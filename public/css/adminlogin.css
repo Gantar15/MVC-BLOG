@@ -1,0 +1,309 @@
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-Bold.ttf);
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-SemiBold.ttf);
+  font-weight: 500;
+  font-style: normal; }
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.emodal {
+  margin-bottom: 0; }
+
+body > div.login_container {
+  background: url("/public/imgs/header_bg_index.jpg") center center;
+  background-size: cover;
+  padding-bottom: 180px;
+  padding-top: 80px;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.title {
+  margin-bottom: 55px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .title h1 {
+    font: 500 20px "Open Sans";
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+    cursor: pointer; }
+    .title h1:after {
+      content: '\203A';
+      position: absolute;
+      -webkit-transform-origin: center;
+              transform-origin: center;
+      -webkit-transform: rotateZ(90deg) translateX(-50%);
+              transform: rotateZ(90deg) translateX(-50%);
+      left: 50%;
+      top: 20px;
+      font: 500 34px "Open Sans";
+      font-weight: normal;
+      color: #ffffff;
+      display: inline-block; }
+
+.card {
+  border: 1px solid #dbdbdb;
+  width: 430px;
+  font: 500 14px "Open Sans";
+  background-color: #ffffff;
+  border-radius: 8px; }
+  .card-body {
+    padding: 15px;
+    border-radius: 0 0 8px 8px; }
+  .card .form-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    position: relative; }
+    .card .form-group:nth-of-type(1) {
+      margin-top: 10px; }
+    .card .form-group:nth-of-type(n+2) {
+      margin-top: 30px; }
+    .card .form-group input {
+      background-color: #ffffff;
+      margin-top: 3px; }
+      .card .form-group input.invalid {
+        border-bottom: 2px solid #f54545 !important;
+        padding-right: 26px; }
+        .card .form-group input.invalid.invalid:focus ~ label, .card .form-group input.invalid.invalid:valid ~ label {
+          font-weight: 500 !important;
+          color: #f54545 !important; }
+        .card .form-group input.invalid + div.field_error_inf {
+          -webkit-animation: alert_show .2s;
+                  animation: alert_show .2s;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: start;
+              -ms-flex-pack: start;
+                  justify-content: flex-start;
+          margin-top: 5px; }
+          .card .form-group input.invalid + div.field_error_inf .wrong_field_icon {
+            min-width: 14px;
+            min-height: 14px;
+            background-image: url("/public/imgs/wrong_field.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-right: 8px; }
+          .card .form-group input.invalid + div.field_error_inf p {
+            font: normal 12px "Open Sans";
+            color: #f54545; }
+@-webkit-keyframes alert_show {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@keyframes alert_show {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+    .card .form-group label {
+      margin-bottom: 20px;
+      position: absolute;
+      left: 5px;
+      color: #7f7f7f;
+      top: 9px;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 0 3px;
+      font: normal 14px "Open Sans"; }
+    .card .form-group input:focus ~ label, .card .form-group textarea:focus ~ label,
+    .card .form-group input:valid ~ label, .card .form-group textarea:valid ~ label {
+      font: normal 12px "Open Sans";
+      color: #4e67ec;
+      top: -12px;
+      left: 3px; }
+    .card .form-group input:focus, .card .form-group input:valid, .card .form-group input:hover {
+      border-bottom: 1px solid #787878; }
+    .card .form-group input:focus.password, .card .form-group input:valid.password {
+      position: relative; }
+    .card .form-group input:focus + .view_password, .card .form-group input:valid + .view_password {
+      cursor: pointer;
+      display: inline-block;
+      width: 25px;
+      height: 20px;
+      position: absolute;
+      top: 7px;
+      right: 10px;
+      background: url("/public/imgs/visible-password.svg") 0 0 no-repeat;
+      background-size: contain; }
+    .card .form-group input:focus.password.visible + .view_password, .card .form-group input:valid.password.visible + .view_password {
+      background: url("/public/imgs/not-visible-password.svg") 0 0 no-repeat;
+      background-size: contain; }
+  .card .submit_block {
+    margin-top: 25px;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+    .card .submit_block button {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      width: 130px;
+      cursor: pointer;
+      height: 33px;
+      border-radius: 15px;
+      color: #278EE8;
+      background-color: #ffffff;
+      border: 1px solid #278EE8;
+      margin-top: 5px;
+      font: 500 14px "Open Sans";
+      outline: none;
+      -webkit-transition: all .3s;
+      transition: all .3s; }
+      .card .submit_block button:hover {
+        background-color: rgba(39, 142, 232, 0.11); }
+      .card .submit_block button img {
+        width: 25px; }
+    .card .submit_block .remember_block {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+      .card .submit_block .remember_block input[type='checkbox'] {
+        display: none; }
+        .card .submit_block .remember_block input[type='checkbox']:checked + label:before {
+          content: "\2713";
+          background-color: #278EE8;
+          border: 1px solid #278EE8;
+          -webkit-box-shadow: 0 0 0 1px rgba(39, 142, 232, 0.51);
+                  box-shadow: 0 0 0 1px rgba(39, 142, 232, 0.51); }
+        .card .submit_block .remember_block input[type='checkbox'] + label {
+          cursor: pointer;
+          position: relative;
+          font: normal 12px "Open Sans";
+          margin-left: 21px;
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none; }
+          .card .submit_block .remember_block input[type='checkbox'] + label:before {
+            line-height: 13px;
+            text-align: center;
+            border: 1px solid #acacac;
+            border-radius: 3px;
+            left: -21px;
+            top: 1px;
+            position: absolute;
+            content: "";
+            color: #ffffff;
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            -webkit-transition: background-color .1s, -webkit-box-shadow .1s;
+            transition: background-color .1s, -webkit-box-shadow .1s;
+            transition: background-color .1s, box-shadow .1s;
+            transition: background-color .1s, box-shadow .1s, -webkit-box-shadow .1s; }
+      .card .submit_block .remember_block label {
+        margin-left: 10px;
+        color: #525252; }
+  .card form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+  .card input {
+    border: none;
+    border-bottom: 1px solid rgba(205, 205, 205, 0);
+    border-bottom-color: #d2d2d2;
+    padding: 5px;
+    padding-left: 10px;
+    font: normal 13px "Open Sans";
+    color: #424242;
+    outline: none;
+    -webkit-transition: border .3s;
+    transition: border .3s; }
+
+.general_form_message {
+  display: none; }
+  .general_form_message.active {
+    display: block; }
+  .general_form_message div {
+    padding: 40px 0px;
+    border-radius: 3px;
+    border: 1px solid #e9452f;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 auto;
+    margin-top: 20px; }
+    .general_form_message div p {
+      font: normal 14px "Open Sans";
+      color: #e9452f; }
+
+.under_login {
+  margin-top: 10px;
+  margin-left: 15px; }
+  .under_login a {
+    text-decoration: none;
+    color: #ffff;
+    font: 500 13px "Open Sans"; }
+    .under_login a:before {
+      margin-right: 5px;
+      content: '\2190';
+      -webkit-transition: margin-right .2s;
+      transition: margin-right .2s; }
+    .under_login a:hover:before {
+      margin-right: 7px; }

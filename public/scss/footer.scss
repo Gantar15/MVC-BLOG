@@ -1,0 +1,202 @@
+footer{
+  box-shadow: 0 -5px 9px -3px #f3f3f3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  a{
+    text-decoration: none;
+  }
+  .column{
+    flex-direction: row;
+  }
+  .footer_head{
+    padding: 55px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #111111;
+
+    @media screen and (max-width: 903px){
+      padding: 35px 0;
+
+      .column {
+        flex-direction: column;
+
+        & > :nth-child(n+2) {
+          margin-top: 35px;
+          margin-left: 0px !important;
+        }
+      }
+    }
+    @media screen and (max-width: 590px){
+        .column ul.main_navigation {
+          width: 100%;
+        }
+    }
+    @media screen and (max-width: 501px){
+      .column ul.main_navigation {
+          display: grid;
+          justify-items: center;
+          justify-content: center;
+
+          li:nth-of-type(n+2){
+            margin-left: 0 !important;
+            margin-top: 10px;
+          }
+        }
+    }
+
+    .column {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &>:nth-child(n+2){
+        margin-left: 70px;
+      }
+
+      .header_logo {
+        margin: 0;
+        margin-left: 0px;
+        margin-bottom: -7px;
+
+        a {
+          display: inline-block;
+
+          img:first-child {
+            margin-left: -6px;
+            width: 129px;
+            height: 34px;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .main_navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style-type: none;
+        width: 475px;
+        flex-wrap: wrap;
+
+        li {
+          a {
+            display: block;
+            cursor: pointer;
+            font: bold 13px $fontName;
+            color: #a0a0a0;
+            overflow-x: hidden;
+            overflow-y: visible;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            transition: all .2s;
+            text-align: center;
+
+            &:hover {
+              color: #ffffff;
+            }
+          }
+          &:nth-of-type(n+2){
+            margin-left: 30px;
+          }
+        }
+      }
+
+      .to_page_top {
+        cursor: pointer;
+        min-width: 35px;
+        height: 35px;
+        border-radius: 7px;
+        background-color: #278EE8;
+        box-shadow: 0 0 0 6px rgba(39, 142, 232, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: box-shadow .2s;
+
+        span{
+          transform: scaleX(2);
+          color: #ffffff;
+          font-size: 10px;
+        }
+
+        &:hover{
+          box-shadow: 0 0 0 7px rgba(39, 142, 232, 0.23);
+        }
+      }
+    }
+  }
+
+  .footer_downtown {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    background-color: #FAFAFA;
+
+    .column {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &>:nth-child(n+2){
+        margin-left: 30px;
+      }
+
+      @media screen and (max-width: 640px) {
+
+        &>:last-child{
+          display: none;
+        }
+      }
+
+      .social {
+        display: flex;
+        justify-content: center;
+        margin-left: -35px;
+
+        @media screen and (max-width: 856px) {
+          margin-left: 40px;
+        }
+
+        img {
+          width: 18px;
+          filter: invert(18%) blur(.2px);
+          transition: filter .3s;
+
+          &[alt="youtube"] {
+            width: 21px;
+            margin-top: -1.5px;
+            margin-right: -2px;
+          }
+
+          &:hover {
+            filter: invert(30%) blur(.2px);
+          }
+        }
+
+        a {
+          &:nth-of-type(n+2) {
+            margin-left: 25px;
+          }
+        }
+      }
+
+      .copyright {
+        word-break: break-word;
+        text-align: center;
+        font: 500 12px $fontName;
+        color: #363636;
+      }
+
+      p{
+        color: #363636;
+        font: 500 12px $fontName;
+        text-transform: capitalize;
+        text-align: center;
+      }
+    }
+  }
+}

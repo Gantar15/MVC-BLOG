@@ -1,0 +1,220 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import "variables";
+@import "headerline";
+
+body{
+    background-color: #FAFAFA;
+}
+
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.header{
+    width: 100%;
+    color: #ffffff;
+
+    .main_navigation{
+        li:nth-of-type(3) a {
+            color: #000000 !important;
+
+            &:after {
+                background-color: #5a8eec !important;
+                left: 5% !important;
+            }
+        }
+    }
+
+    .user_block{
+        p{
+            color: #353535 !important;
+        }
+    }
+
+    &_flex{
+        height: 350px;
+        padding: 0 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('../imgs/header_bg_contact.jpg');
+        background-size: cover;
+    }
+
+    &_title{
+        margin-bottom: 30px;
+        text-align: center;
+        font-family: $fontName;
+
+        h2{
+            font-size: 35px;
+        }
+    }
+}
+
+.column_title+.column{
+    background-color: #ffffff;
+    margin: 20px auto;
+    margin-bottom: 130px;
+    width: 405px;
+    border-radius: 15px;
+    border: 1px solid #dedede;
+    box-shadow: 0 0 6px 1px rgba(75, 75, 75, 0.05);
+    padding: 0;
+}
+.column_title{
+    margin-top: 90px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+
+    p {
+        text-align: center;
+        font: 500 18px $fontName;
+        color: #323232;
+        position: relative;
+        cursor: pointer;
+        width: content-box;
+
+        &:after{
+            content: '\203A';
+            position: absolute;
+            transform-origin: center;
+            transform: rotateZ(90deg) translateX(-50%);
+            left: 50%;
+            top: 20px;
+            font: 500 37px $fontName;
+            font-weight: normal;
+            color: #278EE8;
+            display: inline-block;
+        }
+    }
+}
+form{
+    margin: 35px 50px;
+    margin-bottom: 20px;
+    font: 500 14px $fontName;
+    display: flex;
+    flex-direction: column;
+    color: #5c5c5c;
+
+    .input_block{
+        position: relative;
+        margin-bottom: 35px;
+
+        &:last-of-type{
+            margin-bottom: 0;
+        }
+    }
+    label{
+        margin-bottom: 20px;
+        position: absolute;
+        left: 0;
+        top: 10px;
+        color: #a1a1a1;
+        transition: all .3s;
+        font: normal 15px $fontName;
+    }
+
+    input:focus~label, textarea:focus~label,
+    input:valid~label, textarea:valid~label
+    {
+        font-size: 13px;
+        color: #556ef3;
+        top: -15px;
+    }
+    input:focus, textarea:focus,
+    input:valid, textarea:valid,
+    input:hover, textarea:hover{
+        border-bottom: 1px solid #656565;
+    }
+
+    input, textarea{
+        border: none;
+        border-bottom: 1px solid #b8b8b8;
+        width: 100%;
+        font: normal 14px $fontName;
+        color: #444444;
+        outline: none;
+        padding: 10px;
+        transition: border .3s;
+        position: relative;
+
+        &.invalid{
+            border-bottom: 2px solid #f54545 !important;
+            padding-right: 26px;
+
+            &~label{
+                font-weight: 500 !important;
+                color: #f54545 !important;
+            }
+
+            &+div.field_error_inf{
+                background-color: #ffffff;
+                border: 1px solid #ececec;
+                border-top: none;
+                padding: 7px 9px;
+                border-radius: 0 0 7px 7px;
+                animation: alert_show .2s;
+
+                p{
+                    font: normal 13px $fontName;
+                    text-align: center;
+                    color: #444444;
+                }
+            }
+
+            @keyframes alert_show {
+                0%{
+                    opacity: 0;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    textarea{
+        height: 33px;
+        padding: 10px;
+        padding-top: 0;
+        margin-top: 7px;
+        overflow-y: hidden;
+        resize: none;
+    }
+    button{
+        cursor: pointer;
+        margin: 0 auto;
+        outline: none;
+        font: 500 14px $fontName;
+        color: #ffffff;
+        margin-top: 25px;
+        width: 130px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #278EE8;
+        border: none;
+        transition: all .15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover{
+            background-color: rgba(39, 142, 232, 0.83);
+        }
+        img {
+            filter: invert(100%);
+            width: 27px;
+        }
+    }
+}
+
+@import "footer";

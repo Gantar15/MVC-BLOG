@@ -1,0 +1,126 @@
+@import "variables";
+
+.card{
+  width: 605px;
+  font: 500 14px $fontName;
+  background-color: #ffffff;
+  border-radius: 8px;
+
+  &-header{
+    word-break: break-all;
+    color: #1f1f1f;
+    padding: 5px;
+    background-color: #f1f1f1;
+    border-radius: 8px 8px 0 0;
+    border: 2px solid #dcdcdc;
+    border-bottom: none;
+  }
+  &-body{
+    padding: 15px 10px;
+    padding-bottom: 15px;
+    border-radius: 0 0 8px 8px;
+    border: 2px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .form-group{
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &:nth-of-type(1){
+      margin-top: 1px;
+    }
+    &:nth-of-type(n+2){
+      margin-top: 20px;
+    }
+    input{
+      margin-top: 3px;
+    }
+
+    label{
+      position: absolute;
+      top: 8px;
+      left: 7px;
+      color: #7b7b7b;
+      transition: all .3s;
+    }
+    textarea~label{
+      top: 10px;
+    }
+    input:focus~label, textarea:focus~label,
+    input:valid~label, textarea:valid~label{
+      top: -11px;
+      left: 10px;
+      color: #4b4b4b;
+    }
+  }
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  input, textarea{
+    border: none;
+    border-bottom: 2px solid #d2d2d2;
+    padding: 5px;
+    font: normal 13px $fontName;
+    outline: none;
+  }
+  input[type='file']{
+    padding-top: 5px;
+    font-weight: 500;
+    color: #7b7b7b;
+    transition: color .3s;
+
+    &:focus, &:valid{
+      color: #3e3e3e;
+    }
+  }
+  textarea{
+    padding-top: 0;
+    height: 25px;
+    margin-top: 13px;
+    resize: none;
+  }
+  input:focus, textarea:focus{
+    border-bottom: 2px solid #5f5f5f;
+  }
+  input:valid, textarea:valid{
+    border-bottom: 2px solid #5f5f5f;
+  }
+  .submit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+      width: 200px;
+      min-height: 30px;
+      cursor: pointer;
+      border: none;
+      color: #ffffff;
+      padding: 0 5px;
+      border-radius: 5px;
+      background-color: #4e67ec;
+      margin-top: 20px;
+      font: 500 14px $fontName;
+      outline: none;
+      transition: background-color .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: rgba(78, 103, 236, 0.87);
+      }
+
+      img {
+        width: 25px;
+      }
+    }
+  }
+}

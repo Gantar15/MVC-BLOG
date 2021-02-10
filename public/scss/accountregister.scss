@@ -1,0 +1,239 @@
+@import "variables";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import "headerline";
+
+.emodal{
+  margin-top: 0;
+}
+
+body > div{
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body{
+  background-color: #FAFAFA;
+}
+
+.column{
+  width: 80%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+
+.header_logo{
+  margin-right: 0;
+}
+.header_line {
+    .register_box {
+      display: none;
+    }
+}
+
+.card{
+  width: 430px;
+  font: 500 14px $fontName;
+
+  &-header{
+    text-align: center;
+    word-break: break-all;
+    color: #3b3b3b;
+    padding: 5px;
+    padding-left: 15px;
+    font: bold 23px $fontName;
+    margin-bottom: 50px;
+
+    h2{
+      font: 500 25px $fontName;
+    }
+    h3{
+      font: 400 15px $fontName;
+
+      a {
+        text-decoration: none;
+        color: #2774e8;
+      }
+    }
+  }
+  &-body{
+    padding: 15px;
+  }
+  .form-group{
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &:nth-of-type(1){
+      margin-top: 1px;
+    }
+    &:nth-of-type(n+2){
+      margin-top: 28px;
+    }
+    input{
+      background-color: #FAFAFA;
+      margin-top: 3px;
+
+      &.invalid{
+        border-bottom: 2px solid #f54545 !important;
+        padding-right: 26px;
+
+        &.invalid:focus~label, &.invalid:valid~label{
+          font-weight: 500 !important;
+          color: #f54545 !important;
+        }
+
+        &+div.field_error_inf{
+          animation: alert_show .2s;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin-top: 5px;
+
+          .wrong_field_icon{
+            min-width: 14px;
+            min-height: 14px;
+            background-image: url("/public/imgs/wrong_field.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-right: 8px;
+          }
+          p{
+            font: normal 12px $fontName;
+            color: #f54545;
+          }
+        }
+
+        @keyframes alert_show {
+          0%{
+            opacity: 0;
+          }
+          100%{
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    label{
+      margin-bottom: 20px;
+      position: absolute;
+      left: 5px;
+      color: #7f7f7f;
+      top: 9px;
+      transition: all .2s;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 0 3px;
+      font: normal 15px $fontName;
+    }
+
+    input:focus~label, textarea:focus~label,
+    input:valid~label, textarea:valid~label
+    {
+      font: normal 13px $fontName;
+      color: #556ef3;
+      top: -12px;
+      left: 3px;
+    }
+    input:focus, input:valid, input:hover
+    {
+      border-bottom: 1px solid #a0a0a0;
+    }
+  }
+  .submit_block {
+    margin-top: 35px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div:first-child {
+      display: flex;
+      align-items: center;
+
+      .view_password {
+        cursor: pointer;
+        display: inline-block;
+        width: 25px;
+        height: 20px;
+        background: url("/public/imgs/visible-password-reg.png") 0 0 no-repeat;
+        background-size: contain;
+      }
+      .view_password.visible {
+        background: url("/public/imgs/not-visible-password-reg.png") 0 0 no-repeat;
+        background-size: contain;
+      }
+
+      p.view_password_label{
+        user-select: none;
+        font: normal 13px $fontName;
+        cursor: pointer;
+        margin-left: 6px;
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      cursor: pointer;
+      border: none;
+      color: #ffffff;
+      height: 33px;
+      border-radius: 17px;
+      background-color: #278EE8;
+      font: 500 14px $fontName;
+      outline: none;
+      transition: all .2s;
+      user-select: none;
+
+      &:hover {
+        background-color: rgba(39, 142, 232, 0.83);
+      }
+      img {
+        width: 25px;
+        filter: invert(100%);
+      }
+    }
+  }
+  form{
+    display: flex;
+    flex-direction: column;
+  }
+  input{
+    border: 1px solid rgba(205, 205, 205, 0);
+    border-bottom-color: #d2d2d2;
+    padding: 5px;
+    padding-left: 8px;
+    font: 500 13px $fontName;
+    color: #3b3b3b;
+    outline: none;
+    transition: border .3s;
+  }
+}
+
+.footer_inf{
+  margin-top: 50px;
+  margin-bottom: 60px;
+  max-width: 500px;
+  word-break: break-word;
+  text-align: center;
+  color: #8d8d8d;
+  font: normal 11px $fontName;
+
+  a{
+    text-decoration: none;
+    color: #687be5;
+  }
+}

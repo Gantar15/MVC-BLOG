@@ -1,0 +1,111 @@
+@font-face {
+  font-family: Open Sans;
+  src: url(../fonts/OpenSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: Open Sans;
+  src: url(../fonts/OpenSans-Bold.ttf);
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: Open Sans;
+  src: url(../fonts/OpenSans-SemiBold.ttf);
+  font-weight: 500;
+  font-style: normal; }
+
+
+.modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.modal-window {
+  padding: 15px 20px 15px 20px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  transform: translateY(-200px);
+  transform-origin: -50px;
+  z-index: 10000;
+  opacity: 0; }
+
+.emodal.open .modal-overlay {
+  opacity: 1;
+  z-index: 9999; }
+
+.emodal.open .modal-window {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+
+.modal-window p, .modal-window span, .modal-window button{
+  font-family: "Open Sans";
+}
+.modal-window{
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+}
+.modal-header{
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(220, 220, 225, 0.49);
+}
+.modal-header > span:nth-child(1){
+  font-weight: 500;
+  font-size: 26px;
+  color: #278ee8;
+}
+.modal-close{
+  font-size: 24px;
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.modal-body{
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(220, 220, 225, 0.49);
+}
+.modal-body > p{
+  margin: 0;
+  color: #393939;
+  font-size: 13px;
+}
+.modal-footer{
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.modal-footer > button{
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 0;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px 40px;
+  background-color: rgba(39, 142, 232, 0.4);
+  color: #ffffff;
+  font-weight: 500;
+  transition: all .3s;
+}
+.modal-footer > button:hover{
+  background-color: rgb(39, 142, 232);
+}
+.modal-footer > button:nth-of-type(2){
+  margin-left: 4px;
+}

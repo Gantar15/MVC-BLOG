@@ -1,0 +1,143 @@
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-Bold.ttf);
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "Open Sans";
+  src: url(../fonts/OpenSans-SemiBold.ttf);
+  font-weight: 500;
+  font-style: normal; }
+.card {
+  width: 605px;
+  font: 500 14px "Open Sans";
+  background-color: #ffffff;
+  border-radius: 8px; }
+  .card-header {
+    word-break: break-all;
+    color: #1f1f1f;
+    padding: 5px;
+    background-color: #f1f1f1;
+    border-radius: 8px 8px 0 0;
+    border: 2px solid #dcdcdc;
+    border-bottom: none; }
+  .card-body {
+    padding: 15px 10px;
+    padding-bottom: 15px;
+    border-radius: 0 0 8px 8px;
+    border: 2px solid #dcdcdc;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+  .card .form-group {
+    word-break: break-word;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    position: relative; }
+    .card .form-group:nth-of-type(1) {
+      margin-top: 1px; }
+    .card .form-group:nth-of-type(n+2) {
+      margin-top: 20px; }
+    .card .form-group input {
+      margin-top: 3px; }
+    .card .form-group label {
+      position: absolute;
+      top: 8px;
+      left: 7px;
+      color: #7b7b7b;
+      -webkit-transition: all .3s;
+      transition: all .3s; }
+    .card .form-group textarea ~ label {
+      top: 10px; }
+    .card .form-group input:focus ~ label, .card .form-group textarea:focus ~ label,
+    .card .form-group input:valid ~ label, .card .form-group textarea:valid ~ label {
+      top: -11px;
+      left: 10px;
+      color: #4b4b4b; }
+  .card form {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+  .card input, .card textarea {
+    border: none;
+    border-bottom: 2px solid #d2d2d2;
+    padding: 5px;
+    font: normal 13px "Open Sans";
+    outline: none; }
+  .card input[type='file'] {
+    padding-top: 5px;
+    font-weight: 500;
+    color: #7b7b7b;
+    -webkit-transition: color .3s;
+    transition: color .3s; }
+    .card input[type='file']:focus, .card input[type='file']:valid {
+      color: #3e3e3e; }
+  .card textarea {
+    padding-top: 0;
+    height: 25px;
+    margin-top: 13px;
+    resize: none; }
+  .card input:focus, .card textarea:focus {
+    border-bottom: 2px solid #5f5f5f; }
+  .card input:valid, .card textarea:valid {
+    border-bottom: 2px solid #5f5f5f; }
+  .card .submit {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+    .card .submit button {
+      width: 200px;
+      min-height: 30px;
+      cursor: pointer;
+      border: none;
+      color: #ffffff;
+      padding: 0 5px;
+      border-radius: 5px;
+      background-color: #4e67ec;
+      margin-top: 20px;
+      font: 500 14px "Open Sans";
+      outline: none;
+      -webkit-transition: background-color .3s;
+      transition: background-color .3s;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+      .card .submit button:hover {
+        background-color: rgba(78, 103, 236, 0.87); }
+      .card .submit button img {
+        width: 25px; }
