@@ -50,7 +50,7 @@ export default class CommentsPagination{
         this.beforeRenderHandler = beforeRenderHandler;
         this.afterRenderHandler = afterRenderHandler;
         this.commentTimeout = commentTimeout;
-        this._filterMode = _filterMode;
+        this._filterMode = filterMode;
         this._setup();
     }
 
@@ -59,6 +59,7 @@ export default class CommentsPagination{
     _setup(){
         let formData = new FormData();
         formData.set('offset', this.offset);
+        formData.set('filter_mode', this._filterMode);
         this._getRequest(formData).then((comments) => {
 
             //Получаем комменты и информацию о оценках комментариев
@@ -68,7 +69,6 @@ export default class CommentsPagination{
             //Устанавливаем лимит, получаем айди авторизированного юзера и айди комментов с ответами
             let form2 = new FormData();
             form2.set('setup', true);
-            form2.set('filter_mode', this._filterMode);
             this._getRequest(form2).then((response) => {
                 if(this.colOfAllComments !== 0) {
                     this.comments_limit = response.comments_limit;

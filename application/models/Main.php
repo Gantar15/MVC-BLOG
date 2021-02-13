@@ -190,7 +190,9 @@ class Main extends Model {
             'offset' => $offset,
             'record_type' => $recordType
         ];
-        return $this->db->row('SELECT * FROM comments WHERE post_id = :post_id AND record_type = :record_type ORDER BY col DESC LIMIT :limit OFFSET :offset', $params);
+        return $this->db->row("
+                SELECT * FROM comments as parent_comments WHERE post_id = :post_id AND record_type = :record_type ORDER BY (SELECT COUNT(id) FROM comments WHERE record_type = 'answer' AND parent_comment_id = parent_comments.id) + likes/2 + dislikes/2 DESC LIMIT :limit OFFSET :offset
+               ", $params);
     }
 
     //Получаем определенное количество записей($limit) по указаному parent_id
@@ -266,7 +268,7 @@ class Main extends Model {
         if($filterMode == 'newest')
             $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
         else if($filterMode == 'popular')
-            $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
+            $comments = $this->getRecordsByPopularity($limit, $offset, $postId, 'comment');
 
         $commentsInfo = [];
         $authorizeCommentsArr = [];
