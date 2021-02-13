@@ -24,8 +24,8 @@ function getCommentTemplate(comment, commentDataJson, type, addClass = ''){
     const userDataJson = commentDataJson['user_data'],
         recentlyAddedCommentId = +commentDataJson['recently_added_comment_id'];
 
-        const hash = pagination.hashCode(recentlyAddedCommentId);
-        pagination.commentsHashIds[hash] = recentlyAddedCommentId;
+    const hash = pagination.hashCode(recentlyAddedCommentId);
+    pagination.commentsHashIds[hash] = recentlyAddedCommentId;
 
     return `
                     <div class="${type} ${addClass}">
@@ -69,6 +69,14 @@ function getCommentTemplate(comment, commentDataJson, type, addClass = ''){
 }
 
 
+//Делает теги безопасными
+function stripTags(str){
+    str = str.replaceAll('<', '&lt;');
+    str = str.replaceAll('>', '&gt;');
+    return str;
+}
+
+
 
 //Скрываем кнопку (еще) до того момента, пока не загрузятся комменты
 if(nextCommentsTrigger) {
@@ -86,7 +94,7 @@ window.addEventListener('scroll', ()=>{
 
     if(!loaded) {
         //Подключаем пагинацию комментов
-        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 0,() => {
+        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 0, 'popular',() => {
             if(nextCommentsTrigger) {
                 loadBlock.remove();
             }
@@ -167,7 +175,11 @@ if(form) {
 
         //Объявляем тип отсылаемой записи (комментарий) и отправляем ее на сервер
         const fData = new FormData(form);
-        fData.set('comment', fData.get('comment').replaceAll('\n', '<br/>'));
+        let commentWithLines = fData.get('comment');
+        commentWithLines = stripTags(commentWithLines);         //Заменяем теги на их безопасные версии
+        commentWithLines = commentWithLines.replaceAll('\n', '<br/>');
+        commentWithLines = pagination.getCommentUnicodeStr(commentWithLines);
+        fData.set('comment', commentWithLines);
         fData.set('record_type', 'comment');
         let response = await fetch(url, {
             method: method,
@@ -176,11 +188,15 @@ if(form) {
 
         if (response.ok) {
             //Если у нас не было комментов до добавление этого комментария, то удаляем надпись о отсутствии комментов
+            //И уменьшаем отступ от кнопки еще
             if (emptyCommentsBlockMessage) {
                 emptyCommentsBlockMessage.style.display = 'none';
+                const commentsBlockBody = document.querySelector('.comments_block_body');
+                commentsBlockBody.style.paddingBottom = '20px';
             }
 
-            let comment = form.comment.value.replaceAll('\n', '<br/>');
+            let comment = stripTags(form.comment.value);
+            comment = comment.replaceAll('\n', '<br/>');
             let commentDataJson = await response.json();
 
             form.reset();
@@ -469,10 +485,14 @@ commentsBlockBody.addEventListener('click', (event) => {
 
                     //Объявляем тип отсылаемой записи (ответ на комментарий) и отправляем ее на сервер
                     const formDATA = new FormData(answerForm);
+                    let finallyComment = formDATA.get('answer');
+                    finallyComment = stripTags(finallyComment);         //Заменяем теги на их безопасные версии
+                    finallyComment = finallyComment.replaceAll('\n', '<br/>');
+                    finallyComment = pagination.getCommentUnicodeStr(finallyComment);        //Переводим обычный текст в юникод строку
                     if(upperCommentId != parentCommentId){           //Если мы оставляем ответ под ответом, то добавляем в начало коммента имя пользователя, на чей коммент отвечаем
                         formDATA.set('upper_comment_id', upperCommentId);
                     }
-                    formDATA.set('answer', formDATA.get('answer').replaceAll('\n', '<br/>'));
+                    formDATA.set('answer', finallyComment);
                     formDATA.set('parent_comment_id', parentCommentId);
                     formDATA.set('record_type', 'answer');
                     const response = await fetch('', {
@@ -483,8 +503,10 @@ commentsBlockBody.addEventListener('click', (event) => {
                     //Рендерим ответ
                     if (response.ok) {
                         const commentDataJson = await response.json();
-                        let answer = answerInput.value.replaceAll('\n', '<br/>');
+                        let answer = stripTags(answerInput.value);
+                        answer = answer.replaceAll('\n', '<br/>');
 
+                        //Добавляем информацию о пользователе, на чей ответ мы ответили, в начало коммента
                         const upperCommentUserInfo = commentDataJson['upper_comment_user_info'];
                         if(upperCommentUserInfo) {
                             answer = `
@@ -938,7 +960,6 @@ function commentsMenusRender(parentBlock) {
                         const commentId = pagination.commentsHashIds[hashCommentId];
                         let formD = new FormData();
                         formD.set('remove_comment_id', commentId);
-
                         if (comment.classList.contains('comment')) {
                             formD.set('type_of_comment', 'comment');
                         } else if (comment.classList.contains('answer')) {
@@ -955,6 +976,10 @@ function commentsMenusRender(parentBlock) {
                             //Если мы удаляем коммент
                             if (comment.classList.contains('comment')) {
                                 comment.remove();
+                                if(colOfComments.innerText > 0)
+                                    colOfComments.innerText = +colOfComments.innerText - 1;
+                                if(colOfComments.innerText === '0')
+                                    emptyCommentsBlockMessage.style.display = '';
                             }
                             //Если удаляем ответ в блоке сейчас добавленных ответов
                             else if (comment.closest('.after_loaded_answers_block')) {
@@ -1124,7 +1149,10 @@ function commentsMenusRender(parentBlock) {
 
                         //Отправляем новый текст коммента на сервер
                         const formD = new FormData();
-                        formD.set('changed_comment_text', commentText);
+                        let commentFinallyText = stripTags(commentText);
+                        commentFinallyText = commentFinallyText.replaceAll('\n', '<br/>');
+                        commentFinallyText = pagination.getCommentUnicodeStr(commentFinallyText);
+                        formD.set('changed_comment_text', commentFinallyText);
                         formD.set('edit_comment_id', editCommentId);
                         fetch('', {
                             method: 'post',
@@ -1204,3 +1232,8 @@ function commentsMenusRender(parentBlock) {
         };
     }
 }
+
+
+
+
+//Сортировка комментариев

@@ -171,7 +171,7 @@ class Main extends Model {
         return $this->db->column('SELECT COUNT(id) FROM comments WHERE parent_comment_id = :parent_comment_id AND record_type = :record_type', $params);
     }
 
-    //Получаем определенное количество записей($limit) под данным постом
+    //Получаем определенное количество записей($limit) под данным постом, сортируя их по дате публикации
     public function getRecordsByLimit($limit, $offset, $postId, $recordType){
         $params = [
             'post_id' => $postId,
@@ -180,6 +180,17 @@ class Main extends Model {
             'record_type' => $recordType
         ];
         return $this->db->row('SELECT * FROM comments WHERE post_id = :post_id AND record_type = :record_type ORDER BY `date_of_post` DESC LIMIT :limit OFFSET :offset', $params);
+    }
+
+    //Получаем определенное количество записей($limit) под данным постом, сортируя их по популярности
+    public function getRecordsByPopularity($limit, $offset, $postId, $recordType){
+        $params = [
+            'post_id' => $postId,
+            'limit' => $limit,
+            'offset' => $offset,
+            'record_type' => $recordType
+        ];
+        return $this->db->row('SELECT * FROM comments WHERE post_id = :post_id AND record_type = :record_type ORDER BY col DESC LIMIT :limit OFFSET :offset', $params);
     }
 
     //Получаем определенное количество записей($limit) по указаному parent_id
@@ -247,10 +258,18 @@ class Main extends Model {
     }
 
     //Получаем информацию о комментах и их пользователях
-    public function getCommentsInfo($limit, $offset, $postId){
+    public function getCommentsInfo($limit, $offset, $postId, $userId, $filterMode){
         $account = new Account();
-        $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
+
+        //В зависимости от режима сортировки получаем массив комментов
+        $comments = [];
+        if($filterMode == 'newest')
+            $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
+        else if($filterMode == 'popular')
+            $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
+
         $commentsInfo = [];
+        $authorizeCommentsArr = [];
 
         $authors_ids = [];
         foreach($comments as $index => $comment){
@@ -260,7 +279,7 @@ class Main extends Model {
                 if (!in_array($comment['author_id'], array_keys($authors_ids))) {
                     $authors_ids[$author_id] = $account->getUserData($author_id);
                 }
-                $commentsInfo[] = array(
+                $commentArr = array(
                     'name' => $authors_ids[$author_id]['name'],
                     'likes' => $comment['likes'],
                     'dislikes' => $comment['dislikes'],
@@ -269,9 +288,17 @@ class Main extends Model {
                     'comment' => $comment['comment'],
                     'comment_id' => $comment['id']
                 );
+
+                if($userId == $author_id)
+                    $authorizeCommentsArr[] = $commentArr;
+                else
+                    $commentsInfo[] = $commentArr;
             }
         }
-        return $commentsInfo;
+
+        //Сначала отправляем комментарии залогиненного пользователя, потом остальные
+        $finallyArr = array_merge($authorizeCommentsArr, $commentsInfo);
+        return $finallyArr;
     }
 
     public function getAnswersInfo($limit, $offset, $parentCommentId){
@@ -280,6 +307,7 @@ class Main extends Model {
         $authors_ids = [];
         $comments = $this->getRecordsByParentCommentIdWithLimit($limit, $offset, $parentCommentId, 'answer', 'ASC');
         $answersInfo = [];
+        $upperCommentAuthorsInf = [];
 
             foreach ($comments as $index => $comment) {
                 $author_id = $comment['author_id'];
@@ -288,7 +316,7 @@ class Main extends Model {
                     if (!in_array($comment['author_id'], array_keys($authors_ids))) {
                         $authors_ids[$author_id] = $account->getUserData($author_id);
                     }
-                    $answersInfo[] = array(
+                    $answerArr = array(
                         'name' => $authors_ids[$author_id]['name'],
                         'likes' => $comment['likes'],
                         'dislikes' => $comment['dislikes'],
@@ -298,8 +326,20 @@ class Main extends Model {
                         'comment_id' => $comment['id'],
                         'parent_comment_id' => $comment['parent_comment_id']
                     );
+
+                    //Если ответ является ответом на другой ответ, то добавляем информацию о пользователе, на чей ответ был сделан данный коммент
+                    if($comment['upper_comment_id'] != 0){
+                        $upperCommentAuthorId = $this->getCommentAuthorId($comment['upper_comment_id']);
+                        if (!in_array($upperCommentAuthorId, array_keys($upperCommentAuthorsInf))) {
+                            $upperCommentAuthorsInf[$upperCommentAuthorId] = $this->getUserInfoForAnswer($upperCommentAuthorId);
+                        }
+                        $answerArr['upper_comment_user_info'] = $upperCommentAuthorsInf[$upperCommentAuthorId];
+                    }
+
+                    $answersInfo[] = $answerArr;
                 }
             }
+
         return $answersInfo;
 
     }
@@ -315,7 +355,7 @@ class Main extends Model {
         $params = [
           'id' => $userId
         ];
-        return $this->db->row('SELECT id, name FROM users WHERE id = :id', $params);
+        return $this->db->row('SELECT id, name FROM users WHERE id = :id', $params)[0];
     }
 
     //Пост

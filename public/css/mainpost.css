@@ -460,7 +460,7 @@
     font-size: 20px; }
   .modal-overlay .modal-window .modal-footer > button:nth-of-type(2) {
     margin-left: 10px;
-    background-color: #d9d9d9; }
+    background-color: #c4c4c4; }
   .modal-overlay .modal-window .modal-footer > button {
     padding: 6px 20px;
     font-size: 14px;
@@ -468,8 +468,7 @@
     border-radius: 2px; }
 
 .empty_comments_block_message {
-  margin-top: 30px;
-  margin-bottom: 40px;
+  margin: 30px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -534,7 +533,6 @@
         color: #2a2a2a;
         font: 500 15px "Open Sans"; }
       .comments_block_head .comments_info .filters_block {
-        padding: 5px;
         border-radius: 5px;
         margin-left: 30px;
         position: relative;
@@ -547,6 +545,7 @@
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
+          padding: 5px;
           -webkit-box-align: center;
               -ms-flex-align: center;
                   align-items: center;
@@ -603,8 +602,8 @@
           transition: height .2s, box-shadow .2s, -webkit-box-shadow .2s; }
           .comments_block_head .comments_info .filters_block ul li {
             cursor: pointer;
-            padding: 5px;
-            color: #535353;
+            padding: 15px 13px;
+            color: #1d1d1d;
             font: normal 14px "Open Sans";
             text-align: center;
             list-style-type: none;
@@ -617,7 +616,7 @@
         .comments_block_head .comments_info .filters_block.active ul {
           -webkit-box-shadow: 0 0 3px 2px #eaeaea;
                   box-shadow: 0 0 3px 2px #eaeaea;
-          height: 73px; }
+          height: 117px; }
         .comments_block_head .comments_info .filters_block.active .filters_open_trigger img {
           -webkit-transform: rotate(180deg);
                   transform: rotate(180deg); }

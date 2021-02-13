@@ -39,8 +39,10 @@ export default class CommentsPagination{
 
     commentsHashIds = {};           //Объект с айдишниками комментариев (ключи захешированны)
 
+    _filterMode;                    //Режим сортировки комментарие (защищенный метор)
 
-    constructor(url, parentNode, colOfAllComments, nextCommentsTrigger, commentTimeout, beforeRenderHandler = () => {}, afterRenderHandler = () => {}) {
+
+    constructor(url, parentNode, colOfAllComments, nextCommentsTrigger, commentTimeout, filterMode, beforeRenderHandler = () => {}, afterRenderHandler = () => {}) {
         this.url = url;
         this.parentNode = parentNode;
         this.colOfAllComments = colOfAllComments;
@@ -48,6 +50,7 @@ export default class CommentsPagination{
         this.beforeRenderHandler = beforeRenderHandler;
         this.afterRenderHandler = afterRenderHandler;
         this.commentTimeout = commentTimeout;
+        this._filterMode = _filterMode;
         this._setup();
     }
 
@@ -65,6 +68,7 @@ export default class CommentsPagination{
             //Устанавливаем лимит, получаем айди авторизированного юзера и айди комментов с ответами
             let form2 = new FormData();
             form2.set('setup', true);
+            form2.set('filter_mode', this._filterMode);
             this._getRequest(form2).then((response) => {
                 if(this.colOfAllComments !== 0) {
                     this.comments_limit = response.comments_limit;
@@ -272,6 +276,15 @@ export default class CommentsPagination{
                     const hashId = this.hashCode(answer.comment_id);
                     this.commentsHashIds[hashId] = +answer.comment_id;
 
+
+                    //Если ответ был сделан на другой ответ, то добавляем в его начало инфу о пользователе, на чей коммент был сделан ответ
+                    let commentFinallyText = this.getTextFromUnicodeStr(answer.comment);
+                    if(answer['upper_comment_user_info']){
+                        commentFinallyText = `
+                            <a href="/account/userprofile/${answer['upper_comment_user_info'].id}" class="upper_comment_user_href">&#64;${answer['upper_comment_user_info'].name}</a>
+                        ` + commentFinallyText;
+                    }
+
                     let template = `
                                     <div class="answer">
                                         <div id = 'comment_id' style="display: none">${hashId}</div>
@@ -284,7 +297,7 @@ export default class CommentsPagination{
                                                 <div class="post_date">${dateStr}</div>
                                             </div>
                                             <p class="comment_text">
-                                                ${answer.comment}
+                                                ${commentFinallyText}
                                             </p>
                                             <div class="end_comment_block">
                                                 <div class="comment_activities">
@@ -399,7 +412,7 @@ export default class CommentsPagination{
                                             <div class="post_date">${dateStr}</div>
                                         </div>
                                         <p class="comment_text">
-                                            ${comment.comment}
+                                            ${this.getTextFromUnicodeStr(comment.comment)}
                                         </p>
                                         <div class="end_comment_block">
                                             <div class="comment_activities">
@@ -493,7 +506,7 @@ export default class CommentsPagination{
     }
 
 
-    //Метод для хэширования
+    //Метод для хэширования айди коммента
     hashCode (str){
         str = str.toString();
         var hash = 0;
@@ -518,5 +531,20 @@ export default class CommentsPagination{
             subtree: true,
             characterDataOldValue: true
         });
+    }
+
+
+    //Переводим строку в строку, содержащюю коды символов коммента в юникоде
+    getCommentUnicodeStr(str){
+        const encoder = new TextEncoder('utf-8');
+        return encoder.encode(str).join(',');
+    }
+
+
+    //Переводим строку с юникод символами в обычный читаемый текст
+    getTextFromUnicodeStr(coddingStr){
+        const decoder = new TextDecoder();
+        const uint8 = new Uint8Array(coddingStr.split(','));
+        return decoder.decode(uint8);
     }
 }

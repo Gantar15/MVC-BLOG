@@ -118,7 +118,7 @@ class MainController extends Controller {
         //Если мы оставляем ответ под ответом, то отправляем имя пользователя, на чей коммент отвечаем
         if(isset($_POST['upper_comment_id'])) {
             $upperCommentAuthorId = $this->model->getCommentAuthorId($_POST['upper_comment_id']);
-            $upperCommentUserInfo = $this->model->getUserInfoForAnswer($upperCommentAuthorId)[0];
+            $upperCommentUserInfo = $this->model->getUserInfoForAnswer($upperCommentAuthorId);
             $response['upper_comment_user_info'] = $upperCommentUserInfo;
         }
 
@@ -143,9 +143,9 @@ class MainController extends Controller {
     }
 
     //Получаем информацию о комментах и их оценках
-    public function commentsOffset($userId, $commentsOnPageLimit, $postId){
+    public function commentsOffset($userId, $commentsOnPageLimit, $postId, $filterMode){
         //Инфа о комментах
-        $commentsInfo = $this->model->getCommentsInfo($commentsOnPageLimit, intval($_POST['offset']), $postId);
+        $commentsInfo = $this->model->getCommentsInfo($commentsOnPageLimit, intval($_POST['offset']), $postId, $userId, $filterMode);
         //Айди отображаемых комментов
         $commentsIds = array_map(function ($commentInf){
             return $commentInf['comment_id'];
@@ -226,6 +226,7 @@ class MainController extends Controller {
             View::errorCode('404');
         }
 
+
         $userId = '';
         if(isset($_COOKIE['authorize'])){
             $userId = $_COOKIE['authorize'];
@@ -246,7 +247,7 @@ class MainController extends Controller {
         $commentsOnPageLimit = 15; //Количество отображаемых комментов за раз
         $answersOnPageLimit = 7; //Количество отображаемых ответов на коммент за раз
         if( isset($_POST['offset']) ) {
-            $this->commentsOffset($userId, $commentsOnPageLimit, $postId);
+            $this->commentsOffset($userId, $commentsOnPageLimit, $postId, $_POST['filter_mode']);
         }
         else if( isset($_POST['setup']) ){
             $this->commentsSetup($userId, $commentsOnPageLimit, $answersOnPageLimit, $postId);
