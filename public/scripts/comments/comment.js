@@ -20,6 +20,16 @@ inputExplore();     //Делаем динамическим размер пол�
 const loadBlock = document.createElement('div');  //Блок загрузки комментов
 loadBlock.className = 'load_block';
 
+//Пагинация комметов
+let pagination;
+
+//Режим сортировки комментов по популярности - popular(по умолчанию), по дате - newest
+let filterMode = 'popular';
+//Загрузка комментов
+let loaded = false;
+
+
+
 function getCommentTemplate(comment, commentDataJson, type, addClass = ''){
     const userDataJson = commentDataJson['user_data'],
         recentlyAddedCommentId = +commentDataJson['recently_added_comment_id'];
@@ -77,26 +87,21 @@ function stripTags(str){
 }
 
 
-
 //Скрываем кнопку (еще) до того момента, пока не загрузятся комменты
 if(nextCommentsTrigger) {
     nextCommentsTrigger.style.display = 'none';
 }
 
-//Пагинация комметов
-let pagination;
 
-//Загрузка комментов
-let loaded = false;
 window.addEventListener('scroll', ()=>{
     //Подключает загрузку комментов, когда юзер до них доскролит
     if(window.pageYOffset + document.documentElement.clientHeight < commentsBlockHead.offsetTop + commentsBlockHead.offsetHeight - 25) return;
 
     if(!loaded) {
         //Подключаем пагинацию комментов
-        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 0, 'popular',() => {
+        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 0, filterMode,() => {
             if(nextCommentsTrigger) {
-                loadBlock.remove();
+                loadBlock.style.display = 'none';
             }
             if(nextCommentsLoader) {
                 nextCommentsLoader.stop();
@@ -134,7 +139,7 @@ window.addEventListener('scroll', ()=>{
 
         //Подключаем загрузку комментов при нажатии на (еще)
         if(nextCommentsTrigger) {
-            nextCommentsTrigger.addEventListener('click', () => {
+            nextCommentsTrigger.onclick = () => {
                 nextCommentsLoader = new LoadParser(nextCommentsTrigger, 0, '/public/imgs/comment_loading.gif');
                 pagination.getNextComments();
                 pagination.preRenderSetup();
@@ -148,7 +153,7 @@ window.addEventListener('scroll', ()=>{
                         clearInterval(itrvId);
                     }
                 }, 500);
-            });
+            };
         }
 
         loaded = true;
@@ -167,6 +172,7 @@ if(form) {
         event.preventDefault();
         //Загрузка при отправке комментария
         commentsBlockBody.prepend(loadBlock);
+        loadBlock.style.display = '';
         let loader = new LoadParser(loadBlock, 0, '/public/imgs/comment_loading.gif');
         loader.start();
 
@@ -407,7 +413,8 @@ commentsBlockBody.addEventListener('click', (event) => {
         }
         if (pagination.authorizeUserId) {
             const endAnswerNode = target.closest('.end_comment_block');
-            const upperCommentHash = target.closest('.answer, .comment').querySelector('#comment_id').innerText;
+            const upperComment = target.closest('.answer, .comment');
+            const upperCommentHash = upperComment.querySelector('#comment_id').innerText;
             const upperCommentId = pagination.commentsHashIds[upperCommentHash];    //Айди комментария или ответа, для которого пользователь оставляет ответ
 
             //Если под данным комментом уже есть поле ввода ответа, то просто фокусимся на нем, иначе добавляем поле ответа
@@ -482,6 +489,9 @@ commentsBlockBody.addEventListener('click', (event) => {
                     let answerLoader = new LoadParser(answerLoaderBlock, 0, '/public/imgs/comment_loading.gif');
                     answerLoader.start();
 
+                    function getUpperCommentAuthorId(upperComment){
+                        return upperComment.querySelector('.user_avatar').href.match(/^.+\/(\d+)$/)[1];
+                    }
 
                     //Объявляем тип отсылаемой записи (ответ на комментарий) и отправляем ее на сервер
                     const formDATA = new FormData(answerForm);
@@ -489,7 +499,7 @@ commentsBlockBody.addEventListener('click', (event) => {
                     finallyComment = stripTags(finallyComment);         //Заменяем теги на их безопасные версии
                     finallyComment = finallyComment.replaceAll('\n', '<br/>');
                     finallyComment = pagination.getCommentUnicodeStr(finallyComment);        //Переводим обычный текст в юникод строку
-                    if(upperCommentId != parentCommentId){           //Если мы оставляем ответ под ответом, то добавляем в начало коммента имя пользователя, на чей коммент отвечаем
+                    if(upperCommentId != parentCommentId && getUpperCommentAuthorId(upperComment) != pagination.authorizeUserId){           //Если мы оставляем ответ под ответом, то добавляем в начало коммента имя пользователя, на чей коммент отвечаем
                         formDATA.set('upper_comment_id', upperCommentId);
                     }
                     formDATA.set('answer', finallyComment);
@@ -1237,3 +1247,29 @@ function commentsMenusRender(parentBlock) {
 
 
 //Сортировка комментариев
+const filtersMenu = document.querySelector('.filters');
+
+filtersMenu.addEventListener('click', (event) => {
+
+    if(colOfComments.textContent != 0) {
+        const prepareCommentBlock = () => {
+            commentsBlockBody.style.paddingBottom = '0px';
+            nextCommentsTrigger.style.display = 'none';
+            loadBlock.style.display = '';
+            commentsBlockBody.querySelectorAll('.comment').forEach(comment => comment.remove());
+            loaded = false;
+            window.dispatchEvent(new Event('scroll'));
+        };
+
+        //Если пользователь выбрал сортировку по популярности
+        if (event.target.closest('.filters li:first-child')) {
+            filterMode = 'popular';
+            prepareCommentBlock();
+        }
+        //Если пользователь выбрал сортировку по дате
+        else if (event.target.closest('.filters li:nth-child(2)')) {
+            filterMode = 'newest';
+            prepareCommentBlock();
+        }
+    }
+});

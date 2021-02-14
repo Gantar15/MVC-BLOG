@@ -1,7 +1,8 @@
     <div class="login_container">
         <div>
-            <div class="title" onclick="window.admin_login.login.focus();">
-                <h1>Вход в админку</h1>
+            <div class="title">
+                <a href="/"><img src="/public/imgs/header_logo_footer.png"></a>
+                <h1 onclick="window.admin_login.login.focus();">admin panel</h1>
             </div>
             <div class="card">
                 <div class="card-body">

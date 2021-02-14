@@ -13,6 +13,11 @@
   src: url(../fonts/OpenSans-SemiBold.ttf);
   font-weight: 500;
   font-style: normal; }
+@font-face {
+  font-family: FjallaOne;
+  src: url(../fonts/FjallaOne-Regular.ttf);
+  font-weight: 400;
+  font-style: normal; }
 * {
   margin: 0;
   padding: 0;
@@ -47,28 +52,31 @@ body > div.login_container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .title a img {
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 178px;
+    height: 40px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    margin-bottom: 3px; }
   .title h1 {
-    font: 500 20px "Open Sans";
-    color: #ffffff;
+    font: 500 13px FjallaOne;
+    letter-spacing: 1.3px;
+    color: #ffffffb5;
     text-align: center;
     position: relative;
+    text-transform: uppercase;
     cursor: pointer; }
-    .title h1:after {
-      content: '\203A';
-      position: absolute;
-      -webkit-transform-origin: center;
-              transform-origin: center;
-      -webkit-transform: rotateZ(90deg) translateX(-50%);
-              transform: rotateZ(90deg) translateX(-50%);
-      left: 50%;
-      top: 20px;
-      font: 500 34px "Open Sans";
-      font-weight: normal;
-      color: #ffffff;
-      display: inline-block; }
 
 .card {
   border: 1px solid #dbdbdb;

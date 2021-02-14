@@ -1,21 +1,21 @@
 /*
 Error: Undefined variable: "$fontName".
-        on line 55 of Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss
+        on line 57 of Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss
 
-50:     height: 30px;
-51:     object-fit: cover;
-52:     margin-bottom: 10px;
-53:   }
-54:   p{
-55:     font: normal 12px $fontName;
-56:     color: #b6b6b6;
-57:     text-align: center;
-58:   }
-59: 
-60: }
+52:     height: 30px;
+53:     object-fit: cover;
+54:     margin-bottom: 10px;
+55:   }
+56:   p{
+57:     font: normal 12px $fontName;
+58:     color: #b6b6b6;
+59:     text-align: center;
+60:   }
+61: 
+62: }
 
 Backtrace:
-Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss:55
+Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss:57
 Q:/Koala/rubygems/gems/sass-3.5.2/lib/sass/script/tree/variable.rb:49:in `_perform'
 Q:/Koala/rubygems/gems/sass-3.5.2/lib/sass/script/tree/node.rb:50:in `perform'
 Q:/Koala/rubygems/gems/sass-3.5.2/lib/sass/script/tree/list_literal.rb:75:in `block in _perform'
@@ -76,4 +76,4 @@ Q:/Koala/bin/sass:22:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$fontName\".\A         on line 55 of Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss\A \A 50:     height: 30px;\A 51:     object-fit: cover;\A 52:     margin-bottom: 10px;\A 53:   }\A 54:   p{\A 55:     font: normal 12px $fontName;\A 56:     color: #b6b6b6;\A 57:     text-align: center;\A 58:   }\A 59: \A 60: }"; }
+  content: "Error: Undefined variable: \"$fontName\".\A         on line 57 of Q:\open_server\OpenServer\domains\mvcBlog\public\scss\comments.scss\A \A 52:     height: 30px;\A 53:     object-fit: cover;\A 54:     margin-bottom: 10px;\A 55:   }\A 56:   p{\A 57:     font: normal 12px $fontName;\A 58:     color: #b6b6b6;\A 59:     text-align: center;\A 60:   }\A 61: \A 62: }"; }

@@ -279,7 +279,8 @@
     .header .header_line_flex .search {
       cursor: pointer;
       display: flex;
-      align-items: center; }
+      align-items: center;
+      padding: 23px 0; }
       .header .header_line_flex .search p {
         margin-top: 2px;
         color: #5e5e5e;

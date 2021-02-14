@@ -15,23 +15,25 @@
     }
 
     .modal-footer {
-      margin-top: 14px;
+      justify-content: flex-end;
+      margin-top: 10px;
     }
 
     .modal-header > span:nth-child(1) {
       font-size: 20px;
+      color: #292929;
     }
 
     .modal-footer > button:nth-of-type(2) {
-      margin-left: 10px;
-      background-color: #c4c4c4;
+      margin-left: 25px;
+      color: #e9452f;
     }
 
     .modal-footer > button {
-      padding: 6px 20px;
+      padding: 0px;
       font-size: 14px;
-      background-color: rgba(39, 142, 232, 1);
-      border-radius: 2px;
+      color: #2f83e9;
+      background-color: transparent !important;
     }
   }
 }
@@ -766,7 +768,6 @@
         display: block;
       }
     }
-
   }
 
 }

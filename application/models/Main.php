@@ -183,15 +183,18 @@ class Main extends Model {
     }
 
     //Получаем определенное количество записей($limit) под данным постом, сортируя их по популярности
-    public function getRecordsByPopularity($limit, $offset, $postId, $recordType){
+    public function getRecordsByPopularity($limit, $offset, $postId, $recordType, $userId){
         $params = [
             'post_id' => $postId,
             'limit' => $limit,
             'offset' => $offset,
-            'record_type' => $recordType
+            'record_type' => $recordType,
+            'user_id' => $userId
         ];
         return $this->db->row("
-                SELECT * FROM comments as parent_comments WHERE post_id = :post_id AND record_type = :record_type ORDER BY (SELECT COUNT(id) FROM comments WHERE record_type = 'answer' AND parent_comment_id = parent_comments.id) + likes/2 + dislikes/2 DESC LIMIT :limit OFFSET :offset
+                SELECT * FROM comments as parent_comments WHERE post_id = :post_id AND record_type = :record_type AND NOT author_id = :user_id ORDER BY 
+                (SELECT COUNT(id) FROM comments WHERE record_type = 'answer' AND parent_comment_id = parent_comments.id) + likes/2 + dislikes/2 DESC
+                LIMIT :limit OFFSET :offset
                ", $params);
     }
 
@@ -259,21 +262,53 @@ class Main extends Model {
         $this->db->query('UPDATE comments SET comment = :comment WHERE id = :id', $params);
     }
 
+    //Получаем комментарии по йди автора
+    public function getCommentsByUser($postId, $userId){
+        $params = [
+            'post_id' => $postId,
+            'author_id' => $userId
+        ];
+        return $this->db->row("SELECT * FROM comments AS parent_comments WHERE post_id = :post_id AND author_id = :author_id AND record_type = 'comment' ORDER BY 
+                (SELECT COUNT(id) FROM comments WHERE record_type = 'answer' AND parent_comment_id = parent_comments.id) + likes/2 + dislikes/2 DESC
+                ", $params);
+    }
+
     //Получаем информацию о комментах и их пользователях
-    public function getCommentsInfo($limit, $offset, $postId, $userId, $filterMode){
+    public function getCommentsInfo($limit, $offset, $postId, $userId, $filterMode, $isFirstComments){
         $account = new Account();
+        $comments = [];
+        $currentOffset = 0;
 
         //В зависимости от режима сортировки получаем массив комментов
-        $comments = [];
-        if($filterMode == 'newest')
+        if ($filterMode == 'newest') {
             $comments = $this->getRecordsByLimit($limit, $offset, $postId, 'comment');
-        else if($filterMode == 'popular')
-            $comments = $this->getRecordsByPopularity($limit, $offset, $postId, 'comment');
+            $currentOffset = count($comments);
+        }
+        else if ($filterMode == 'popular') {
+            //Если отправляем первую партию комментов, то отображаем сначала комменты авторизированного пользователя
+            if($isFirstComments) {
+                //Получаем сразу комменты залогиненного пользователя
+                $authorizeCommentsArr = $this->getCommentsByUser($postId, $userId);
+                $colOfAuthorizeUserComments = count($authorizeCommentsArr);
+
+                if ($colOfAuthorizeUserComments >= $limit) {
+                    $comments = $authorizeCommentsArr;
+                } else {
+                    $limit -= $colOfAuthorizeUserComments;
+                    $comments = $this->getRecordsByPopularity($limit, $offset, $postId, 'comment', $userId);
+                    $currentOffset = count($comments);
+                    $comments = array_merge($authorizeCommentsArr, $comments);
+                }
+            }
+            else{
+                $comments = $this->getRecordsByPopularity($limit, $offset, $postId, 'comment', $userId);
+                $currentOffset = count($comments);
+            }
+        }
 
         $commentsInfo = [];
-        $authorizeCommentsArr = [];
-
         $authors_ids = [];
+
         foreach($comments as $index => $comment){
             $author_id = $comment['author_id'];
             //Если пользователя больше нет - не отображаем его комменты !!!!ВРЕМЕННО
@@ -281,7 +316,7 @@ class Main extends Model {
                 if (!in_array($comment['author_id'], array_keys($authors_ids))) {
                     $authors_ids[$author_id] = $account->getUserData($author_id);
                 }
-                $commentArr = array(
+                $commentsInfo[] = array(
                     'name' => $authors_ids[$author_id]['name'],
                     'likes' => $comment['likes'],
                     'dislikes' => $comment['dislikes'],
@@ -290,17 +325,13 @@ class Main extends Model {
                     'comment' => $comment['comment'],
                     'comment_id' => $comment['id']
                 );
-
-                if($userId == $author_id)
-                    $authorizeCommentsArr[] = $commentArr;
-                else
-                    $commentsInfo[] = $commentArr;
             }
         }
 
-        //Сначала отправляем комментарии залогиненного пользователя, потом остальные
-        $finallyArr = array_merge($authorizeCommentsArr, $commentsInfo);
-        return $finallyArr;
+        return array(
+            'comments_info' => $commentsInfo,
+            'current_offset' => $currentOffset
+        );
     }
 
     public function getAnswersInfo($limit, $offset, $parentCommentId){

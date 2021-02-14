@@ -41,6 +41,8 @@ export default class CommentsPagination{
 
     _filterMode;                    //Режим сортировки комментарие (защищенный метор)
 
+    currentOffset;                  //Количество комментов, которые пришли с сервера с последним запросом (за вычетом комментариев авторизированного пользователя при сортировке по популярности)
+
 
     constructor(url, parentNode, colOfAllComments, nextCommentsTrigger, commentTimeout, filterMode, beforeRenderHandler = () => {}, afterRenderHandler = () => {}) {
         this.url = url;
@@ -51,6 +53,7 @@ export default class CommentsPagination{
         this.afterRenderHandler = afterRenderHandler;
         this.commentTimeout = commentTimeout;
         this._filterMode = filterMode;
+
         this._setup();
     }
 
@@ -58,6 +61,7 @@ export default class CommentsPagination{
     //В первый запрос принимаем комменты и устанавливаем лимиты комментов и ответов
     _setup(){
         let formData = new FormData();
+        formData.set('first_comments', true);
         formData.set('offset', this.offset);
         formData.set('filter_mode', this._filterMode);
         this._getRequest(formData).then((comments) => {
@@ -65,6 +69,7 @@ export default class CommentsPagination{
             //Получаем комменты и информацию о оценках комментариев
             this.comments = comments['comments_info'];
             this.commentsWithActiveMarksData = comments['comments_with_active_marks_data'];
+            this.currentOffset = comments['current_offset'];
 
             //Устанавливаем лимит, получаем айди авторизированного юзера и айди комментов с ответами
             let form2 = new FormData();
@@ -95,10 +100,12 @@ export default class CommentsPagination{
     //Получаем следующие комменты с сервера
     getNextComments(){
         let formData = new FormData();
+        formData.set('filter_mode', this._filterMode);
         formData.set('offset', this.offset);
 
         this._getRequest(formData).then((comments) => {
             this.comments = comments['comments_info'];
+            this.currentOffset = comments['current_offset'];
 
             this.commentsWithActiveMarksData = comments['comments_with_active_marks_data'];
             this._readyState = 1;
@@ -126,7 +133,7 @@ export default class CommentsPagination{
 
 
     get _nextOffset(){
-        return (this.offset / this.comments_limit + 1) * this.comments_limit;
+        return this.offset + this.currentOffset;
     }
 
     get _isLastPage(){
@@ -475,7 +482,7 @@ export default class CommentsPagination{
                     this.parentNode.insertAdjacentHTML('beforeend', commentCode);
                     this.forbidEdit(this.parentNode.lastElementChild);   //Запрещаем изменение айди комментария
                 }
-
+                
                 this.finallyCommentsCodes = [];   //Чистим буфер комментов
                 this.colOfPostedComments += this.comments.length;
 
@@ -494,7 +501,7 @@ export default class CommentsPagination{
                             commentsBlockBody.style.paddingBottom = '65px';
                             this.nextCommentsTrigger.style.display = '';
                         }
-                        this.offset = this._nextOffset; // Это сделано для того, чтобы в следующий раз получать следующие комментарии
+                        this.offset = this._nextOffset; // Меняем смещение для того, чтобы в следующий раз получать следующие комментарии
                     }
                 }
 

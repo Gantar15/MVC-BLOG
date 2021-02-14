@@ -93,17 +93,16 @@ class MainController extends Controller {
         //а уже у ответа на этот коммент родительским комментарием будет коммент, под которым отвечал юзер(соре за часто повторяющиеся слова :3)
         $recentlyAddedCommentId = 0;
         if($_POST['record_type'] == 'comment') {
-            if(isset($_POST['upper_comment_id'])) {
-                $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['comment'], $postId, $_POST['record_type'], $_POST['upper_comment_id']);
-            }
-            else{
-                $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['comment'], $postId, $_POST['record_type']);
-            }
+            $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['comment'], $postId, $_POST['record_type']);
             $this->model->setParentCommentId($recentlyAddedCommentId, $recentlyAddedCommentId);
         }
         else if($_POST['record_type'] == 'answer'){
             if(isset($_POST['upper_comment_id'])) {
-                $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['answer'], $postId, $_POST['record_type'], $_POST['upper_comment_id']);
+                $upperCommentAuthorId = $this->model->getCommentAuthorId($_POST['upper_comment_id']);
+
+                if ($upperCommentAuthorId != $userId) {
+                    $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['answer'], $postId, $_POST['record_type'], $_POST['upper_comment_id']);
+                }
             }
             else{
                 $recentlyAddedCommentId = $this->model->commentPost($userId, $_POST['answer'], $postId, $_POST['record_type']);
@@ -143,9 +142,14 @@ class MainController extends Controller {
     }
 
     //Получаем информацию о комментах и их оценках
-    public function commentsOffset($userId, $commentsOnPageLimit, $postId, $filterMode){
+    public function commentsOffset($userId, $commentsOnPageLimit, $postId, $filterMode, $isFirstComments = false){
+        $currentOffset = null;
+
         //Инфа о комментах
-        $commentsInfo = $this->model->getCommentsInfo($commentsOnPageLimit, intval($_POST['offset']), $postId, $userId, $filterMode);
+        $commentsInfObj = $this->model->getCommentsInfo($commentsOnPageLimit, intval($_POST['offset']), $postId, $userId, $filterMode, $isFirstComments);
+        $commentsInfo = $commentsInfObj['comments_info'];
+        $currentOffset = $commentsInfObj['current_offset'];
+
         //Айди отображаемых комментов
         $commentsIds = array_map(function ($commentInf){
             return $commentInf['comment_id'];
@@ -157,7 +161,8 @@ class MainController extends Controller {
 
         $this->view->response([
             'comments_info' => $commentsInfo,
-            'comments_with_active_marks_data' => $commentsWithActiveMarksData
+            'comments_with_active_marks_data' => $commentsWithActiveMarksData,
+            'current_offset' => $currentOffset
         ]);
     }
 
@@ -247,7 +252,10 @@ class MainController extends Controller {
         $commentsOnPageLimit = 15; //Количество отображаемых комментов за раз
         $answersOnPageLimit = 7; //Количество отображаемых ответов на коммент за раз
         if( isset($_POST['offset']) ) {
-            $this->commentsOffset($userId, $commentsOnPageLimit, $postId, $_POST['filter_mode']);
+            if(isset($_POST['first_comments']))
+                $this->commentsOffset($userId, $commentsOnPageLimit, $postId, $_POST['filter_mode'], true);
+            else
+                $this->commentsOffset($userId, $commentsOnPageLimit, $postId, $_POST['filter_mode']);
         }
         else if( isset($_POST['setup']) ){
             $this->commentsSetup($userId, $commentsOnPageLimit, $answersOnPageLimit, $postId);
@@ -266,10 +274,18 @@ class MainController extends Controller {
 
         //Удаляем комментарий или ответ
         if(isset($_POST['remove_comment_id'])){
-            $this->model->removeCommentById($_POST['remove_comment_id'], $_POST['type_of_comment']);
+            $commentAuthorId = $this->model->getCommentAuthorId($_POST['remove_comment_id']);
+
+            //Удаляем коммент только тогда, когда айди автора коммента равен айди залогиненного пользователя
+            if($commentAuthorId == $userId)
+                $this->model->removeCommentById($_POST['remove_comment_id'], $_POST['type_of_comment']);
         }
         //Редактируем комментарий или ответ
         elseif(isset($_POST['edit_comment_id'])) {
+            $commentAuthorId = $this->model->getCommentAuthorId($_POST['edit_comment_id']);
+
+            //Редактируем коммент только тогда, когда айди автора коммента равен айди залогиненного пользователя
+            if($commentAuthorId == $userId)
             $this->model->editCommentById($_POST['edit_comment_id'], $_POST['changed_comment_text']);
         }
 
