@@ -1,42 +1,85 @@
 <div class="posts">
-    <div class="title">Список всех постов</div>
-    <div class="posts_container">
-
-        <?php if(empty($posts)): ?>
-            <div class="title">Посты закончились, солнышко :3</div>
-        <?php else: ?>
-            <?php foreach($posts as $post): ?>
-            <div class="post">
-                <div class="post_content">
-                    <div class="info_block">
-                        <div class="id">id поста: <?=$post['id']?></div>
-                        <div class="name">
-                            <?=htmlspecialchars($post['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
-                        </div>
-                        <div class="description">
-                            <?=htmlspecialchars($post['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
-                        </div>
-                    </div>
-                </div>
-                <div class="controllers_block">
-                    <div class="controllers">
-                        <button class="post_page"><a href="/post/<?=$post['id']?>">Перейти</a></button>
-                        <button class="edit"><a href="/admin/edit/<?=$post['id']?>">Редактировать</a></button>
-                        <button class="delete"><a href="/admin/delete/<?=$post['id']?>">Удалить</a></button>
-                    </div>
-                    <div class="opener">
+    <div class="main_header_block">
+        <div class="title">
+            <p>Страница постов</p>
+            <p>здесь представлены все посты</p>
+        </div>
+        <div class="pages_way">
+            <a href="/admin/main">
+                <img src="/public/imgs/home.png"/>
+                <span>Home</span>
+            </a>
+            <div class="arrow-right">&gt;</div>
+            <a href="/admin/posts">
+                <span>Posts</span>
+            </a>
+        </div>
+    </div>
+    <section class="posts_container">
+        <div class="posts_container_header">
+            <span>Посты</span>
+            <a href="/admin/add" class="add_post">
+                <span>новый пост</span>
+                <img src="/public/imgs/add.png">
+            </a>
+        </div>
+        <div class="posts_block">
+            <?php foreach($posts as $post):?>
+                <div class="post">
+                    <img class="post_image_preview" src="/public/uploaded_information/<?=$post['id']?>.jpg">
+                    <div class="post_main_flex">
                         <div>
-                            <img src="/public/imgs/down-arrow_icon.png">
-                            <img src="/public/imgs/down-arrow_icon.png">
+                            <p class="post_name">
+                                <?=htmlspecialchars($post['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
+                            </p>
+    <!--                        <div class="post_author">-->
+    <!--                            --><?//=$post['author_id']?>
+    <!--                        </div>-->
+                            <p class="date_of_post">
+                                <?php
+                                $postDateStr = $post['date_of_create'];
+                                $postDate = strtotime($postDateStr);
+
+                                $arr = [
+                                    'января',
+                                    'февраля',
+                                    'марта',
+                                    'апреля',
+                                    'мая',
+                                    'июня',
+                                    'июля',
+                                    'августа',
+                                    'сентября',
+                                    'октября',
+                                    'ноября',
+                                    'декабря'
+                                ];
+
+                                $month = $arr[date('n', $postDate)-1];
+                                echo date('j ', $postDate) . $month . date(' Y', $postDate);
+                                ?>
+                            </p>
+                            <p class="post_description">
+                                <?=htmlspecialchars($post['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
+                            </p>
+                        </div>
+                        <div class="actions">
+                            <a href="/admin/edit/<?=$post['id']?>" class="edit">
+                                <img src="/public/imgs/edit-post.png">
+                                <p>Изменить</p>
+                            </a>
+                            <a href="/admin/delete/<?=$post['id']?>" class="delete">
+                                <img src="/public/imgs/delete-post.png">
+                                <p>Удалить</p>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php endforeach?>
-        <?php endif; ?>
-
-    </div>
-    <div class="buttons_block">
-        <?=$pagination?>
-    </div>
+            <?php endforeach;?>
+        </div>
+        <div class="buttons_block">
+            <?=$pagination?>
+        </div>
+    </section>
 </div>
+

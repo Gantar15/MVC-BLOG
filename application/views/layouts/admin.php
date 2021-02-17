@@ -17,47 +17,88 @@
 </head>
 <body>
     <?php if ($this->route['action'] != 'login'): ?>
-        <div class="navbar-brand">
-            <a href="/admin/posts/1">Панель Администратора</a>
-            <div class="navbar-brand-burger">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-        <div class="main_flex">
-            <div class="main_content_box">
-                <div class="sub_flex">
-                    <?php echo $content; ?>
-                </div>
-                <aside class="navbar">
-                    <div class="navbar-list">
-                        <ul>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin/add">
-                                    <div class="nav-item-icon"></div>
-                                    <span class="nav-link-text">Добавить пост</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin/posts/1">
-                                    <div class="nav-item-icon"></div>
-                                    <span class="nav-link-text">Посты</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin/logout">
-                                    <div class="nav-item-icon"></div>
-                                    <span class="nav-link-text">Выход</span>
-                                </a>
-                            </li>
-                        </ul>
+        <div class="main_box">
+            <aside class="aside_menu active">
+                <header>
+                    <a href="/"><img src="/public/imgs/header_logo_footer.png"></a>
+                </header>
+                <section class="aside_menu_body">
+                    <div class="aside_category users_category">
+                        <div class="category_name active">
+                            <span>user navigation</span>
+                            <div class="navigation_zip"></div>
+                        </div>
+                        <nav class="active">
+                            <ul>
+                                <li <?php if($this->route['action'] == 'users'):?>
+                                        class = 'active'
+                                    <?php endif;?>>
+                                    <a href="/admin/users">
+                                        <div></div>
+                                        <span>Users</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                </aside>
-            </div>
-            <footer>
-                <article class="copyright">&copy;Егор Павловскииийи. 2020 БГТУ - шарага. А ето php приколюха</article>
-            </footer>
+                    <div class="aside_category posts_category">
+                        <div class="category_name active">
+                            <span>posts navigation</span>
+                            <div class="navigation_zip"></div>
+                        </div>
+                        <nav class="active">
+                            <ul>
+                                <li <?php if($this->route['action'] == 'posts'):?>
+                                        class = 'active'
+                                    <?php endif;?>>
+                                    <a href="/admin/posts/1">
+                                        <div></div>
+                                        <span>Posts</span>
+                                    </a>
+                                </li>
+                                <li <?php if($this->route['action'] == 'categories'):?>
+                                        class = 'active'
+                                    <?php endif;?>>
+                                    <a href="/admin/categories">
+                                        <div></div>
+                                        <span>Categories</span>
+                                    </a>
+                                </li>
+                                <li <?php if($this->route['action'] == 'tegs'):?>
+                                        class = 'active'
+                                    <?php endif;?>>
+                                    <a href="/admin/tags">
+                                        <div></div>
+                                        <span>Tags</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+            </aside>
+            <section class="main_admin_block">
+                <section>
+                    <header>
+                        <div class="aside_burger">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <a href="/admin/logout" class="go-out">
+                            <p>Exit</p>
+                            <div></div>
+                        </a>
+                    </header>
+                    <main>
+                        <?=$content?>
+                    </main>
+                </section>
+                <footer>
+                    <article class="copyright">&copy;Егор Павловскииийи. 2020 БГТУ - шарага.
+                        <span><a href="/privacy">Политика конфиденциальности</a></span></article>
+                </footer>
+            </section>
         </div>
     <?php endif; ?>
     <?php if($this->route['action'] == 'login'): ?>

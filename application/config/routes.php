@@ -81,5 +81,9 @@ return [
     'admin/posts/{page:\d+}' => [
         'controller' => 'admin',
         'action' => 'posts'
+    ],
+    'admin/users/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'users'
     ]
 ];

@@ -1,5 +1,6 @@
 @import "variables";
 @import "headerline";
+@import "pagination";
 
 *{
     margin: 0;
@@ -328,127 +329,6 @@ a{
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-.buttons_block{
-    margin-top: 45px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    .buttons_controllers{
-        display: flex;
-
-        button:nth-of-type(1) {
-            border-radius: 5px 0 0 5px;
-            position: relative;
-            text-transform: uppercase;
-
-            a{
-                display: block;
-                padding-left: 25px;
-            }
-
-            &:before{
-                content: '\00AB';
-                font-size: 18px;
-                color: #353535;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-55%);
-                left: 8px;
-            }
-        }
-
-        button:nth-of-type(2) {
-            position: relative;
-            text-transform: uppercase;
-
-            a{
-                display: block;
-                padding-left: 25px;
-            }
-
-            &:before {
-                content: '\003C';
-                font-size: 10px;
-                position: absolute;
-                top: 50%;
-                color: #353535;
-                transform: translateY(-45%) scaleY(1.5);
-                left: 10px;
-            }
-        }
-    }
-
-    .pages_controllers{
-        display: flex;
-
-        button {
-            &:nth-of-type(n+2) {
-                margin-left: 10px;
-            }
-        }
-    }
-
-    .next_page{
-        text-transform: uppercase;
-        border-radius: 0 5px 5px 0;
-        position: relative;
-
-        a{
-            padding-right: 25px;
-        }
-
-        &:after{
-            content: '\003E';
-            font-size: 10px;
-            position: absolute;
-            top: 50%;
-            color: #3e3e3e;
-            transform: translateY(-45%) scaleY(1.5);
-            right: 10px;
-        }
-    }
-
-    button{
-        border: none;
-        background-color: transparent;
-        outline: none;
-        transition: background-color .3s;
-
-        a{
-            display: block;
-            padding: 8px 12px;
-            font: 500 12px $fontName;
-            color: #353535;
-        }
-        &:hover{
-            background-color: #e8e8e8;
-        }
-        &:disabled{
-            a{
-                color: #939393;
-                pointer-events: none;
-            }
-            &:hover{
-                background-color: transparent;
-            }
-            &:before{
-                color: #939393 !important;
-            }
-            &:after{
-                color: #939393 !important;
-            }
-        }
-        &.active{
-            background-color: #277ee8;
-
-            a {
-                color: #ffffff;
             }
         }
     }

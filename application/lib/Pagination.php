@@ -74,7 +74,7 @@ class Pagination
         $page = $this->currentPage - 1;
         $previous = "
             <div class='buttons_controllers'>
-                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/1\">В начало</a></button>
+                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/1\"></a></button>
                 <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">Назад</a></button>
             </div>
             ";

@@ -3,6 +3,8 @@
 
 @import "headerline";
 
+@import "userbox";
+
 *{
   margin: 0;
   padding: 0;
@@ -56,10 +58,6 @@ ul{
 
 .header_line {
   box-shadow: 1px 0 6px 0 #ececec;
-
-  .user_block_body{
-    height: 140px;
-  }
 }
 
 @import "footer";
