@@ -86,6 +86,7 @@ class MainController extends Controller {
         ]);
     }
 
+    //Пост------------------------------------------------------------
 
     //Постим комментарий(или ответ)
     public function postComment($userId, $userData, $postId){

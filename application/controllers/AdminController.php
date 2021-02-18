@@ -157,7 +157,7 @@ class AdminController extends Controller {
     //Отображение постов
 
     public function postsAction(){
-        $limit = 3;
+        $limit = 5;
         $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
@@ -169,7 +169,7 @@ class AdminController extends Controller {
         $posts = $this->model->getPostsByLimit($limit, $pagination->currentPage);
         $this->view->render('Список постов', [
             'posts' => $posts,
-            'pagination' => $paginationContent
+            'pagination' => $pagination
         ]);
     }
 

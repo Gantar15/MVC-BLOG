@@ -4,6 +4,13 @@
   justify-content: space-between;
   width: 100%;
 
+  %button_ext{
+    font-size: 9px;
+    display: inline-block;
+    transform: scaleY(2);
+    padding-bottom: 2px;
+  }
+
   .buttons_controllers{
     display: flex;
 
@@ -12,22 +19,16 @@
     }
 
     button:nth-of-type(2) {
-      position: relative;
       text-transform: uppercase;
+      border-radius: 5px 0 0 5px;
 
       a{
-        display: block;
-        padding-left: 25px;
-      }
+        padding-bottom: 6px;
 
-      &:before {
-        content: '\003C';
-        font-size: 10px;
-        position: absolute;
-        top: 50%;
-        color: #353535;
-        transform: translateY(-45%) scaleY(1.5);
-        left: 10px;
+        span:first-child{
+          padding-right: 10px;
+          @extend %button_ext;
+        }
       }
     }
   }
@@ -45,20 +46,14 @@
   .next_page{
     text-transform: uppercase;
     border-radius: 0 5px 5px 0;
-    position: relative;
 
     a{
-      padding-right: 25px;
-    }
+      padding-bottom: 6px;
 
-    &:after{
-      content: '\003E';
-      font-size: 10px;
-      position: absolute;
-      top: 50%;
-      color: #3e3e3e;
-      transform: translateY(-45%) scaleY(1.5);
-      right: 10px;
+      span:last-child{
+        padding-left: 10px;
+        @extend %button_ext;
+      }
     }
   }
 
@@ -72,7 +67,7 @@
       display: block;
       padding: 8px 12px;
       font: 500 12px $fontName;
-      color: #353535;
+      color: #474747;
     }
     &:hover{
       background-color: #e8e8e8;

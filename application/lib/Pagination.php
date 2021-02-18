@@ -8,7 +8,7 @@ class Pagination
 {
 
     private $route;
-    private $totalCount;
+    public $totalCount;
     private $limit;
     public $totalPageCount;
     public $currentPage;
@@ -74,13 +74,17 @@ class Pagination
         $page = $this->currentPage - 1;
         $previous = "
             <div class='buttons_controllers'>
-                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/1\"></a></button>
-                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">Назад</a></button>
+                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/1\">&laquo;</a></button>
+                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">
+                    <span>&lt;</span><span>Назад</span></a>
+                </button>
             </div>
             ";
         $page = $this->currentPage + 1;
         $next = "
-            <button class='next_page' $nextDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">Вперед</a></button>
+            <button class='next_page' $nextDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">
+                <span>Вперед</span><span>&gt;</span></a>
+            </button>
             ";
 
         return $previous.'<div class="pages_controllers">'.$paginationCode.'</div>'.$next;

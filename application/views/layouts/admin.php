@@ -6,7 +6,7 @@
     <title><?php echo $title; ?></title>
     <?php if ($this->route['action'] != 'login'): ?>
         <link rel="stylesheet" href="/public/css/adminpanel.css">
-        <script src="/public/scripts/adminpanel.js" defer></script>
+        <script src="/public/scripts/admin/adminpanel.js" defer></script>
     <? endif; ?>
     <link rel="icon" href="/public/imgs/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="<?= '/public/css/'.$this->route['controller'].$this->route['action'].'.css' ?>">
@@ -14,6 +14,8 @@
     <script src="/public/scripts/modal.js"></script>
     <script src="/public/scripts/loadParser.js" type="module"></script>
     <script src="/public/scripts/form.js" type="module"></script>
+
+    <script src="/public/scripts/admin/main_admin_posts.js" defer></script>
 </head>
 <body>
     <?php if ($this->route['action'] != 'login'): ?>

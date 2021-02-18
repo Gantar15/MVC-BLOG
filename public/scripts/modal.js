@@ -25,11 +25,11 @@ $m.modal = function(modalHTML, options){
         open(){
             document.addEventListener('keydown', escModalCloseHandler);
             $modal.classList.add("open");
-            options.onOpenObj && options.onOpenObj.onOpen && options.onOpenObj.onOpen();
+            options?.onOpenObj?.onOpen?.();
         },
         close(){
             $modal.classList.remove("open");
-            options.onCloseObj && options.onCloseObj.onClose && options.onCloseObj.onClose();
+            options?.onCloseObj?.onClose?.();
         },
         destroy(){
             $modal.removeEventListener("click", modalCloseHandler);

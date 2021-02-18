@@ -455,6 +455,12 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%; }
+  .buttons_block .buttons_controllers button:nth-of-type(2) a span:first-child, .buttons_block .next_page a span:last-child {
+    font-size: 9px;
+    display: inline-block;
+    -webkit-transform: scaleY(2);
+            transform: scaleY(2);
+    padding-bottom: 2px; }
   .buttons_block .buttons_controllers {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -462,20 +468,12 @@
     .buttons_block .buttons_controllers button:nth-of-type(1) {
       display: none; }
     .buttons_block .buttons_controllers button:nth-of-type(2) {
-      position: relative;
-      text-transform: uppercase; }
+      text-transform: uppercase;
+      border-radius: 5px 0 0 5px; }
       .buttons_block .buttons_controllers button:nth-of-type(2) a {
-        display: block;
-        padding-left: 25px; }
-      .buttons_block .buttons_controllers button:nth-of-type(2):before {
-        content: '\003C';
-        font-size: 10px;
-        position: absolute;
-        top: 50%;
-        color: #353535;
-        -webkit-transform: translateY(-45%) scaleY(1.5);
-                transform: translateY(-45%) scaleY(1.5);
-        left: 10px; }
+        padding-bottom: 6px; }
+        .buttons_block .buttons_controllers button:nth-of-type(2) a span:first-child {
+          padding-right: 10px; }
   .buttons_block .pages_controllers {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -484,19 +482,11 @@
       margin-left: 10px; }
   .buttons_block .next_page {
     text-transform: uppercase;
-    border-radius: 0 5px 5px 0;
-    position: relative; }
+    border-radius: 0 5px 5px 0; }
     .buttons_block .next_page a {
-      padding-right: 25px; }
-    .buttons_block .next_page:after {
-      content: '\003E';
-      font-size: 10px;
-      position: absolute;
-      top: 50%;
-      color: #3e3e3e;
-      -webkit-transform: translateY(-45%) scaleY(1.5);
-              transform: translateY(-45%) scaleY(1.5);
-      right: 10px; }
+      padding-bottom: 6px; }
+      .buttons_block .next_page a span:last-child {
+        padding-left: 10px; }
   .buttons_block button {
     border: none;
     background-color: transparent;
@@ -507,7 +497,7 @@
       display: block;
       padding: 8px 12px;
       font: 500 12px "Open Sans";
-      color: #353535; }
+      color: #474747; }
     .buttons_block button:hover {
       background-color: #e8e8e8; }
     .buttons_block button:disabled a {
@@ -764,6 +754,7 @@ a {
                 .blog_recordings .blog_recording .main_post_content .record_container .blog_recording_block .name_block .info-block .author_name a:hover span {
                   color: #5f657a; }
           .blog_recordings .blog_recording .main_post_content .record_container .blog_recording_block .name_block .blog_description {
+            word-break: break-word;
             margin-top: 30px;
             color: #333339;
             font-weight: 500;

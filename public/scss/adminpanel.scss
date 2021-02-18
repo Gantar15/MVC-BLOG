@@ -76,7 +76,7 @@
         }
       }
       &.active .category_name .navigation_zip{
-        transform: rotate(-180deg);
+        transform: rotate(90deg);
       }
 
       nav {
@@ -86,18 +86,18 @@
 
         ul {
           list-style-type: none;
-          margin-left: 30px;
           display: flex;
           flex-direction: column;
 
           li{
-            width: fit-content;
+            transition: background-color .1s;
 
-            &:nth-of-type(n+2) {
-              margin-top: 20px;
+            &:hover{
+              background-color: #2f383c;
             }
-
             a {
+              padding: 10px 0;
+              padding-left: 30px;
               display: flex;
               align-items: center;
               text-decoration: none;
@@ -131,10 +131,10 @@
       }
 
       &.users_category nav{
-        height: 17px;
+        height: 37px;
       }
       &.posts_category nav{
-        height: 90px;
+        height: 110px;
       }
     }
   }
