@@ -66,24 +66,40 @@ return [
         'controller' => 'admin',
         'action' => 'logout'
     ],
-    'admin/add' => [
+    //posts
+    'admin/postadd' => [
         'controller' => 'admin',
-        'action' => 'add'
+        'action' => 'postadd'
     ],
-    'admin/edit/{id:\d+}' => [
+    'admin/postedit/{id:\d+}' => [
         'controller' => 'admin',
-        'action' => 'edit'
+        'action' => 'postedit'
     ],
-    'admin/delete/{id:\d+}' => [
+    'admin/postdelete/{id:\d+}' => [
         'controller' => 'admin',
-        'action' => 'delete'
+        'action' => 'postdelete'
     ],
     'admin/posts/{page:\d+}' => [
         'controller' => 'admin',
         'action' => 'posts'
     ],
+    'admin/postsearch' => [
+        'controller' => 'admin',
+        'action' => 'postsearch'
+    ],
+    //users
     'admin/users/{page:\d+}' => [
         'controller' => 'admin',
         'action' => 'users'
+    ],
+    //categories
+    'admin/categories/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'categories'
+    ],
+    //tags
+    'admin/tags/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'tags'
     ]
 ];

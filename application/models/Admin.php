@@ -142,5 +142,26 @@ class Admin extends Model
         return $this->db->column('SELECT COUNT(id) FROM posts');
     }
 
+    public function searchPostsByName($postTitle){
+        return $this->db->row("SELECT * FROM posts WHERE name REGEXP :name", ['name' => $postTitle]);
+    }
 
+    public function searchPostsByDescription($postTitle){
+        return $this->db->row("SELECT * FROM posts WHERE description REGEXP :description", ['description' => $postTitle]);
+    }
+
+//    public function searchPostsByAuthorName($postTitle){
+//        return $this->db->row("SELECT * FROM posts WHERE (SELECT name FROM users WHERE id = author_id) REGEXP :description", ['description' => $postTitle]);
+//    }
+
+
+    //Categories---------------------------------------
+
+    public function getCategoriesByLimit($limit, $currentPage){
+        $params = [
+            'limit' => $limit,
+            'offset' => ($currentPage-1)*$limit
+        ];
+        return $this->db->row('SELECT * FROM categories LIMIT :limit OFFSET :offset', $params);
+    }
 }

@@ -27,7 +27,7 @@
                 <section class="aside_menu_body">
                     <div class="aside_category users_category">
                         <div class="category_name active">
-                            <span>user navigation</span>
+                            <span>Меню пользователей</span>
                             <div class="navigation_zip"></div>
                         </div>
                         <nav class="active">
@@ -35,9 +35,9 @@
                                 <li <?php if($this->route['action'] == 'users'):?>
                                         class = 'active'
                                     <?php endif;?>>
-                                    <a href="/admin/users">
+                                    <a href="/admin/users/1">
                                         <div></div>
-                                        <span>Users</span>
+                                        <span>Пользователи</span>
                                     </a>
                                 </li>
                             </ul>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="aside_category posts_category">
                         <div class="category_name active">
-                            <span>posts navigation</span>
+                            <span>Меню постов</span>
                             <div class="navigation_zip"></div>
                         </div>
                         <nav class="active">
@@ -55,23 +55,23 @@
                                     <?php endif;?>>
                                     <a href="/admin/posts/1">
                                         <div></div>
-                                        <span>Posts</span>
+                                        <span>Посты</span>
                                     </a>
                                 </li>
                                 <li <?php if($this->route['action'] == 'categories'):?>
                                         class = 'active'
                                     <?php endif;?>>
-                                    <a href="/admin/categories">
+                                    <a href="/admin/categories/1">
                                         <div></div>
-                                        <span>Categories</span>
+                                        <span>Категории</span>
                                     </a>
                                 </li>
                                 <li <?php if($this->route['action'] == 'tegs'):?>
                                         class = 'active'
                                     <?php endif;?>>
-                                    <a href="/admin/tags">
+                                    <a href="/admin/tags/1">
                                         <div></div>
-                                        <span>Tags</span>
+                                        <span>Теги</span>
                                     </a>
                                 </li>
                             </ul>
@@ -88,7 +88,7 @@
                             <div></div>
                         </div>
                         <a href="/admin/logout" class="go-out">
-                            <p>Exit</p>
+                            <p>Выход</p>
                             <div></div>
                         </a>
                     </header>

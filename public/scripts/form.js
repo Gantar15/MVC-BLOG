@@ -26,6 +26,9 @@ import inputExplore from "./input_explorer.js";
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
 
+        //Если у формы указан специальный атрибут non-validate, то не делаем валидацию этой формы
+        if(form.dataset.nonValidate) return;
+
         async function formWorker(isUserSubmit = false, input = false){
             if(!form.isLoading) {
                 const submitButton = event.target.closest('form').querySelector('button[type="submit"], input[type="submit"]');

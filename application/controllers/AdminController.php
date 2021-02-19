@@ -15,7 +15,6 @@ class AdminController extends Controller {
     }
 
     //Вход
-
     public function loginAction(){
         if(isset($_SESSION['admin']) || isset($_COOKIE['admin'])){
             $this->view->redirect('admin/posts/1');
@@ -66,7 +65,6 @@ class AdminController extends Controller {
     }
 
     //Выход
-
     public function logoutAction(){
         if(isset($_SESSION['admin'])){
             unset($_SESSION['admin']);
@@ -76,9 +74,11 @@ class AdminController extends Controller {
         $this->view->redirect('admin/login');
     }
 
-    //Изменение поста
 
-    public function editAction(){
+    //Посты-----------------------------------------------
+
+    //Изменение поста
+    public function posteditAction(){
         if(!$this->model->postExistCheck($this->route['id'])) {
             View::errorCode(404);
         }
@@ -114,8 +114,7 @@ class AdminController extends Controller {
     }
 
     //Добавление поста
-
-    public function addAction(){
+    public function postaddAction(){
         if(!empty($_POST)){
             if($this->model->postValidate($_POST, 'add')) {
                 $id = $this->model->postAdd($_POST);
@@ -144,8 +143,7 @@ class AdminController extends Controller {
     }
 
     //Удаление поста
-
-    public function deleteAction(){
+    public function postdeleteAction(){
         if($this->model->postExistCheck($this->route['id'])) {
             $this->model->postDelete($this->route['id']);
             $this->view->redirect('admin/posts/1');
@@ -155,7 +153,6 @@ class AdminController extends Controller {
     }
 
     //Отображение постов
-
     public function postsAction(){
         $limit = 5;
         $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
@@ -165,11 +162,66 @@ class AdminController extends Controller {
         if($this->route['page'] > $pagination->totalPageCount){
             $this->view->redirect($pagination->totalPageCount);
         }
-        $paginationContent = $pagination->getContent();
+        $pagination->getContent();
         $posts = $this->model->getPostsByLimit($limit, $pagination->currentPage);
         $this->view->render('Список постов', [
             'posts' => $posts,
             'pagination' => $pagination
+        ]);
+    }
+
+    //Поиск постов
+    public function postsearchAction(){
+        $posts = $this->model->searchPostsByName($_POST['search_text']);
+        $posts = array_merge($posts, $this->model->searchPostsByDescription($_POST['search_text']));
+//      $posts = array_merge($posts, $this->model->searchPostsByAuthorName($_POST['search_text']));
+
+        $this->view->render('Поиск постов', [
+            'posts' => $posts,
+            'colOfPosts' => count($posts),
+            'searchTitle' => $_POST['search_text']
+        ]);
+    }
+
+
+    //Категории-----------------------------------------------
+
+    //Категории
+    public function categoriesAction(){
+        $limit = 6;
+        $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect($pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $categories = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
+
+        $this->view->render('Список категорий', [
+            'categories' => $categories,
+            'pagination' => $pagination
+        ]);
+    }
+
+
+    //Теги-----------------------------------------------
+
+    //Теги
+    public function tagsAction(){
+        $this->view->render('Список тегов', [
+            'tags' => ''
+        ]);
+    }
+
+
+    //Пользователи-----------------------------------------------
+
+    //Пользователи
+    public function usersAction(){
+        $this->view->render('Список тегов', [
+            'users' => ''
         ]);
     }
 

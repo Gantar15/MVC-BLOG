@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header"><?= $title ?></div>
     <div class="card-body">
-        <form enctype="multipart/form-data" action="/admin/edit/<?= $id ?>" method="post">
+        <form enctype="multipart/form-data" action="/admin/post/edit/<?= $id ?>" method="post">
             <div class="form-group">
                 <input required id="fge1" type="text" name="name" value="<?php
                     echo htmlspecialchars($name, ENT_QUOTES|ENT_HTML5, 'UTF-8', true);

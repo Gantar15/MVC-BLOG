@@ -5,6 +5,27 @@
   .posts_container{
 
     .posts_block{
+      .empty_search_request{
+        margin-top: 50px;
+        margin-bottom: 55px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img{
+          object-fit: contain;
+          width: 75px;
+          height: 75px;
+        }
+        p:nth-of-type(1){
+          margin-top: 10px;
+          font: 500 25px $fontName;
+        }
+        p:nth-of-type(2){
+          margin-top: 3px;
+          font: normal 13px $fontName;
+        }
+      }
       .post{
         display: flex;
 
