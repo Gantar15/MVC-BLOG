@@ -61,9 +61,50 @@
     .posts .posts_add .posts_add_header p {
       color: #414141;
       font: 500 16px "Open Sans"; }
-  .posts .posts_add .add_category {
-    padding: 40px 20px; }
+  .posts .posts_add .add_category .general_form_message {
+    display: none;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 85%;
+    padding: 10px 5px;
+    border: 2px solid #e34d4ded;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: relative; }
+    .posts .posts_add .add_category .general_form_message.active {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+    .posts .posts_add .add_category .general_form_message div:last-of-type {
+      position: absolute;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      font: 500 19px "Open Sans";
+      color: #4f4f4f;
+      right: 7px;
+      top: 10px; }
+    .posts .posts_add .add_category .general_form_message p {
+      color: #3b3b3b;
+      font: 500 14px "Open Sans"; }
+  .posts .posts_add .add_category form {
+    margin-top: 40px; }
     .posts .posts_add .add_category form .add_category_flex {
+      padding: 0px 20px;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -92,6 +133,11 @@
           -webkit-box-direction: normal;
               -ms-flex-direction: column;
                   flex-direction: column; }
+          .posts .posts_add .add_category form .add_category_flex .add_info div .field_error_inf {
+            margin-left: 3px; }
+            .posts .posts_add .add_category form .add_category_flex .add_info div .field_error_inf p {
+              font: normal 13px "Open Sans";
+              color: rgba(227, 63, 35, 0.84); }
           .posts .posts_add .add_category form .add_category_flex .add_info div:nth-of-type(n+2) {
             margin-top: 30px; }
           .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type label div {
@@ -99,9 +145,9 @@
           .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type input:focus, .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type textarea:focus, .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type input:hover, .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type textarea:hover {
             border-color: #4cd056; }
           .posts .posts_add .add_category form .add_category_flex .add_info div:last-of-type label div {
-            background-color: #deca4c; }
+            background-color: #dea44c; }
           .posts .posts_add .add_category form .add_category_flex .add_info div:last-of-type input:focus, .posts .posts_add .add_category form .add_category_flex .add_info div:last-of-type textarea:focus, .posts .posts_add .add_category form .add_category_flex .add_info div:last-of-type input:hover, .posts .posts_add .add_category form .add_category_flex .add_info div:last-of-type textarea:hover {
-            border-color: #deca4c; }
+            border-color: #dea44c; }
           .posts .posts_add .add_category form .add_category_flex .add_info div label {
             width: -webkit-fit-content;
             width: -moz-fit-content;
@@ -134,6 +180,8 @@
             border-radius: 3px;
             -webkit-transition: border-color .2s;
             transition: border-color .2s; }
+            .posts .posts_add .add_category form .add_category_flex .add_info div input.invalid, .posts .posts_add .add_category form .add_category_flex .add_info div textarea.invalid {
+              border-color: rgba(227, 63, 35, 0.84) !important; }
           .posts .posts_add .add_category form .add_category_flex .add_info div textarea {
             overflow: hidden;
             height: 38px;
@@ -145,7 +193,7 @@
         .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger {
           width: 300px;
           height: 170px;
-          border: 2px solid #a7a7a7;
+          border: 2px solid #969696;
           border-radius: 3px;
           cursor: pointer;
           display: -webkit-box;
@@ -165,11 +213,11 @@
           -webkit-transition: border-color .2s;
           transition: border-color .2s; }
           .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger p {
-            color: #2a2a2a;
+            color: #303030;
             text-transform: uppercase;
             font: 500 12px "Open Sans"; }
           .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger img {
-            opacity: .8;
+            opacity: .7;
             width: 40px;
             height: 40px;
             -o-object-fit: cover;
@@ -177,23 +225,31 @@
             margin-top: 13px; }
           .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger:hover {
             border-color: #2f83e9; }
-    .posts .posts_add .add_category form input[type='submit'] {
-      cursor: pointer;
-      display: block;
-      margin: 0 auto;
-      margin-top: 50px;
-      outline: none;
-      padding: 7px 12px;
-      border: none;
-      background-color: #2f83e9;
-      color: #ffffff;
-      font: 500 14px "Open Sans";
-      border-radius: 4px;
-      -webkit-transition: all .2s;
-      transition: all .2s; }
-      .posts .posts_add .add_category form input[type='submit']:hover {
-        -webkit-box-shadow: 0px 2px 0 2px #6262bc3d;
-                box-shadow: 0px 2px 0 2px #6262bc3d; }
+    .posts .posts_add .add_category form .submit_items_block {
+      border-top: 2px solid #e3e3e3;
+      padding: 20px 0;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      margin-top: 55px; }
+      .posts .posts_add .add_category form .submit_items_block input:last-of-type {
+        color: #de5751de;
+        margin-left: 25px; }
+      .posts .posts_add .add_category form .submit_items_block input {
+        cursor: pointer;
+        display: block;
+        outline: none;
+        background-color: #ffffff;
+        border: none;
+        color: #2f83e9;
+        font: 500 14px "Open Sans";
+        border-radius: 4px; }
 .posts .posts_container {
   margin-top: 30px;
   width: 100%;

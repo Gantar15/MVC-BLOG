@@ -24,7 +24,11 @@
             </div>
         </div>
         <div class="add_category">
-            <form method="post" action="/admin/categoryadd">
+            <div class="general_form_message">
+                <p></p>
+                <div onclick="document.querySelector('.general_form_message').classList.remove('active')">&times;</div>
+            </div>
+            <form method="post" action="">
                 <div class="add_category_flex">
                     <div class="add_info">
                         <div>
@@ -42,15 +46,18 @@
                     </div>
                     <div class="second_half">
                         <div class="add_image">
-                            <input type="file">
-                            <div class="add_image_trigger">
+                            <input name="icon" type="file">
+                            <div class="add_image_trigger"  onclick="document.forms[0]['icon'].click()">
                                 <p>загрузите изображение</p>
                                 <img src="/public/imgs/add_image.png">
                             </div>
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="Добавить">
+                <div class="submit_items_block">
+                    <input type="submit" value="Отправить &#10004;">
+                    <input type="reset" value="Сбросить &#10006;">
+                </div>
             </form>
         </div>
     </section>

@@ -46,16 +46,21 @@ document.addEventListener('click', event => {
 
    //Если пользователь нажал на свернуть окно
    if(target.closest('.trey')){
-        const parentGroupBox = target.closest('.group_box');
-        if(!parentGroupBox.style.height || parseInt(parentGroupBox.style.height) === parseInt(parentGroupBox.fullHeight)){
 
-            parentGroupBox.fullHeight = parentGroupBox.offsetHeight;
-            parentGroupBox.style.height = parentGroupBox.offsetHeight + 'px';
+        const parentGroupBox = target.closest('.group_box');
+        if(!parentGroupBox.classList.contains('small')){
+
+            parentGroupBox.classList.add('small');
+            parentGroupBox.style.height = parentGroupBox.scrollHeight + 'px';
             const groupBoxHeader = parentGroupBox.querySelector('.group_box_header');
             parentGroupBox.style.height = groupBoxHeader.offsetHeight + 'px';
         }
         else {
-            parentGroupBox.style.height = parentGroupBox.fullHeight + 'px';
+            parentGroupBox.style.height = parentGroupBox.scrollHeight + 'px';
+            setTimeout(()=> {
+                parentGroupBox.style.height = '';
+                parentGroupBox.classList.remove('small');
+            },200);
         }
    }
    //Если пользователь нажал на закрыть окно
@@ -63,4 +68,11 @@ document.addEventListener('click', event => {
        const parentGroupBox = target.closest('.group_box');
        parentGroupBox.remove();
    }
+});
+
+
+
+//Добавляем нормализацию размеров textarea после reset формы
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('reset', () => inputExplore());
 });

@@ -15,7 +15,38 @@
             </a>
         </div>
     </div>
-    <section class="posts_container">
+    <section class="posts_add group_box active_box">
+        <div class="posts_add_header group_box_header">
+            <p>Добавить тег</p>
+            <div class="controllers">
+                <div class="trey">&ndash;</div>
+                <div class="close">&times;</div>
+            </div>
+        </div>
+        <div class="add_category">
+            <div class="general_form_message">
+                <p></p>
+                <div onclick="document.querySelector('.general_form_message').classList.remove('active')">&times;</div>
+            </div>
+            <form method="post" action="">
+                <div class="add_category_flex">
+                    <div class="add_info">
+                        <div>
+                            <label for="name">
+                                <div></div><p>Название тега</p>
+                            </label>
+                            <input type="text" id="name" name="name" placeholder="Введите название">
+                        </div>
+                    </div>
+                </div>
+                <div class="submit_items_block">
+                    <input type="submit" value="Отправить &#10004;">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="posts_container group_box">
         <div class="posts_container_header">
             <div class="post_head_title">
                 <span>Теги</span>
@@ -34,7 +65,12 @@
         </div>
         <div class="posts_block">
             <?php foreach($tags as $tag):?>
-
+                <div class="tag">
+                    <p class="tag_name"><span>#</span><?=$tag['name']?></p>
+                    <div class="controllers">
+                        <div class="delete"></div>
+                    </div>
+                </div>
             <?php endforeach;?>
         </div>
         <div class="posts_footer">

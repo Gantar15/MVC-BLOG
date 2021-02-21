@@ -135,6 +135,16 @@ import inputExplore from "./input_explorer.js";
         };
 
         const inputs = form.querySelectorAll('input, textarea');
+
+        form.addEventListener('reset', ()=>{
+            inputs.forEach(input => {
+                if(!input.value)
+                    input.classList.remove('invalid');
+                    const fieldErrorInf = input.parentNode.querySelector('.field_error_inf');
+                    fieldErrorInf?.remove();
+            });
+        });
+
         inputs.forEach(input => {
 
             input.addEventListener('invalid', function(ev){    //Удаляем стандартное окно незаполненного поля

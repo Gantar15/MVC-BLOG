@@ -87,7 +87,7 @@ class AdminController extends Controller {
                     if($this->model->postEdit($_POST, $this->route['id'])) {
 
                         if($_FILES['image']['tmp_name']) {
-                            if (!$this->model->uploadImage($this->route['id'], $_FILES['image']['tmp_name'])) {
+                            if (!$this->model->uploadImage($this->route['id'], $_FILES['image']['tmp_name'], 'public/uploaded_information')) {
                                 $this->view->message('Ошибка', $this->model->error, '', 'popup');
                             }
                         }
@@ -197,7 +197,7 @@ class AdminController extends Controller {
     //Категории
     public function categoriesAction(){
         $limit = 6;
-        $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
+        $pagination = new Pagination($this->route, $this->model->getTagsCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
         }
@@ -206,6 +206,51 @@ class AdminController extends Controller {
         }
         $pagination->getContent();
         $categories = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
+
+        //Валидация для добавления категории
+        if(!empty($_POST)) {
+            $this->model->error = [];
+
+            if (empty($_POST['name'])) {
+                $this->model->error[] = ['message' => 'Введите название', 'field_name' => 'name'];
+            }
+            if (empty($_POST['description'])) {
+                $this->model->error[] = ['message' => 'Введите описание', 'field_name' => 'description'];
+            }
+
+            if(!empty($this->model->error)){
+                $this->view->message('Ошибка', $this->model->error, '', 'validation');
+            }
+            else {
+                $key = false;
+                $key = $this->model->categoryNameValidate($_POST['name']);
+                if ($key) {
+                    $this->model->categoryDescriptionValidate($_POST['description']);
+                }
+
+                if(!empty($this->model->error)) {
+                    $this->view->message('Ошибка', $this->model->error, '', 'general');
+                }
+            }
+
+            //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
+            if(isset($_POST['login_trusted'])) {
+                if(!file_exists($_FILES['icon']['tmp_name'])){
+                    $this->view->message('Ошибка', 'Выберите изображение', '', 'general');
+                }
+
+                $id = $this->model->addCategory($_POST);
+
+                if($id && !$this->model->uploadImage($id, $_FILES['icon']['tmp_name'], 'public/categories_icons')){
+                    $this->view->message('Ошибка', $this->model->error, '', 'general');
+                }
+                $this->view->location('admin/categories/'.$this->route['page']);
+            }
+            //Если данные верны, но все еще приходят проверки на валидность полей от js, то говорим, что уже все правильно
+            else{
+                exit(json_encode(['finally_valid' => true]));
+            }
+        }
 
         $this->view->render('Список категорий', [
             'categories' => $categories,
@@ -219,7 +264,7 @@ class AdminController extends Controller {
     //Теги
     public function tagsAction(){
         $limit = 6;
-        $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
+        $pagination = new Pagination($this->route, $this->model->getTagsCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
         }
@@ -227,7 +272,31 @@ class AdminController extends Controller {
             $this->view->redirect($pagination->totalPageCount);
         }
         $pagination->getContent();
-        $tags = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
+        $tags = $this->model->getTagsByLimit($limit, $pagination->currentPage);
+
+        //Валидация для добавления тега
+        if(!empty($_POST)) {
+            if (empty($_POST['name'])) {
+                $this->model->error[] = ['message' => 'Введите название', 'field_name' => 'name'];
+                $this->view->message('Ошибка', $this->model->error, '', 'validation');
+            }
+            else{
+                $this->model->tagValidate($_POST['name']);
+                if(!empty($this->model->error)) {
+                    $this->view->message('Ошибка', $this->model->error, '', 'general');
+                }
+            }
+
+            //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
+            if(isset($_POST['login_trusted'])) {
+                $this->model->addTag($_POST['name']);
+                $this->view->location('admin/tags/'.$this->route['page']);
+            }
+            //Если данные верны, но все еще приходят проверки на валидность полей от js, то говорим, что уже все правильно
+            else{
+                exit(json_encode(['finally_valid' => true]));
+            }
+        }
 
         $this->view->render('Список тегов', [
             'tags' => $tags,

@@ -47,8 +47,9 @@
 
 .group_box {
   -webkit-transition: border .2s, height .3s;
-  transition: border .2s, height .3s;
-  overflow: hidden; }
+  transition: border .2s, height .3s; }
+  .group_box.small {
+    overflow: hidden; }
 
 .group_box.active_box {
   border-top: 3px solid #2f83e9 !important; }

@@ -49,7 +49,10 @@
 
 .group_box{
   transition: border .2s, height .3s;
-  overflow: hidden;
+
+  &.small{
+    overflow: hidden;
+  }
 }
 .group_box.active_box{
   border-top: 3px solid #2f83e9 !important;

@@ -42,62 +42,114 @@
     }
 
     .add_category{
-      padding: 40px 20px;
 
-      form{
-        .add_category_flex{
+      .general_form_message{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 85%;
+        padding: 10px 5px;
+        border: 2px solid #e34d4ded;
+        border-radius: 3px;
+        margin: 0 auto;
+        margin-top: 20px;
+        position: relative;
+
+        &.active{
+          display: flex;
+        }
+
+        div:last-of-type{
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+          font: 500 19px $fontName;
+          color: #4f4f4f;
+          right: 7px;
+          top: 10px;
+        }
+        p{
+          color: #3b3b3b;
+          font: 500 14px $fontName;
+        }
+      }
+
+      form {
+        margin-top: 40px;
+
+        .add_category_flex {
+          padding: 0px 20px;
           display: flex;
           justify-content: center;
           align-items: center;
 
-          .add_info{
+          .add_info {
             display: flex;
             flex-direction: column;
             height: fit-content;
 
-            div{
+            div {
               display: flex;
               flex-direction: column;
 
-              &:nth-of-type(n+2){
+              .field_error_inf {
+                margin-left: 3px;
+
+                p {
+                  font: normal 13px $fontName;
+                  color: rgba(227, 63, 35, 0.84);
+                }
+              }
+
+              &:nth-of-type(n+2) {
                 margin-top: 30px;
               }
+
               &:first-of-type {
                 label div {
                   background-color: #4cd056;
                 }
-                input:focus, textarea:focus, input:hover, textarea:hover{
+
+                input:focus, textarea:focus, input:hover, textarea:hover {
                   border-color: #4cd056;
                 }
               }
-              &:last-of-type{
+
+              &:last-of-type {
                 label div {
-                  background-color: #deca4c;
+                  background-color: #dea44c;
                 }
-                input:focus, textarea:focus, input:hover, textarea:hover{
-                  border-color: #deca4c;
+
+                input:focus, textarea:focus, input:hover, textarea:hover {
+                  border-color: #dea44c;
                 }
               }
 
-              label{
+              label {
                 width: fit-content;
                 display: flex;
                 align-items: center;
 
-                div{
+                div {
                   margin-top: -5px;
                   width: 10px;
                   height: 10px;
                   border-radius: 50%;
                   margin-right: 5px;
                 }
-                p{
+
+                p {
                   font: 500 13px $fontName;
                   color: #303030;
                   margin-bottom: 5px;
                 }
               }
-              input, textarea{
+
+              input, textarea {
                 margin-left: 3px;
                 width: 300px;
                 border: 2px solid #969696;
@@ -108,8 +160,13 @@
                 resize: none;
                 border-radius: 3px;
                 transition: border-color .2s;
+
+                &.invalid {
+                  border-color: rgba(227, 63, 35, 0.84) !important;
+                }
               }
-              textarea{
+
+              textarea {
                 overflow: hidden;
                 height: 38px;
                 padding-bottom: 12px;
@@ -119,17 +176,18 @@
           }
 
 
-          .second_half{
+          .second_half {
             margin-left: 30px;
 
-            .add_image{
-              input[type=file]{
+            .add_image {
+              input[type=file] {
                 display: none;
               }
-              .add_image_trigger{
+
+              .add_image_trigger {
                 width: 300px;
                 height: 170px;
-                border: 2px solid #a7a7a7;
+                border: 2px solid #969696;
                 border-radius: 3px;
                 cursor: pointer;
                 display: flex;
@@ -139,20 +197,21 @@
                 margin-bottom: -15px;
                 transition: border-color .2s;
 
-                p{
-                  color: #2a2a2a;
+                p {
+                  color: #303030;
                   text-transform: uppercase;
                   font: 500 12px $fontName;
                 }
-                img{
-                  opacity: .8;
+
+                img {
+                  opacity: .7;
                   width: 40px;
                   height: 40px;
                   object-fit: cover;
                   margin-top: 13px;
                 }
 
-                &:hover{
+                &:hover {
                   border-color: #2f83e9;
                 }
               }
@@ -160,22 +219,27 @@
           }
         }
 
-        input[type = 'submit']{
-          cursor: pointer;
-          display: block;
-          margin: 0 auto;
-          margin-top: 50px;
-          outline: none;
-          padding: 7px 12px;
-          border: none;
-          background-color: #2f83e9;
-          color: #ffffff;
-          font: 500 14px $fontName;
-          border-radius: 4px;
-          transition: all .2s;
+        .submit_items_block {
+          border-top: 2px solid #e3e3e3;
+          padding: 20px 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 55px;
 
-          &:hover{
-            box-shadow: 0px 2px 0 2px #6262bc3d;
+          input:last-of-type{
+            color: #de5751de;
+            margin-left: 25px;
+          }
+          input {
+            cursor: pointer;
+            display: block;
+            outline: none;
+            background-color: #ffffff;
+            border: none;
+            color: #2f83e9;
+            font: 500 14px $fontName;
+            border-radius: 4px;
           }
         }
 

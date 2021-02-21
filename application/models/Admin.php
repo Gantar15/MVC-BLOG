@@ -116,15 +116,15 @@ class Admin extends Model
         return $response;
     }
 
-    public function uploadImage($id, $filePath){
+    public function uploadImage($id, $filePath, $directory){
         try {
             $img = new Imagick($filePath);
             $img->cropThumbnailImage(1080, 600);
             $img->setImageCompressionQuality(80);
             $img->setImageFormat ("jpeg");
-            $response = file_put_contents('public/uploaded_information/'.$id.'.jpg', $img);
+            $response = file_put_contents($directory.'/'.$id.'.jpg', $img);
         } catch (\Exception $err){
-            $this->error = 'Не удалось обновить изображение. Попробуйте другое';
+            $this->error = 'Не удалось загрузить изображение. Попробуйте другое';
             return false;
         }
         return $response;
@@ -164,4 +164,96 @@ class Admin extends Model
         ];
         return $this->db->row('SELECT * FROM categories LIMIT :limit OFFSET :offset', $params);
     }
+
+    public function addCategory($post){
+        $params = [
+            'name' => $post['name'],
+            'description' => $post['description']
+        ];
+        $response = $this->db->query('INSERT INTO categories (name, description) VALUES (:name, :description)', $params);
+        if(!$response){
+            $this->error = 'Не удалось добавить категорию';
+            return false;
+        }
+        return $this->db->lastInsertId();
+    }
+
+    public function categoryExistCheck($name)
+    {
+        if($this->db->column('SELECT id FROM categories WHERE name = :name', ['name' => $name])){
+            return true;
+        }
+        return false;
+    }
+
+    public function categoryNameValidate($name){
+        if(mb_strlen($name, 'utf-8') < 2) {
+            $this->error = 'Длина названия не должна быть меньше 2 символов';
+            return false;
+        }
+        elseif(mb_strlen($name, 'utf-8') > 20) {
+            $this->error = 'Длина названия не должна быть больше 20 символов';
+            return false;
+        }
+        elseif($this->categoryExistCheck($name)){
+            $this->error = 'Категория с указанным названием уже существует';
+            return false;
+        }
+        return true;
+    }
+
+    public function categoryDescriptionValidate($description){
+        if(mb_strlen($description, 'utf-8') < 15) {
+            $this->error = 'Длина описания не должна быть меньше 15 символов';
+            return false;
+        }
+        elseif(mb_strlen($description, 'utf-8') > 150) {
+            $this->error = 'Длина описания не должна быть больше 150 символов';
+            return false;
+        }
+        return true;
+    }
+
+    public function getCategoriesCount(){
+        return $this->db->column('SELECT COUNT(id) FROM categories');
+    }
+
+
+    //Tags-------------------------------------------------
+
+    public function tagExistCheck($tagName){
+        return $this->db->column('SELECT id FROM tags WHERE name = :name', ['name' => $tagName]);
+    }
+
+    public function tagValidate($tagName){
+        if($this->tagExistCheck($_POST['name'])){
+            $this->error = 'Данный тег уже существует. Придумайте другой :3';
+        }
+        elseif(mb_strlen($tagName, 'utf-8') < 2) {
+            $this->error = 'Длина тега не может быть меньше 2 символов';
+        }
+        elseif(mb_strlen($tagName, 'utf-8') > 25) {
+            $this->error = 'Длина тега не может быть беольше 25 символов';
+        }
+        elseif(preg_match("# #", $tagName)){
+            $this->error = 'Тег не может содержать пробелы';
+        }
+    }
+
+    public function addTag($tagName){
+        $this->db->query('INSERT INTO tags (name) VALUES (:name)', ['name' => $tagName]);
+    }
+
+    public function getTagsByLimit($limit, $currentPage){
+        $params = [
+            'limit' => $limit,
+            'offset' => ($currentPage-1)*$limit
+        ];
+        return $this->db->row('SELECT * FROM tags LIMIT :limit OFFSET :offset', $params);
+    }
+
+    public function getTagsCount(){
+        return $this->db->column('SELECT COUNT(id) FROM tags');
+    }
+
 }
