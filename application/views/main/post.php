@@ -153,7 +153,7 @@
                                 <div class="send_comment_input_block">
                                     <textarea required name="comment" placeholder="Оставьте комментарий"></textarea>
                                 </div>
-                                <div class="buttons_block">
+                                <div class="buttons_block <?if(!isset($_SESSION['authorize']) AND !isset($_COOKIE['authorize']) ):?>non-authorize<?php endif;?>">
                                     <button type="reset">Отмена</button>
                                     <button disabled type="submit">Оставить комментарий</button>
                                 </div>

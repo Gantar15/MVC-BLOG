@@ -26,9 +26,10 @@
             </div>
             <form method="post" action="/admin/postsearch" data-non-validate="true" class="search_block">
                 <input value="<?=$searchTitle?>" name="search_text" type="text" placeholder="Введите запрос">
-                <div class="search_trigger" onclick="((ev)=>ev.target.closest('form').submit())(event)">
+                <div class="search_trigger">
                     <img src="/public/imgs/search.png">
                 </div>
+                <div class="remove_search_content">&times;</div>
             </form>
         </div>
         <div class="posts_block">

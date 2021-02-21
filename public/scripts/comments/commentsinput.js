@@ -3,7 +3,8 @@ const sendCommentInputBlock = document.querySelector('.send_comment_input_block'
     commentForm = document.querySelector('.comments_send_block > form');
 
 
-if(buttonsBlock) {
+//Показываем кнопки отправления комментария, только если пользователь авторизирован
+if(!buttonsBlock?.classList.contains('non-authorize')) {
     //Показываем кнопки отправки и отмены коммента при фокусе на поле
     const resetButton = buttonsBlock.querySelector('button[type=reset]');
     const submitButton = buttonsBlock.querySelector('button[type=submit]');

@@ -175,6 +175,14 @@ class AdminController extends Controller {
         $posts = $this->model->searchPostsByName($_POST['search_text']);
         $posts = array_merge($posts, $this->model->searchPostsByDescription($_POST['search_text']));
 //      $posts = array_merge($posts, $this->model->searchPostsByAuthorName($_POST['search_text']));
+        $posts = array_reduce($posts, function($uniquePosts, $post){
+            foreach ($uniquePosts as $p){
+                if($p['id'] === $post['id'])
+                    return $uniquePosts;
+            }
+            $uniquePosts[] = $post;
+            return $uniquePosts;
+        }, array());
 
         $this->view->render('Поиск постов', [
             'posts' => $posts,
@@ -210,8 +218,20 @@ class AdminController extends Controller {
 
     //Теги
     public function tagsAction(){
+        $limit = 6;
+        $pagination = new Pagination($this->route, $this->model->getPostsCount(), $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect($pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $tags = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
+
         $this->view->render('Список тегов', [
-            'tags' => ''
+            'tags' => $tags,
+            'pagination' => $pagination
         ]);
     }
 
