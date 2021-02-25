@@ -140,7 +140,7 @@ import inputExplore from "./input_explorer.js";
             inputs.forEach(input => {
                 if(!input.value)
                     input.classList.remove('invalid');
-                    const fieldErrorInf = input.parentNode.querySelector('.field_error_inf');
+                    const fieldErrorInf = input.parentNode?.querySelector('.field_error_inf');
                     fieldErrorInf?.remove();
             });
         });

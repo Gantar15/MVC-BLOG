@@ -142,12 +142,20 @@ class Admin extends Model
         return $this->db->column('SELECT COUNT(id) FROM posts');
     }
 
-    public function searchPostsByName($postTitle){
-        return $this->db->row("SELECT * FROM posts WHERE name REGEXP :name", ['name' => $postTitle]);
+    public function colOfSearchedPosts($title){
+        $params =  [
+            'name' => $title
+        ];
+        return $this->db->column("SELECT COUNT(id) FROM posts WHERE name REGEXP :name OR description REGEXP :name", $params);
     }
 
-    public function searchPostsByDescription($postTitle){
-        return $this->db->row("SELECT * FROM posts WHERE description REGEXP :description", ['description' => $postTitle]);
+    public function searchPosts($title, $limit, $currentPage){
+        $params =  [
+            'name' => $title,
+            'limit' => $limit,
+            'offset' =>  ($currentPage - 1) * $limit
+        ];
+        return $this->db->row("SELECT * FROM posts WHERE name REGEXP :name OR description REGEXP :name LIMIT :limit OFFSET :offset", $params);
     }
 
 //    public function searchPostsByAuthorName($postTitle){
@@ -218,6 +226,22 @@ class Admin extends Model
         return $this->db->column('SELECT COUNT(id) FROM categories');
     }
 
+    public function colOfSearchedCategories($tagTitle){
+        $params =  [
+            'name' => $tagTitle
+        ];
+        return $this->db->column("SELECT COUNT(id) FROM categories WHERE name REGEXP :name", $params);
+    }
+
+    public function searchCategoriesByName($categoryTitle, $limit, $currentPage){
+        $params =  [
+            'name' => $categoryTitle,
+            'limit' => $limit,
+            'offset' => $currentPage
+        ];
+        return $this->db->row("SELECT * FROM categories WHERE name REGEXP :name LIMIT :limit OFFSET :offset", $params);
+    }
+
 
     //Tags-------------------------------------------------
 
@@ -249,11 +273,39 @@ class Admin extends Model
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row('SELECT * FROM tags LIMIT :limit OFFSET :offset', $params);
+        return $this->db->row('SELECT * FROM tags ORDER BY id DESC LIMIT :limit OFFSET :offset', $params);
+    }
+
+    public function tagExistsCheck($id){
+        if($this->db->column('SELECT id FROM tags WHERE id = :id', ['id' => $id])){
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteTag($id)
+    {
+        $this->db->query('DELETE FROM tags WHERE id = :id', ['id' => $id]);
     }
 
     public function getTagsCount(){
         return $this->db->column('SELECT COUNT(id) FROM tags');
+    }
+
+    public function colOfSearchedTags($tagTitle){
+        $params =  [
+            'name' => $tagTitle
+        ];
+        return $this->db->column("SELECT COUNT(id) FROM tags WHERE name REGEXP :name", $params);
+    }
+
+    public function searchTagsByName($tagTitle, $limit, $currentPage){
+        $params =  [
+            'name' => $tagTitle,
+            'limit' => $limit,
+            'offset' => ($currentPage-1)*$limit
+        ];
+        return $this->db->row("SELECT * FROM tags WHERE name REGEXP :name LIMIT :limit OFFSET :offset", $params);
     }
 
 }

@@ -1,7 +1,7 @@
-@import "variables";
+@import "../variables";
 
-@import "headerline";
-@import "comments";
+@import "../headerline";
+@import "../comments";
 
 *{
     margin: 0;
@@ -470,4 +470,4 @@ a{
     }
 }
 
-@import "footer";
+@import "../footer";

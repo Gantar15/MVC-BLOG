@@ -1,4 +1,4 @@
-@import "variables";
+@import "../variables";
 
 *{
   margin: 0;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-@import "headerline";
+@import "../headerline";
 
 .emodal{
   margin-top: 0;

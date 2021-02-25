@@ -32,7 +32,7 @@ groupBoxes.length && groupBoxes.forEach(groupBox => {
 
     groupBox.addEventListener('click', (event) => {
         const box = event.target.closest('.group_box');
-        setSelect(box);
+        box && setSelect(box);
     });
 
 });

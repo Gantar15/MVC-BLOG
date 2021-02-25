@@ -151,7 +151,7 @@
                             <?php endif;?>
                             <form action="" method="post">
                                 <div class="send_comment_input_block">
-                                    <textarea required name="comment" placeholder="Оставьте комментарий"></textarea>
+                                    <textarea <?if(!isset($_SESSION['authorize']) AND !isset($_COOKIE['authorize']) ):?>disabled<?php endif;?> required name="comment" placeholder="Оставьте комментарий"></textarea>
                                 </div>
                                 <div class="buttons_block <?if(!isset($_SESSION['authorize']) AND !isset($_COOKIE['authorize']) ):?>non-authorize<?php endif;?>">
                                     <button type="reset">Отмена</button>

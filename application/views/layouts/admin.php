@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <?php if ($this->route['action'] != 'login'): ?>
+    <?php if($this->route['action'] != 'login'): ?>
         <link rel="stylesheet" href="/public/css/adminpanel.css">
         <script src="/public/scripts/admin/adminpanel.js" type="module"></script>
     <? endif; ?>
+    <?php if($this->route['action'] == 'categories'): ?>
+        <script src="/public/scripts/image_uploader.js" type="module"></script>
+        <script src="/public/scripts/admin/admin_category.js" type="module"></script>
+    <?php endif;?>
     <link rel="icon" href="/public/imgs/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="<?= '/public/css/'.$this->route['controller'].$this->route['action'].'.css' ?>">
     <link rel="stylesheet" href="/public/css/modal.css">
@@ -33,7 +37,7 @@
                         </div>
                         <nav class="active">
                             <ul>
-                                <li <?php if($this->route['action'] == 'users'):?>
+                                <li <?php if($this->route['action'] == 'users' || $this->route['action'] == 'usersearch'):?>
                                         class = 'active'
                                     <?php endif;?>>
                                     <a href="/admin/users/1">
@@ -59,7 +63,7 @@
                                         <span>Посты</span>
                                     </a>
                                 </li>
-                                <li <?php if($this->route['action'] == 'categories'):?>
+                                <li <?php if($this->route['action'] == 'categories' || $this->route['action'] == 'categorysearch'):?>
                                         class = 'active'
                                     <?php endif;?>>
                                     <a href="/admin/categories/1">
@@ -67,7 +71,7 @@
                                         <span>Категории</span>
                                     </a>
                                 </li>
-                                <li <?php if($this->route['action'] == 'tags'):?>
+                                <li <?php if($this->route['action'] == 'tags' || $this->route['action'] == 'tagsearch'):?>
                                         class = 'active'
                                     <?php endif;?>>
                                     <a href="/admin/tags/1">

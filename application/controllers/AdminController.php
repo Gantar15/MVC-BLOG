@@ -160,7 +160,7 @@ class AdminController extends Controller {
             $this->route['page'] = 1;
         }
         if($this->route['page'] > $pagination->totalPageCount){
-            $this->view->redirect($pagination->totalPageCount);
+            $this->view->redirect('admin/posts/'.$pagination->totalPageCount);
         }
         $pagination->getContent();
         $posts = $this->model->getPostsByLimit($limit, $pagination->currentPage);
@@ -172,8 +172,30 @@ class AdminController extends Controller {
 
     //Поиск постов
     public function postsearchAction(){
-        $posts = $this->model->searchPostsByName($_POST['search_text']);
-        $posts = array_merge($posts, $this->model->searchPostsByDescription($_POST['search_text']));
+        //Если у нас нет текста запроса, выдаем ошибку
+        if(!isset($_SESSION['postsearch_text']) && $this->route['page'] > 1){
+            $this->view->errorCode(404);
+        }
+        //Сохраняем текст поиска для погинации по результатам поиска
+        if($this->route['page'] == 1 && isset($_POST['search_text'])){
+            $_SESSION['postsearch_text'] = $_POST['search_text'];
+        }
+        //Если мы переключились на другую страницу поиска, подгружаем текст запроса
+        if(!isset($_POST['search_text'])) {
+            $_POST['search_text'] = $_SESSION['postsearch_text'];
+        }
+
+        $limit = 2;
+        $colOfPosts = $this->model->colOfSearchedPosts($_POST['search_text']);
+        $pagination = new Pagination($this->route, $colOfPosts, $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect('admin/postsearch/'.$pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $posts = $this->model->searchPosts($_POST['search_text'], $limit, $pagination->currentPage);
 //      $posts = array_merge($posts, $this->model->searchPostsByAuthorName($_POST['search_text']));
         $posts = array_reduce($posts, function($uniquePosts, $post){
             foreach ($uniquePosts as $p){
@@ -186,8 +208,9 @@ class AdminController extends Controller {
 
         $this->view->render('Поиск постов', [
             'posts' => $posts,
-            'colOfPosts' => count($posts),
-            'searchTitle' => $_POST['search_text']
+            'colOfPosts' => $colOfPosts,
+            'searchTitle' => $_POST['search_text'],
+            'pagination' => $pagination
         ]);
     }
 
@@ -197,12 +220,12 @@ class AdminController extends Controller {
     //Категории
     public function categoriesAction(){
         $limit = 6;
-        $pagination = new Pagination($this->route, $this->model->getTagsCount(), $limit);
+        $pagination = new Pagination($this->route, $this->model->getCategoriesCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
         }
         if($this->route['page'] > $pagination->totalPageCount){
-            $this->view->redirect($pagination->totalPageCount);
+            $this->view->redirect('admin/categories/'.$pagination->totalPageCount);
         }
         $pagination->getContent();
         $categories = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
@@ -258,18 +281,53 @@ class AdminController extends Controller {
         ]);
     }
 
+    //Поиск категорий
+    public function categorysearchAction(){
+        //Если у нас нет текста запроса, выдаем ошибку
+        if(!isset($_SESSION['categorysearch_text']) && $this->route['page'] > 1){
+            $this->view->errorCode(404);
+        }
+        //Сохраняем текст поиска для погинации по результатам поиска
+        if($this->route['page'] == 1 && isset($_POST['search_text'])){
+            $_SESSION['categorysearch_text'] = $_POST['search_text'];
+        }
+        //Если мы переключились на другую страницу поиска, подгружаем текст запроса
+        if(!isset($_POST['search_text'])) {
+            $_POST['search_text'] = $_SESSION['categorysearch_text'];
+        }
+
+        $limit = 6;
+        $colOfCategories = $this->model->colOfSearchedCategories();
+        $pagination = new Pagination($this->route, $colOfCategories, $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect('admin/categorysearch/'.$pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $categories = $this->model->searchCategoriesByName($_POST['search_text'], $limit, $pagination->currentPage);
+
+        $this->view->render('Поиск категорий', [
+            'categories' => $categories,
+            'colOfCategories' => $colOfCategories,
+            'searchTitle' => $_POST['search_text'],
+            'pagination' => $pagination
+        ]);
+    }
+
 
     //Теги-----------------------------------------------
 
     //Теги
     public function tagsAction(){
-        $limit = 6;
+        $limit = 15;
         $pagination = new Pagination($this->route, $this->model->getTagsCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
         }
         if($this->route['page'] > $pagination->totalPageCount){
-            $this->view->redirect($pagination->totalPageCount);
+            $this->view->redirect('admin/tags/'.$pagination->totalPageCount);
         }
         $pagination->getContent();
         $tags = $this->model->getTagsByLimit($limit, $pagination->currentPage);
@@ -300,6 +358,49 @@ class AdminController extends Controller {
 
         $this->view->render('Список тегов', [
             'tags' => $tags,
+            'pagination' => $pagination
+        ]);
+    }
+
+    public function tagdeleteAction(){
+        $tagId = $this->route['id'];
+        if($this->model->tagExistsCheck($tagId)) {
+            $this->model->deleteTag($tagId);
+        }
+        $this->view->redirect('admin/tags/1');
+    }
+
+    //Поиск тегов
+    public function tagsearchAction(){
+        //Если у нас нет текста запроса, выдаем ошибку
+        if(!isset($_SESSION['tagsearch_text']) && $this->route['page'] > 1){
+            $this->view->errorCode(404);
+        }
+        //Сохраняем текст поиска для погинации по результатам поиска
+        if($this->route['page'] == 1 && isset($_POST['search_text'])){
+            $_SESSION['tagsearch_text'] = $_POST['search_text'];
+        }
+        //Если мы переключились на другую страницу поиска, подгружаем текст запроса
+        if(!isset($_POST['search_text'])) {
+            $_POST['search_text'] = $_SESSION['tagsearch_text'];
+        }
+
+        $limit = 15;
+        $colOfTags = $this->model->colOfSearchedTags($_POST['search_text']);
+        $pagination = new Pagination($this->route, $colOfTags, $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect('admin/tagsearch/'.$pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $tags = $this->model->searchTagsByName($_POST['search_text'], $limit, $pagination->currentPage);
+
+        $this->view->render('Поиск тегов', [
+            'tags' => $tags,
+            'colOfTags' => $colOfTags,
+            'searchTitle' => $_POST['search_text'],
             'pagination' => $pagination
         ]);
     }

@@ -17,6 +17,9 @@ return [
         'posts',
         'users',
         'categories',
-        'tags'
+        'categorysearch',
+        'tags',
+        'tagdelete',
+        'tagsearch'
 	],
 ];

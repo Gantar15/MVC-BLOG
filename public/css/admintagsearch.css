@@ -13,191 +13,6 @@
   src: url(../fonts/OpenSans-SemiBold.ttf);
   font-weight: 500;
   font-style: normal; }
-.posts .posts_add {
-  margin-top: 21px;
-  width: 100%;
-  -webkit-box-shadow: 0 1px 2px 4px #e0e6ed;
-          box-shadow: 0 1px 2px 4px #e0e6ed;
-  border-top: 3px solid #c2c2cf;
-  border-radius: 2px;
-  background-color: #ffffff; }
-  .posts .posts_add .posts_add_header {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    padding: 12px 10px;
-    border-bottom: 2px solid #e3e3e3; }
-    .posts .posts_add .posts_add_header .controllers {
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex; }
-      .posts .posts_add .posts_add_header .controllers div {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        font: 500 19px "Open Sans";
-        color: #3b3b3b; }
-      .posts .posts_add .posts_add_header .controllers div:nth-of-type(2) {
-        margin-left: 10px; }
-    .posts .posts_add .posts_add_header p {
-      color: #414141;
-      font: 500 16px "Open Sans"; }
-  .posts .posts_add .add_category .general_form_message {
-    display: none;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    width: 85%;
-    padding: 10px 5px;
-    background-color: #e14a43;
-    border-radius: 3px;
-    margin: 0 auto;
-    margin-top: 20px;
-    position: relative; }
-    .posts .posts_add .add_category .general_form_message.active {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex; }
-    .posts .posts_add .add_category .general_form_message div:last-of-type {
-      position: absolute;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      font: 500 19px "Open Sans";
-      color: #ffffff;
-      right: 7px;
-      top: 10px; }
-    .posts .posts_add .add_category .general_form_message p {
-      color: #ffffff;
-      font: 500 14px "Open Sans"; }
-  .posts .posts_add .add_category form {
-    margin-top: 35px; }
-    .posts .posts_add .add_category form .add_category_flex {
-      padding: 0px 20px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
-      .posts .posts_add .add_category form .add_category_flex .add_info {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        height: -webkit-fit-content;
-        height: -moz-fit-content;
-        height: fit-content; }
-        .posts .posts_add .add_category form .add_category_flex .add_info div {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-orient: vertical;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: column;
-                  flex-direction: column; }
-          .posts .posts_add .add_category form .add_category_flex .add_info div .field_error_inf {
-            margin-left: 3px; }
-            .posts .posts_add .add_category form .add_category_flex .add_info div .field_error_inf p {
-              font: normal 13px "Open Sans";
-              color: rgba(227, 63, 35, 0.84); }
-          .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type label div {
-            background-color: #4cd081; }
-          .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type input:focus, .posts .posts_add .add_category form .add_category_flex .add_info div:first-of-type input:hover {
-            border-color: #4cd081; }
-          .posts .posts_add .add_category form .add_category_flex .add_info div label {
-            width: -webkit-fit-content;
-            width: -moz-fit-content;
-            width: fit-content;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-                -ms-flex-align: center;
-                    align-items: center; }
-            .posts .posts_add .add_category form .add_category_flex .add_info div label div {
-              margin-top: -5px;
-              width: 10px;
-              height: 10px;
-              border-radius: 50%;
-              margin-right: 5px; }
-            .posts .posts_add .add_category form .add_category_flex .add_info div label p {
-              font: 500 13px "Open Sans";
-              color: #303030;
-              margin-bottom: 5px; }
-          .posts .posts_add .add_category form .add_category_flex .add_info div input {
-            margin-left: 3px;
-            width: 300px;
-            border: 2px solid #969696;
-            font: normal 12px "Open Sans";
-            padding: 6px 5px;
-            padding-bottom: 8px;
-            outline: none;
-            resize: none;
-            border-radius: 3px;
-            -webkit-transition: border-color .2s;
-            transition: border-color .2s; }
-            .posts .posts_add .add_category form .add_category_flex .add_info div input.invalid {
-              border-color: rgba(227, 63, 35, 0.84) !important; }
-    .posts .posts_add .add_category form .submit_items_block {
-      border-top: 2px solid #e3e3e3;
-      padding: 20px 0;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      margin-top: 40px; }
-      .posts .posts_add .add_category form .submit_items_block input {
-        cursor: pointer;
-        display: block;
-        outline: none;
-        background-color: #ffffff;
-        border: none;
-        color: #2f83e9;
-        font: 500 14px "Open Sans";
-        border-radius: 4px; }
 .posts .posts_container {
   margin-top: 21px;
   width: 100%;
@@ -301,11 +116,36 @@
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     margin: 0 auto; }
+    .posts .posts_container .posts_block .empty_search_request {
+      margin-top: 50px;
+      margin-bottom: 55px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+      .posts .posts_container .posts_block .empty_search_request img {
+        -o-object-fit: contain;
+           object-fit: contain;
+        width: 135px;
+        height: 135px; }
+      .posts .posts_container .posts_block .empty_search_request p {
+        color: #3c3c3c; }
+      .posts .posts_container .posts_block .empty_search_request p:nth-of-type(1) {
+        margin-top: 10px;
+        font: 500 25px "Open Sans"; }
+      .posts .posts_container .posts_block .empty_search_request p:nth-of-type(2) {
+        margin-top: 3px;
+        font: normal 13px "Open Sans"; }
     .posts .posts_container .posts_block .tag {
       margin-top: 10px;
-      -webkit-box-flex: 0;
-          -ms-flex: 0 1 30%;
-              flex: 0 1 30%;
+      -ms-flex-preferred-size: 30%;
+          flex-basis: 30%;
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
@@ -324,8 +164,6 @@
       margin-left: 10px;
       -webkit-transform: translate(-5px, -5px);
               transform: translate(-5px, -5px); }
-      .posts .posts_container .posts_block .tag:nth-of-type(n+2) {
-        margin-left: 10px; }
       .posts .posts_container .posts_block .tag p.tag_name {
         font: 500 14px "Open Sans";
         color: #4a4a4a; }
@@ -351,39 +189,6 @@
         -ms-flex-pack: center;
             justify-content: center;
     padding-bottom: 20px; }
-    .posts .posts_container .posts_footer a.add_post {
-      text-decoration: none;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      border: 1px solid #6262bc;
-      padding: 8px;
-      border-radius: 3px; }
-      .posts .posts_container .posts_footer a.add_post:hover {
-        border-color: #4c4ccd; }
-        .posts .posts_container .posts_footer a.add_post:hover span {
-          color: #4c4ccd; }
-        .posts .posts_container .posts_footer a.add_post:hover img {
-          opacity: .8;
-          -webkit-transform: rotate(90deg);
-                  transform: rotate(90deg); }
-      .posts .posts_container .posts_footer a.add_post span {
-        font: 500 14px "Open Sans";
-        margin-right: 8px;
-        color: #6262bc;
-        -webkit-transition: color .2s;
-        transition: color .2s; }
-      .posts .posts_container .posts_footer a.add_post img {
-        opacity: .7;
-        width: 21px;
-        height: 21px;
-        -o-object-fit: cover;
-           object-fit: cover;
-        -webkit-transition: all .2s;
-        transition: all .2s; }
     .posts .posts_container .posts_footer .buttons_block > div {
       margin-top: 0;
       display: -webkit-box;

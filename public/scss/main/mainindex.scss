@@ -1,6 +1,6 @@
-@import "variables";
-@import "headerline";
-@import "pagination";
+@import "../variables";
+@import "../headerline";
+@import "../pagination";
 
 *{
     margin: 0;
@@ -50,7 +50,7 @@ a{
     &_flex{
         padding: 0 20px;
         height: 550px !important;
-        background: url('../imgs/header_bg_index.jpg');
+        background: url('../../imgs/header_bg_index.jpg');
         background-size: cover;
     }
 
@@ -335,4 +335,4 @@ a{
     }
 }
 
-@import "footer";
+@import "../footer";

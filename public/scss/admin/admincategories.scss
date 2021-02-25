@@ -1,4 +1,4 @@
-@import "variables";
+@import "../variables";
 
 .posts{
 
@@ -49,7 +49,7 @@
         justify-content: center;
         width: 85%;
         padding: 10px 5px;
-        border: 2px solid #e34d4ded;
+        background-color: #e14a43;
         border-radius: 3px;
         margin: 0 auto;
         margin-top: 20px;
@@ -68,18 +68,18 @@
           height: 20px;
           cursor: pointer;
           font: 500 19px $fontName;
-          color: #4f4f4f;
+          color: #ffffff;
           right: 7px;
           top: 10px;
         }
         p{
-          color: #3b3b3b;
+          color: #ffffff;
           font: 500 14px $fontName;
         }
       }
 
       form {
-        margin-top: 40px;
+        margin-top: 48px;
 
         .add_category_flex {
           padding: 0px 20px;
@@ -177,18 +177,89 @@
 
 
           .second_half {
-            margin-left: 30px;
+            margin-left: 35px;
+            margin-bottom: -16px;
 
             .add_image {
+              width: 300px;
+              height: 170px;
+
               input[type=file] {
                 display: none;
               }
 
+              .uploaded_image_block{
+                width: 100%;
+                height: 100%;
+                position: relative;
+
+                &>img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  border-radius: 3px;
+                }
+
+                .uploaded_image_reset{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  width: 100%;
+                  height: 100%;
+                  background-color: #3c3c3c99;
+
+                  &>div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px 20px;
+                    cursor: pointer;
+
+                    img {
+                      width: 35px;
+                      height: 35px;
+                      object-fit: contain;
+                    }
+
+                    p {
+                      color: #ffffff;
+                      margin-top: 5px;
+                      font: 500 17px $fontName;
+                    }
+                  }
+                }
+
+                .uploaded_image_info{
+                  display: flex;
+                  align-items: center;
+                  position: absolute;
+                  bottom: -25px;
+                  left: 50%;
+                  width: max-content;
+                  transform: translateX(-50%);
+
+                  p{
+                    display: inline-block;
+                    word-break: keep-all;
+                    font: 500 13px $fontName;
+                    color: #343434;
+
+                    &:last-of-type{
+                      margin-left: 20px;
+                    }
+                  }
+                }
+              }
+
               .add_image_trigger {
-                width: 300px;
-                height: 170px;
-                border: 2px solid #969696;
                 border-radius: 3px;
+                border: 2px solid #969696;
+                width: 100%;
+                height: 100%;
                 cursor: pointer;
                 display: flex;
                 flex-direction: column;
@@ -198,17 +269,18 @@
                 transition: border-color .2s;
 
                 p {
-                  color: #303030;
+                  color: #606060;
                   text-transform: uppercase;
-                  font: 500 12px $fontName;
+                  font: 500 15px $fontName;
+                  margin-top: 10px;
                 }
 
                 img {
                   opacity: .7;
-                  width: 40px;
+                  width: 50px;
                   height: 40px;
                   object-fit: cover;
-                  margin-top: 13px;
+                  margin-top: 15px;
                 }
 
                 &:hover {
@@ -225,10 +297,10 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 55px;
+          margin-top: 65px;
 
           input:last-of-type{
-            color: #de5751de;
+            color: #e14a43;
             margin-left: 25px;
           }
           input {

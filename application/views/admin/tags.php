@@ -10,7 +10,7 @@
                 <span>Главная</span>
             </a>
             <div class="arrow-right">&gt;</div>
-            <a href="/admin/categories">
+            <a href="/admin/tags/1">
                 <span>Теги</span>
             </a>
         </div>
@@ -55,7 +55,7 @@
                     <img src="/public/imgs/tags.png">
                 </div>
             </div>
-            <form method="post" action="/admin/postsearch" data-non-validate="true" class="search_block">
+            <form method="post" action="/admin/tagsearch/1" data-non-validate="true" class="search_block">
                 <input name="search_text" type="text" placeholder="Введите запрос">
                 <div class="search_trigger">
                     <img src="/public/imgs/search.png">
@@ -68,7 +68,7 @@
                 <div class="tag">
                     <p class="tag_name"><span>#</span><?=$tag['name']?></p>
                     <div class="controllers">
-                        <div class="delete"></div>
+                        <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete">&times;</a>
                     </div>
                 </div>
             <?php endforeach;?>

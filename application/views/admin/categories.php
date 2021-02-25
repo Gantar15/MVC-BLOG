@@ -10,7 +10,7 @@
                 <span>Главная</span>
             </a>
             <div class="arrow-right">&gt;</div>
-            <a href="/admin/categories">
+            <a href="/admin/categories/1">
                 <span>Категории</span>
             </a>
         </div>
@@ -47,10 +47,6 @@
                     <div class="second_half">
                         <div class="add_image">
                             <input name="icon" type="file">
-                            <div class="add_image_trigger"  onclick="document.forms[0]['icon'].click()">
-                                <p>загрузите изображение</p>
-                                <img src="/public/imgs/add_image.png">
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +67,7 @@
                     <img src="/public/imgs/categories.png">
                 </div>
             </div>
-            <form method="post" action="/admin/postsearch" data-non-validate="true" class="search_block">
+            <form method="post" action="/admin/categorysearch/1" data-non-validate="true" class="search_block">
                 <input name="search_text" type="text" placeholder="Введите запрос">
                 <div class="search_trigger">
                     <img src="/public/imgs/search.png">

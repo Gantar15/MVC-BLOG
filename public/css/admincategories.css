@@ -71,7 +71,7 @@
             justify-content: center;
     width: 85%;
     padding: 10px 5px;
-    border: 2px solid #e34d4ded;
+    background-color: #e14a43;
     border-radius: 3px;
     margin: 0 auto;
     margin-top: 20px;
@@ -95,14 +95,14 @@
       height: 20px;
       cursor: pointer;
       font: 500 19px "Open Sans";
-      color: #4f4f4f;
+      color: #ffffff;
       right: 7px;
       top: 10px; }
     .posts .posts_add .add_category .general_form_message p {
-      color: #3b3b3b;
+      color: #ffffff;
       font: 500 14px "Open Sans"; }
   .posts .posts_add .add_category form {
-    margin-top: 40px; }
+    margin-top: 48px; }
     .posts .posts_add .add_category form .add_category_flex {
       padding: 0px 20px;
       display: -webkit-box;
@@ -187,44 +187,122 @@
             height: 38px;
             padding-bottom: 12px; }
       .posts .posts_add .add_category form .add_category_flex .second_half {
-        margin-left: 30px; }
-        .posts .posts_add .add_category form .add_category_flex .second_half .add_image input[type=file] {
-          display: none; }
-        .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger {
+        margin-left: 35px;
+        margin-bottom: -16px; }
+        .posts .posts_add .add_category form .add_category_flex .second_half .add_image {
           width: 300px;
-          height: 170px;
-          border: 2px solid #969696;
-          border-radius: 3px;
-          cursor: pointer;
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-orient: vertical;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-          -webkit-box-align: center;
-              -ms-flex-align: center;
-                  align-items: center;
-          -webkit-box-pack: center;
-              -ms-flex-pack: center;
-                  justify-content: center;
-          margin-bottom: -15px;
-          -webkit-transition: border-color .2s;
-          transition: border-color .2s; }
-          .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger p {
-            color: #303030;
-            text-transform: uppercase;
-            font: 500 12px "Open Sans"; }
-          .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger img {
-            opacity: .7;
-            width: 40px;
-            height: 40px;
-            -o-object-fit: cover;
-               object-fit: cover;
-            margin-top: 13px; }
-          .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger:hover {
-            border-color: #2f83e9; }
+          height: 170px; }
+          .posts .posts_add .add_category form .add_category_flex .second_half .add_image input[type=file] {
+            display: none; }
+          .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block {
+            width: 100%;
+            height: 100%;
+            position: relative; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block > img {
+              width: 100%;
+              height: 100%;
+              -o-object-fit: cover;
+                 object-fit: cover;
+              border-radius: 3px; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_reset {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+                  -ms-flex-align: center;
+                      align-items: center;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #3c3c3c99; }
+              .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_reset > div {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+                -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                        justify-content: center;
+                padding: 10px 20px;
+                cursor: pointer; }
+                .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_reset > div img {
+                  width: 35px;
+                  height: 35px;
+                  -o-object-fit: contain;
+                     object-fit: contain; }
+                .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_reset > div p {
+                  color: #ffffff;
+                  margin-top: 5px;
+                  font: 500 17px "Open Sans"; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_info {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+                  -ms-flex-align: center;
+                      align-items: center;
+              position: absolute;
+              bottom: -25px;
+              left: 50%;
+              width: -webkit-max-content;
+              width: -moz-max-content;
+              width: max-content;
+              -webkit-transform: translateX(-50%);
+                      transform: translateX(-50%); }
+              .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_info p {
+                display: inline-block;
+                word-break: keep-all;
+                font: 500 13px "Open Sans";
+                color: #343434; }
+                .posts .posts_add .add_category form .add_category_flex .second_half .add_image .uploaded_image_block .uploaded_image_info p:last-of-type {
+                  margin-left: 20px; }
+          .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger {
+            border-radius: 3px;
+            border: 2px solid #969696;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            margin-bottom: -15px;
+            -webkit-transition: border-color .2s;
+            transition: border-color .2s; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger p {
+              color: #606060;
+              text-transform: uppercase;
+              font: 500 15px "Open Sans";
+              margin-top: 10px; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger img {
+              opacity: .7;
+              width: 50px;
+              height: 40px;
+              -o-object-fit: cover;
+                 object-fit: cover;
+              margin-top: 15px; }
+            .posts .posts_add .add_category form .add_category_flex .second_half .add_image .add_image_trigger:hover {
+              border-color: #2f83e9; }
     .posts .posts_add .add_category form .submit_items_block {
       border-top: 2px solid #e3e3e3;
       padding: 20px 0;
@@ -237,9 +315,9 @@
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center;
-      margin-top: 55px; }
+      margin-top: 65px; }
       .posts .posts_add .add_category form .submit_items_block input:last-of-type {
-        color: #de5751de;
+        color: #e14a43;
         margin-left: 25px; }
       .posts .posts_add .add_category form .submit_items_block input {
         cursor: pointer;

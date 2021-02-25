@@ -83,7 +83,7 @@ return [
         'controller' => 'admin',
         'action' => 'posts'
     ],
-    'admin/postsearch' => [
+    'admin/postsearch/{page:\d+}' => [
         'controller' => 'admin',
         'action' => 'postsearch'
     ],
@@ -97,9 +97,21 @@ return [
         'controller' => 'admin',
         'action' => 'categories'
     ],
+    'admin/categorysearch/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'categorysearch'
+    ],
     //tags
     'admin/tags/{page:\d+}' => [
         'controller' => 'admin',
         'action' => 'tags'
+    ],
+    'admin/tagdelete/{id:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'tagdelete'
+    ],
+    'admin/tagsearch/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'tagsearch'
     ]
 ];

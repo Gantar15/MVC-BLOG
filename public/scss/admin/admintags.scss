@@ -1,4 +1,4 @@
-@import "variables";
+@import "../variables";
 
 .posts{
 
@@ -49,7 +49,7 @@
         justify-content: center;
         width: 85%;
         padding: 10px 5px;
-        border: 2px solid #e34d4ded;
+        background-color: #e14a43;
         border-radius: 3px;
         margin: 0 auto;
         margin-top: 20px;
@@ -68,12 +68,12 @@
           height: 20px;
           cursor: pointer;
           font: 500 19px $fontName;
-          color: #4f4f4f;
+          color: #ffffff;
           right: 7px;
           top: 10px;
         }
         p{
-          color: #3b3b3b;
+          color: #ffffff;
           font: 500 14px $fontName;
         }
       }
@@ -277,30 +277,47 @@
     }
 
     .posts_block{
-      padding: 35px 20px;
-      width: 400px;
-      display: grid;
+      padding: 55px 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
       margin: 0 auto;
 
       .tag{
+        margin-top: 10px;
+        flex: 0 1 30%;
         width: fit-content;
-        padding: 5px;
-        border: 1px solid #3b3b3b;
+        padding: 10px 15px;
+        border: 1px solid #818181;
         border-radius: 2px;
         display: flex;
         align-items: center;
-        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 10px;
+        transform: translate(-5px, -5px);
+
+        &:nth-of-type(n+2){
+          margin-left: 10px;
+        }
 
         p.tag_name{
           font: 500 14px $fontName;
-          color: #3b3b3b;
+          color: #4a4a4a;
 
           span{
             color: #2f83e9;
           }
         }
         .controllers{
+          margin-left: 10px;
 
+          .delete{
+            text-decoration: none;
+            margin-top: 1px;
+            cursor: pointer;
+            font: 500 18px $fontName;
+            color: #3b3b3b;
+          }
         }
       }
 

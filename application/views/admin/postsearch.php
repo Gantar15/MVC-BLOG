@@ -24,7 +24,7 @@
                     <img src="/public/imgs/sticky-notes.png">
                 </div>
             </div>
-            <form method="post" action="/admin/postsearch" data-non-validate="true" class="search_block">
+            <form method="post" action="/admin/postsearch/1" data-non-validate="true" class="search_block">
                 <input value="<?=$searchTitle?>" name="search_text" type="text" placeholder="Введите запрос">
                 <div class="search_trigger">
                     <img src="/public/imgs/search.png">
@@ -128,6 +128,13 @@
                 </div>
             <?php endforeach;?>
             <?php endif;?>
+        </div>
+        <div class="posts_footer">
+            <div class="buttons_block">
+                <div>
+                    <?=$pagination->getContent()?>
+                </div>
+            </div>
         </div>
     </section>
 </div>

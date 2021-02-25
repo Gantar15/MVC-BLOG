@@ -1,9 +1,9 @@
 
-@import "variables";
+@import "../variables";
 
-@import "headerline";
+@import "../headerline";
 
-@import "userbox";
+@import "../userbox";
 
 *{
   margin: 0;
@@ -60,4 +60,4 @@ ul{
   box-shadow: 1px 0 6px 0 #ececec;
 }
 
-@import "footer";
+@import "../footer";
