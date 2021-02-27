@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/public/css/adminpanel.css">
         <script src="/public/scripts/admin/adminpanel.js" type="module"></script>
     <? endif; ?>
-    <?php if($this->route['action'] == 'categories'): ?>
+    <?php if($this->route['action'] == 'categories' || $this->route['action'] == 'categoryedit'): ?>
         <script src="/public/scripts/image_uploader.js" type="module"></script>
         <script src="/public/scripts/admin/admin_category.js" type="module"></script>
     <?php endif;?>
@@ -64,7 +64,7 @@
                                         <span>Посты</span>
                                     </a>
                                 </li>
-                                <li <?php if($this->route['action'] == 'categories' || $this->route['action'] == 'categorysearch'):?>
+                                <li <?php if($this->route['action'] == 'categories' || $this->route['action'] == 'categorysearch' || $this->route['action'] == 'categoryedit'):?>
                                         class = 'active'
                                     <?php endif;?>>
                                     <a href="/admin/categories/1">

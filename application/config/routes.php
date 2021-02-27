@@ -105,6 +105,10 @@ return [
         'controller' => 'admin',
         'action' => 'categorydelete'
     ],
+    'admin/categoryedit/{id:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'categoryedit'
+    ],
     //tags
     'admin/tags/{page:\d+}' => [
         'controller' => 'admin',

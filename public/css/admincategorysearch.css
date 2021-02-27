@@ -76,23 +76,25 @@
       font: 500 12px "Open Sans"; }
     .buttons_block > div button:hover {
       background-color: #f5f5f5; }
-    .buttons_block > div button:disabled a {
-      color: #939393;
-      pointer-events: none; }
-    .buttons_block > div button:disabled:hover {
-      background-color: transparent; }
-    .buttons_block > div button:disabled:before {
-      color: #939393 !important; }
-    .buttons_block > div button:disabled:after {
-      color: #939393 !important; }
+    .buttons_block > div button:disabled {
+      display: none; }
+      .buttons_block > div button:disabled a {
+        color: #939393;
+        pointer-events: none; }
+      .buttons_block > div button:disabled:hover {
+        background-color: transparent; }
+      .buttons_block > div button:disabled:before {
+        color: #939393 !important; }
+      .buttons_block > div button:disabled:after {
+        color: #939393 !important; }
     .buttons_block > div button.active {
-      background-color: #6262bced;
-      border-color: #6262bced; }
-      .buttons_block > div button.active a {
-        color: #ffffff; }
+      background-color: #fcfaff;
+      border-color: #6262bced;
+      border-left: 1px solid #6262bced; }
 
 .posts .posts_add {
   margin-top: 21px;
+  margin-bottom: 30px;
   width: 100%;
   -webkit-box-shadow: 0 1px 2px 4px #e0e6ed;
           box-shadow: 0 1px 2px 4px #e0e6ed;
@@ -140,7 +142,7 @@
       color: #414141;
       font: 500 16px "Open Sans"; }
 .posts .posts_container {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
   -webkit-box-shadow: 0 1px 2px 4px #e0e6ed;
           box-shadow: 0 1px 2px 4px #e0e6ed;
@@ -381,6 +383,7 @@
             -ms-flex-pack: center;
                 justify-content: center; }
         .posts .posts_container .posts_block .category .category_img + div .controllers a {
+          text-decoration: none;
           padding: 5px 7px;
           cursor: pointer;
           border: 1px solid #bcbcbc;
@@ -398,8 +401,7 @@
             background-color: #2f83e91a; }
         .posts .posts_container .posts_block .category .category_img + div .controllers .delete_category {
           margin-left: 20px;
-          border-color: #f54545;
-          text-decoration: none; }
+          border-color: #f54545; }
           .posts .posts_container .posts_block .category .category_img + div .controllers .delete_category p {
             color: #f54545; }
           .posts .posts_container .posts_block .category .category_img + div .controllers .delete_category:hover {

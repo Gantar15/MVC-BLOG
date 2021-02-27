@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="post_information">
-                    <div class="post_name"><?=$post['name']?></div>
+                    <div class="post_name"><?=htmlspecialchars($post['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?></div>
                     <div class="inf">
                         <div class="views">
                             <img src="/public/imgs/eye.svg">
@@ -60,14 +60,14 @@
                 <div class="post_description">
                     <p> <span>Описание</span><br>
                         <p class="descrpton">
-                            <?=$post['description']?>
+                            <?=htmlspecialchars($post['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
                         </p>
                     </p>
                 </div>
                 <div class="post_text">
                     <p><span>Главная часть</span><br>
                         <p class="text">
-                            <?=$post['text']?>
+                            <?=htmlspecialchars($post['text'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
                         </p>
                     </p>
                 </div>

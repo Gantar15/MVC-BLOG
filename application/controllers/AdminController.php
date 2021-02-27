@@ -285,11 +285,11 @@ class AdminController extends Controller {
 
     //Поиск категорий
     public function categorysearchAction(){
-        //Если у нас нет текста запроса, выдаем ошибку
+        //Если у нас нет текста запроса и страница больше первой, выдаем ошибку
         if(!isset($_SESSION['categorysearch_text']) && $this->route['page'] > 1){
             $this->view->errorCode(404);
         }
-        //Сохраняем текст поиска для погинации по результатам поиска
+        //Сохраняем текст поиска для пагинации по результатам поиска
         if($this->route['page'] == 1 && isset($_POST['search_text'])){
             $_SESSION['categorysearch_text'] = $_POST['search_text'];
         }
@@ -298,8 +298,8 @@ class AdminController extends Controller {
             $_POST['search_text'] = $_SESSION['categorysearch_text'];
         }
 
-        $limit = 6;
-        $colOfCategories = $this->model->colOfSearchedCategories();
+        $limit = 4;
+        $colOfCategories = $this->model->colOfSearchedCategories($_POST['search_text']);
         $pagination = new Pagination($this->route, $colOfCategories, $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
@@ -308,7 +308,7 @@ class AdminController extends Controller {
             $this->view->redirect('admin/categorysearch/'.$pagination->totalPageCount);
         }
         $pagination->getContent();
-        $categories = $this->model->searchCategoriesByName($_POST['search_text'], $limit, $pagination->currentPage);
+        $categories = $this->model->searchCategories($_POST['search_text'], $limit, $pagination->currentPage);
 
         $this->view->render('Поиск категорий', [
             'categories' => $categories,
@@ -325,6 +325,21 @@ class AdminController extends Controller {
             $this->model->deleteCategory($id);
         }
         $this->view->redirect('admin/categories/1');
+    }
+
+    public function categoryeditAction(){
+        $id = $this->route['id'];
+        $category = $this->model->getCategoryById($id);
+
+        if(!empty($_POST)){
+            if(true){
+
+            }
+        }
+
+        $this->view->render('Изменение категории', [
+            'category' => $category
+        ]);
     }
 
 

@@ -1,6 +1,6 @@
-@import "../variables";
-@import "admin_pagination";
-@import "admin_body_template";
+@import "../../variables";
+@import "../admin_pagination";
+@import "../admin_body_template";
 
 .posts{
 
@@ -359,6 +359,7 @@
             justify-content: center;
 
             a {
+              text-decoration: none;
               padding: 5px 7px;
               cursor: pointer;
               border: 1px solid #bcbcbc;
@@ -382,7 +383,6 @@
             }
 
             .delete_category {
-              text-decoration: none;
               margin-left: 20px;
               border-color: #f54545;
               p {

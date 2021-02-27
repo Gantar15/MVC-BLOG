@@ -32,8 +32,10 @@ class MainController extends Controller {
 
         //Получаем информацию о постах
         $posts = $this->model->getNewestPostsByLimit($limit, $pagination->currentPage);
-        for ($i = 0; $i < count($posts); $i++){
-            $posts[$i]['col_of_comments'] = $this->model->commentsCount($posts[$i]['id']);
+        if(!empty($posts)) {
+            for ($i = 0; $i < count($posts); $i++) {
+                $posts[$i]['col_of_comments'] = $this->model->commentsCount($posts[$i]['id']);
+            }
         }
 
         //Получаем инфу о пользователе, если он залогинился

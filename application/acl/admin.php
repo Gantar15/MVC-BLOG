@@ -19,6 +19,7 @@ return [
         'categories',
         'categorysearch',
         'categorydelete',
+        'categoryedit',
         'tags',
         'tagdelete',
         'tagsearch'

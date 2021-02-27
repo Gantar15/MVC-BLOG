@@ -47,7 +47,7 @@
                             <div class="category_main">
                                 <div class="name_block">
                                     <p class="name">
-                                        <?=$category['name']?>
+                                        <?=htmlspecialchars($category['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
                                     </p>
                                 </div>
                                 <div class="col_of_posts">
@@ -55,11 +55,11 @@
                                     <img src="/public/imgs/posts.svg">
                                 </div>
                                 <p class="description">
-                                    <?=$category['description']?>
+                                    <?=htmlspecialchars($category['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
                                 </p>
                             </div>
                             <div class="controllers">
-                                <a class="edit"><p>Изменить</p></a>
+                                <a href="/admin/categoryedit/<?=$category['id']?>" class="edit"><p>Изменить</p></a>
                                 <a href="/admin/categorydelete/<?=$category['id']?>" class="delete_category"><p>Удалить</p></a>
                             </div>
                         </div>

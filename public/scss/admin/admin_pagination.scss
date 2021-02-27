@@ -85,6 +85,7 @@
       }
 
       &:disabled {
+        display: none;
         a {
           color: #939393;
           pointer-events: none;
@@ -104,12 +105,9 @@
       }
 
       &.active {
-        background-color: #6262bced;
+        background-color: #fcfaff;
         border-color: #6262bced;
-
-        a {
-          color: #ffffff;
-        }
+        border-left: 1px solid #6262bced;
       }
     }
   }

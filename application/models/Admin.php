@@ -224,8 +224,8 @@ class Admin extends Model
             $this->error = 'Длина названия не должна быть меньше 2 символов';
             return false;
         }
-        elseif(mb_strlen($name, 'utf-8') > 20) {
-            $this->error = 'Длина названия не должна быть больше 20 символов';
+        elseif(mb_strlen($name, 'utf-8') > 25) {
+            $this->error = 'Длина названия не должна быть больше 25 символов';
             return false;
         }
         elseif($this->categoryExistCheck($name)){
@@ -240,8 +240,8 @@ class Admin extends Model
             $this->error = 'Длина описания не должна быть меньше 15 символов';
             return false;
         }
-        elseif(mb_strlen($description, 'utf-8') > 150) {
-            $this->error = 'Длина описания не должна быть больше 150 символов';
+        elseif(mb_strlen($description, 'utf-8') > 250) {
+            $this->error = 'Длина описания не должна быть больше 250 символов';
             return false;
         }
         return true;
@@ -251,20 +251,27 @@ class Admin extends Model
         return $this->db->column('SELECT COUNT(id) FROM categories');
     }
 
-    public function colOfSearchedCategories($tagTitle){
+    public function colOfSearchedCategories($searchText){
         $params =  [
-            'name' => $tagTitle
+            'text' => $searchText
         ];
-        return $this->db->column("SELECT COUNT(id) FROM categories WHERE name REGEXP :name", $params);
+        return $this->db->column("SELECT COUNT(id) FROM categories WHERE name REGEXP :text OR description REGEXP :text", $params);
     }
 
-    public function searchCategoriesByName($categoryTitle, $limit, $currentPage){
+    public function searchCategories($searchText, $limit, $currentPage){
         $params =  [
-            'name' => $categoryTitle,
+            'text' => $searchText,
             'limit' => $limit,
-            'offset' => $currentPage
+            'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row("SELECT * FROM categories WHERE name REGEXP :name LIMIT :limit OFFSET :offset", $params);
+        $categories = $this->db->row("SELECT * FROM categories WHERE name REGEXP :text OR description REGEXP :text LIMIT :limit OFFSET :offset", $params);
+        if(!empty($categories)) {
+            for ($i = 0; $i < count($categories); $i++) {
+                $colOfPosts = $this->colOfPostsInCategory($categories[$i]['id']);
+                $categories[$i]['col_of_posts'] = $colOfPosts;
+            }
+        }
+        return $categories;
     }
 
 
