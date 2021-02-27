@@ -76,9 +76,39 @@
             </form>
         </div>
         <div class="posts_block">
-            <?php foreach($categories as $category):?>
-
-            <?php endforeach;?>
+            <?php if(empty($categories)):?>
+                <div class="empty_posts_block">
+                    <img src="/public/imgs/empty_box.png">
+                    <p>Категорий нет</p>
+                    <p>Но вы можете создать новую категорию</p>
+                </div>
+            <?php else:?>
+                <?php foreach($categories as $category):?>
+                    <div class="category">
+                        <img src="/public/categories_icons/<?=$category['id']?>.jpg" class="category_img">
+                        <div>
+                            <div class="category_main">
+                                <div class="name_block">
+                                    <p class="name">
+                                        <?=$category['name']?>
+                                    </p>
+                                </div>
+                                <div class="col_of_posts">
+                                    <p><?=$category['col_of_posts']?> <?=$this->valuesFormatter($category['col_of_posts'], 'постов', 'пост', 'поста')?></p>
+                                    <img src="/public/imgs/posts.svg">
+                                </div>
+                                <p class="description">
+                                    <?=$category['description']?>
+                                </p>
+                            </div>
+                            <div class="controllers">
+                                <a class="edit"><p>Изменить</p></a>
+                                <a href="/admin/categorydelete/<?=$category['id']?>" class="delete_category"><p>Удалить</p></a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            <?php endif;?>
         </div>
         <div class="posts_footer">
             <div class="buttons_block">

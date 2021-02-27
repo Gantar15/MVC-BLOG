@@ -18,6 +18,7 @@ return [
         'users',
         'categories',
         'categorysearch',
+        'categorydelete',
         'tags',
         'tagdelete',
         'tagsearch'

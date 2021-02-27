@@ -19,7 +19,8 @@
     <script src="/public/scripts/loadParser.js" type="module"></script>
     <script src="/public/scripts/form.js" type="module"></script>
 
-    <script src="/public/scripts/admin/main_admin_posts.js" defer></script>
+    <script src="/public/scripts/admin/main_admin_posts.js" type="module"></script>
+    <script src="/public/scripts/admin/tags.js" type="module"></script>
     <script src="/public/scripts/admin/admin_search.js" defer></script>
 </head>
 <body>

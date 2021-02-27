@@ -197,14 +197,16 @@ class AdminController extends Controller {
         $pagination->getContent();
         $posts = $this->model->searchPosts($_POST['search_text'], $limit, $pagination->currentPage);
 //      $posts = array_merge($posts, $this->model->searchPostsByAuthorName($_POST['search_text']));
-        $posts = array_reduce($posts, function($uniquePosts, $post){
-            foreach ($uniquePosts as $p){
-                if($p['id'] === $post['id'])
-                    return $uniquePosts;
-            }
-            $uniquePosts[] = $post;
-            return $uniquePosts;
-        }, array());
+        if(!empty($posts)) {
+            $posts = array_reduce($posts, function ($uniquePosts, $post) {
+                foreach ($uniquePosts as $p) {
+                    if ($p['id'] === $post['id'])
+                        return $uniquePosts;
+                }
+                $uniquePosts[] = $post;
+                return $uniquePosts;
+            }, array());
+        }
 
         $this->view->render('Поиск постов', [
             'posts' => $posts,
@@ -219,7 +221,7 @@ class AdminController extends Controller {
 
     //Категории
     public function categoriesAction(){
-        $limit = 6;
+        $limit = 4;
         $pagination = new Pagination($this->route, $this->model->getCategoriesCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
@@ -316,6 +318,15 @@ class AdminController extends Controller {
         ]);
     }
 
+    public function categorydeleteAction(){
+        $id = $this->route['id'];
+        $categoryName = $this->model->getCategoryById($id)['name'];
+        if($this->model->categoryExistCheck($categoryName)) {
+            $this->model->deleteCategory($id);
+        }
+        $this->view->redirect('admin/categories/1');
+    }
+
 
     //Теги-----------------------------------------------
 
@@ -364,7 +375,8 @@ class AdminController extends Controller {
 
     public function tagdeleteAction(){
         $tagId = $this->route['id'];
-        if($this->model->tagExistsCheck($tagId)) {
+        $tagName = $this->model->getTagById($tagId)['name'];
+        if($this->model->tagExistCheck($tagName)) {
             $this->model->deleteTag($tagId);
         }
         $this->view->redirect('admin/tags/1');

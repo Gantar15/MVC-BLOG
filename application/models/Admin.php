@@ -165,12 +165,23 @@ class Admin extends Model
 
     //Categories---------------------------------------
 
+    public function colOfPostsInCategory($id){
+        return $this->db->column('SELECT COUNT(id) FROM posts WHERE category = :category_id', ['category_id' => $id]);
+    }
+
     public function getCategoriesByLimit($limit, $currentPage){
         $params = [
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row('SELECT * FROM categories LIMIT :limit OFFSET :offset', $params);
+        $categories = $this->db->row('SELECT * FROM categories LIMIT :limit OFFSET :offset', $params);
+        if(!empty($categories)) {
+            for ($i = 0; $i < count($categories); $i++) {
+                $colOfPosts = $this->colOfPostsInCategory($categories[$i]['id']);
+                $categories[$i]['col_of_posts'] = $colOfPosts;
+            }
+        }
+        return $categories;
     }
 
     public function addCategory($post){
@@ -186,12 +197,26 @@ class Admin extends Model
         return $this->db->lastInsertId();
     }
 
+    public function deleteCategory($id){
+        $this->db->query('DELETE FROM categories WHERE id = :id', ['id' => $id]);
+        $posts = $this->db->row('SELECT id, category FROM posts WHERE category = :id', ['id' => $id]);
+        if(!empty($posts)) {
+            foreach ($posts as $post) {
+                $this->db->query("UPDATE posts SET category = '' WHERE id = :id", ['id' => $post['id']]);
+            }
+        }
+    }
+
     public function categoryExistCheck($name)
     {
         if($this->db->column('SELECT id FROM categories WHERE name = :name', ['name' => $name])){
             return true;
         }
         return false;
+    }
+
+    public function getCategoryById($id){
+        return $this->db->row('SELECT * FROM categories WHERE id = :id', ['id' => $id])[0];
     }
 
     public function categoryNameValidate($name){
@@ -245,6 +270,10 @@ class Admin extends Model
 
     //Tags-------------------------------------------------
 
+    public function colOfPostsWithTag($tagId){
+        return $this->db->column('SELECT COUNT(id) FROM posts WHERE tags REGEXP :tag_id', ['tag_id' => $tagId]);
+    }
+
     public function tagExistCheck($tagName){
         return $this->db->column('SELECT id FROM tags WHERE name = :name', ['name' => $tagName]);
     }
@@ -273,19 +302,31 @@ class Admin extends Model
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row('SELECT * FROM tags ORDER BY id DESC LIMIT :limit OFFSET :offset', $params);
+        $tags = $this->db->row('SELECT * FROM tags ORDER BY id DESC LIMIT :limit OFFSET :offset', $params);
+        if(!empty($tags)) {
+            for ($i = 0; $i < count($tags); $i++) {
+                $tags[$i]['col_of_posts'] = $this->colOfPostsWithTag($tags[$i]['id']);
+            }
+        }
+        return $tags;
     }
 
-    public function tagExistsCheck($id){
-        if($this->db->column('SELECT id FROM tags WHERE id = :id', ['id' => $id])){
-            return true;
-        }
-        return false;
+    public function getTagById($id){
+        return $this->db->row('SELECT * FROM tags WHERE id = :id', ['id' => $id])[0];
     }
 
     public function deleteTag($id)
     {
         $this->db->query('DELETE FROM tags WHERE id = :id', ['id' => $id]);
+        $postsWithTags = $this->db->row('SELECT id, tags FROM posts WHERE tags REGEXP :tag_id', ['tag_id' => $id]);
+        foreach ($postsWithTags as $post){
+            $newTags = preg_replace("#$id,|,$id|$id#", '', $post['tags']);
+            $params = [
+              'tags' => $newTags,
+              'post_id' => $post['id']
+            ];
+            $this->db->query('UPDATE posts SET tags = :tags WHERE id = :post_id', $params);
+        }
     }
 
     public function getTagsCount(){
@@ -305,7 +346,13 @@ class Admin extends Model
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row("SELECT * FROM tags WHERE name REGEXP :name LIMIT :limit OFFSET :offset", $params);
+        $tags = $this->db->row("SELECT * FROM tags WHERE name REGEXP :name ORDER BY id DESC LIMIT :limit OFFSET :offset", $params);
+        if(!empty($tags)) {
+            for ($i = 0; $i < count($tags); $i++) {
+                $tags[$i]['col_of_posts'] = $this->colOfPostsWithTag($tags[$i]['id']);
+            }
+        }
+        return $tags;
     }
 
 }

@@ -1,8 +1,8 @@
 
-
-//Модальное окно для подтверждения удаления поста
-const okObj = {};
-const modal = $m.modal(`
+if(document.querySelector('.delete_post')) {
+//Модальное окно для подтверждения удаления
+    const okObj = {};
+    const modal = $m.modal(`
                             <div class="modal-header">
                                 <span>Подтверждение</span>
                             </div>
@@ -16,21 +16,22 @@ const modal = $m.modal(`
                                 <button data-closer>ОТМЕНА</button>
                             </div>
                         `, {
-    width: 300,
-    onOkObj: okObj
-});
+        width: 300,
+        onOkObj: okObj
+    });
 
-//даление поста
-document.addEventListener('click', event => {
-   const postDelete = event.target.closest('.actions .delete');
-   if(!postDelete) return;
-   event.preventDefault();
+//Удаление поста
+    document.addEventListener('click', event => {
+        const postDelete = event.target.closest('.actions .delete_post');
+        if (!postDelete) return;
+        event.preventDefault();
 
-    okObj.onOk = () => {
-        window.location.href = postDelete.href;
-    };
-    modal.open();
-});
+        okObj.onOk = () => {
+            window.location.href = postDelete.href;
+        };
+        modal.open();
+    });
+}
 
 
 //Доп инфа о посте в админке

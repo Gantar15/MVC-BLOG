@@ -52,6 +52,8 @@ export default function imageUploader(inputSelector, buttonHtml){
     function _resetImage(){
         if(!_input.classList.contains('uploaded')) return;
 
+        const img = _uploadedImageBlock.querySelector('img');
+        URL.revokeObjectURL(img.url);
         _inputReset();
         _uploadedImageBlock.insertAdjacentHTML('beforebegin', _buttonOldValue);
         const oldVal = _uploadedImageBlock.previousElementSibling;

@@ -64,14 +64,27 @@
             </form>
         </div>
         <div class="posts_block">
-            <?php foreach($tags as $tag):?>
-                <div class="tag">
-                    <p class="tag_name"><span>#</span><?=$tag['name']?></p>
-                    <div class="controllers">
-                        <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete">&times;</a>
-                    </div>
+            <?php if(empty($tags)):?>
+                <div class="empty_posts_block">
+                    <img src="/public/imgs/empty_box.png">
+                    <p>Тегов нет</p>
+                    <p>Но вы можете создать новый тег</p>
                 </div>
-            <?php endforeach;?>
+            <?php else:?>
+                <?php foreach($tags as $tag):?>
+                    <div class="tag">
+                        <div class="tag_body">
+                            <p class="tag_name"><span>#</span><?=$tag['name']?></p>
+                            <div class="controllers">
+                                <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete_tag">&times;</a>
+                            </div>
+                        </div>
+                        <div class="tag_footer">
+                            <p>Постов с данным тегом <?=$tag['col_of_posts']?></p>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            <?php endif;?>
         </div>
         <div class="posts_footer">
             <div class="buttons_block">

@@ -15,7 +15,7 @@
             </a>
         </div>
     </div>
-    <section class="posts_container">
+    <section class="posts_container group_box active_box">
         <div class="posts_container_header">
             <div class="post_head_title">
                 <span>Посты</span>
@@ -33,7 +33,7 @@
             </form>
         </div>
         <div class="posts_block">
-            <?php if ($colOfPosts === 0):?>
+            <?php if ($colOfPosts == 0):?>
                 <div class="empty_search_request">
                     <img src="/public/imgs/telescope.svg">
                     <p>Ничего не найдено</p>
@@ -118,7 +118,7 @@
                                     <img src="/public/imgs/edit-post.png">
                                     <p>Изменить</p>
                                 </a>
-                                <a href="/admin/postdelete/<?=$post['id']?>" class="delete">
+                                <a href="/admin/postdelete/<?=$post['id']?>" class="delete_post">
                                     <img src="/public/imgs/delete-post.png">
                                     <p>Удалить</p>
                                 </a>

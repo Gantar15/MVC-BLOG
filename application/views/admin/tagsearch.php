@@ -33,7 +33,7 @@
             </form>
         </div>
         <div class="posts_block">
-            <?php if ($colOfTags === 0):?>
+            <?php if ($colOfTags == 0):?>
                 <div class="empty_search_request">
                     <img src="/public/imgs/telescope.svg">
                     <p>Ничего не найдено</p>
@@ -42,9 +42,14 @@
             <?php else:?>
                 <?php foreach($tags as $tag):?>
                     <div class="tag">
-                        <p class="tag_name"><span>#</span><?=$tag['name']?></p>
-                        <div class="controllers">
-                            <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete">&times;</a>
+                        <div class="tag_body">
+                            <p class="tag_name"><span>#</span><?=$tag['name']?></p>
+                            <div class="controllers">
+                                <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete_tag">&times;</a>
+                            </div>
+                        </div>
+                        <div class="tag_footer">
+                            <p>Постов с данным тегом <?=$tag['col_of_posts']?></p>
                         </div>
                     </div>
                 <?php endforeach;?>

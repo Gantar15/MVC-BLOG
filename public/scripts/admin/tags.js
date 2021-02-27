@@ -1,15 +1,6 @@
-import imageUploader from "../image_uploader.js";
-
-imageUploader('.second_half .add_image > input', `
-                        <div class="add_image_trigger">
-                            <p>загрузите изображение</p>
-                            <img src="/public/imgs/add_image.svg">
-                        </div>
-                    `);
 
 
-
-if(document.querySelector('.delete_category'))
+if(document.querySelector('.delete_tag'))
 {
 //Модальное окно для подтверждения удаления
     const okObj = {};
@@ -19,7 +10,7 @@ if(document.querySelector('.delete_category'))
                             </div>
                             <div class="modal-body">
                                 <p>  
-                                Вы уверены, что хотите удалить данную категорию ?
+                                Вы уверены, что хотите удалить данный тег ?
                                 </p>
                             </div>
                             <div class="modal-footer">
@@ -33,7 +24,7 @@ if(document.querySelector('.delete_category'))
 
 //Удаление поста
     document.addEventListener('click', event => {
-        const postDelete = event.target.closest('.delete_category');
+        const postDelete = event.target.closest('.delete_tag');
         if (!postDelete) return;
         event.preventDefault();
 
