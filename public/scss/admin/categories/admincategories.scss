@@ -294,6 +294,8 @@
       flex-wrap: wrap;
 
       .category{
+        height: auto;
+        box-shadow: 0 0 3px 1px #f8f8f8;
         flex: 0 1 45%;
         display: flex;
         flex-direction: column;
@@ -308,53 +310,60 @@
           width: 100%;
         }
         .category_img + div {
+          height: 100%;
+          border: 1px solid #dfdfdf;
           border-radius: 0 0 3px 3px;
-          border: 1px solid #9b9b9b;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           border-top: none;
 
           .category_main {
             padding: 10px 20px;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
 
             div.name_block {
               width: 100%;
               display: flex;
-              justify-content: center;
+              flex-direction: column;
               align-items: center;
+              margin-bottom: 30px;
 
               .name {
                 font: 500 20px $fontName;
               }
-            }
-            .col_of_posts{
-              margin-top: 5px;
-              display: flex;
-              align-items: center;
+              .col_of_posts{
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
 
-              img{
-                object-fit: contain;
-                width: 14px;
-                height: 14px;
-              }
-              p{
-                text-align: right;
-                margin-right: 8px;
-                font: normal 13px $fontName;
+                img{
+                  object-fit: contain;
+                  width: 14px;
+                  height: 14px;
+                }
+                p{
+                  text-align: right;
+                  margin-right: 8px;
+                  font: normal 13px $fontName;
+                }
               }
             }
             .description {
+              margin: auto 0;
               text-align: center;
-              margin-top: 20px;
               font: normal 13px $fontName;
             }
           }
 
           .controllers {
             padding: 15px 0;
-            border-top: 1px solid #bfbfbf;
+            border-top: 1px solid #e3e3e3;
             display: flex;
             justify-content: center;
 

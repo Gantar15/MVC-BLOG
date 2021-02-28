@@ -185,7 +185,7 @@ class AdminController extends Controller {
             $_POST['search_text'] = $_SESSION['postsearch_text'];
         }
 
-        $limit = 2;
+        $limit = 5;
         $colOfPosts = $this->model->colOfSearchedPosts($_POST['search_text']);
         $pagination = new Pagination($this->route, $colOfPosts, $limit);
         if(!isset($this->route['page'])){
@@ -219,20 +219,8 @@ class AdminController extends Controller {
 
     //Категории-----------------------------------------------
 
-    //Категории
-    public function categoriesAction(){
-        $limit = 4;
-        $pagination = new Pagination($this->route, $this->model->getCategoriesCount(), $limit);
-        if(!isset($this->route['page'])){
-            $this->route['page'] = 1;
-        }
-        if($this->route['page'] > $pagination->totalPageCount){
-            $this->view->redirect('admin/categories/'.$pagination->totalPageCount);
-        }
-        $pagination->getContent();
-        $categories = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
-
-        //Валидация для добавления категории
+    //Валидация для добавления категории
+    public function categoryValidate($whenSuccessF, $mode){
         if(!empty($_POST)) {
             $this->model->error = [];
 
@@ -249,6 +237,11 @@ class AdminController extends Controller {
             else {
                 $key = false;
                 $key = $this->model->categoryNameValidate($_POST['name']);
+
+                if($mode == 'add' && $this->model->categoryExistCheck($_POST['name'])){
+                    $this->model->error = 'Категория с указанным названием уже существует';
+                    $key = false;
+                }
                 if ($key) {
                     $this->model->categoryDescriptionValidate($_POST['description']);
                 }
@@ -260,22 +253,45 @@ class AdminController extends Controller {
 
             //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
-                if(!file_exists($_FILES['icon']['tmp_name'])){
-                    $this->view->message('Ошибка', 'Выберите изображение', '', 'general');
+
+                //Если нам отправили форму со старым изображением категории, то не праверяем его
+                if(!isset($_POST['primary_image'])) {
+                    if (!file_exists($_FILES['icon']['tmp_name'])) {
+                        $this->view->message('Ошибка', 'Выберите изображение', '', 'general');
+                    }
                 }
 
-                $id = $this->model->addCategory($_POST);
-
-                if($id && !$this->model->uploadImage($id, $_FILES['icon']['tmp_name'], 'public/categories_icons')){
-                    $this->view->message('Ошибка', $this->model->error, '', 'general');
-                }
-                $this->view->location('admin/categories/'.$this->route['page']);
+                $whenSuccessF();
             }
             //Если данные верны, но все еще приходят проверки на валидность полей от js, то говорим, что уже все правильно
             else{
                 exit(json_encode(['finally_valid' => true]));
             }
         }
+    }
+
+    //Категории
+    public function categoriesAction(){
+        $limit = 4;
+        $pagination = new Pagination($this->route, $this->model->getCategoriesCount(), $limit);
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect('admin/categories/'.$pagination->totalPageCount);
+        }
+        $pagination->getContent();
+        $categories = $this->model->getCategoriesByLimit($limit, $pagination->currentPage);
+
+        //Валидация для добавления категории
+        $this->categoryValidate(function() {
+            $id = $this->model->addCategory($_POST);
+
+            if(!$id || !$this->model->uploadImage($id, $_FILES['icon']['tmp_name'], 'public/categories_icons')){
+                $this->view->message('Ошибка', $this->model->error, '', 'general');
+            }
+            $this->view->location('admin/categories/'.$this->route['page']);
+        }, 'add');
 
         $this->view->render('Список категорий', [
             'categories' => $categories,
@@ -313,11 +329,12 @@ class AdminController extends Controller {
         $this->view->render('Поиск категорий', [
             'categories' => $categories,
             'colOfCategories' => $colOfCategories,
-            'searchTitle' => $_POST['search_text'],
+            'searchText' => $_POST['search_text'],
             'pagination' => $pagination
         ]);
     }
 
+    //Удаление категорий
     public function categorydeleteAction(){
         $id = $this->route['id'];
         $categoryName = $this->model->getCategoryById($id)['name'];
@@ -327,15 +344,28 @@ class AdminController extends Controller {
         $this->view->redirect('admin/categories/1');
     }
 
+    //Изменение категорий
     public function categoryeditAction(){
         $id = $this->route['id'];
+        $GLOBALS['category_id'] = $id;
         $category = $this->model->getCategoryById($id);
 
-        if(!empty($_POST)){
-            if(true){
+        if(!empty($_POST)) {
+            //Валидация для изменения категории
+            $this->categoryValidate(function () {
+                $id = $GLOBALS['category_id'];
+                $key = $this->model->editCategory($id, $_POST['name'], $_POST['description']);
 
-            }
+                //Если нам отправили форму со старым изображением категории, то не загружаем его
+                if (!isset($_POST['primary_image'])) {
+                    if (!$key || !$this->model->uploadImage($id, $_FILES['icon']['tmp_name'], 'public/categories_icons')) {
+                        $this->view->message('Ошибка', $this->model->error, '', 'general');
+                    }
+                }
+                $this->view->location('admin/categories/1');
+            }, 'edit');
         }
+        unset($GLOBALS['category_id']);
 
         $this->view->render('Изменение категории', [
             'category' => $category

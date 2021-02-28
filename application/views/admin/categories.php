@@ -92,10 +92,10 @@
                                     <p class="name">
                                         <?=htmlspecialchars($category['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
                                     </p>
-                                </div>
-                                <div class="col_of_posts">
-                                    <p><?=$category['col_of_posts']?> <?=$this->valuesFormatter($category['col_of_posts'], 'постов', 'пост', 'поста')?></p>
-                                    <img src="/public/imgs/posts.svg">
+                                    <div class="col_of_posts">
+                                        <p><?=$category['col_of_posts']?> <?=$this->valuesFormatter($category['col_of_posts'], 'постов', 'пост', 'поста')?></p>
+                                        <img src="/public/imgs/posts.svg">
+                                    </div>
                                 </div>
                                 <p class="description">
                                     <?=htmlspecialchars($category['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>

@@ -85,7 +85,7 @@
       }
 
       &:disabled {
-        display: none;
+        opacity: .7;
         a {
           color: #939393;
           pointer-events: none;

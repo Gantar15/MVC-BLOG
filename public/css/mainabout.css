@@ -483,7 +483,7 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: url("../imgs/header_bg_about.jpg");
+  background: url("../../imgs/header_bg_about.jpg");
   background-size: cover; }
 .header_title {
   color: #fafafa;

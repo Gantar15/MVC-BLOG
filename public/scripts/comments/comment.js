@@ -99,7 +99,7 @@ window.addEventListener('scroll', ()=>{
 
     if(!loaded) {
         //Подключаем пагинацию комментов
-        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 0, filterMode,() => {
+        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 100, filterMode,() => {
             if(nextCommentsTrigger) {
                 loadBlock.style.display = 'none';
             }
@@ -129,9 +129,9 @@ window.addEventListener('scroll', ()=>{
             }
             let Id = setInterval(async () => {
                 if (pagination.isCommentsReady) {
+                    clearInterval(Id);
                     await pagination.render();
                     commentsMenusRender(document.querySelector('.comments_block_body'));
-                    clearInterval(Id);
                 }
             }, loadTime);
         }
@@ -148,9 +148,9 @@ window.addEventListener('scroll', ()=>{
                 //Рендерим комменты и убираем загрузку со страницы, когда у нас уже есть готовый html-код комментариев
                 let itrvId = setInterval(async () => {
                     if (pagination.isCommentsReady) {
+                        clearInterval(itrvId);
                         await pagination.render();
                         commentsMenusRender(document.querySelector('.comments_block_body'));
-                        clearInterval(itrvId);
                     }
                 }, 500);
             };
@@ -639,6 +639,7 @@ commentsBlockBody.addEventListener('click', event => {
             let loadTime;
             let inttId = setInterval(() => {
                 if(pagination.readyAnswersState === 1){
+                    clearInterval(inttId);
                     colOfActualAnswers = pagination.answers[commentId].length;
                     if(colOfActualAnswers <= 3){
                         loadTime = 300;
@@ -647,7 +648,6 @@ commentsBlockBody.addEventListener('click', event => {
                     } else{
                         loadTime = 500;
                     }
-                    clearInterval(inttId);
                     //Скрываем ответы, которые расположены под блоком ответов
                     let afterLoadedAnswersBlock = answer.querySelector('.answers_block + .after_loaded_answers_block');
                     afterLoadedAnswersBlock && afterLoadedAnswersBlock.classList.add('hidden');
@@ -658,6 +658,7 @@ commentsBlockBody.addEventListener('click', event => {
 
                     const intrvlId = setInterval(async () => {
                         if (pagination.commentsWithAnswers[commentId].isAnswersCodesReady) {
+                            clearInterval(intrvlId);
                             loader.stop();
                             loadAnswersBlock && loadAnswersBlock.classList.remove('active');
                             showNextAnswers && showNextAnswers.remove();
@@ -701,10 +702,8 @@ commentsBlockBody.addEventListener('click', event => {
                                     });
                                 }
                             }
-                            clearInterval(intrvlId);
                         }
                     }, loadTime);
-
                 }
             }, 10);
         };

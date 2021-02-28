@@ -77,7 +77,7 @@
     .buttons_block > div button:hover {
       background-color: #f5f5f5; }
     .buttons_block > div button:disabled {
-      display: none; }
+      opacity: .7; }
       .buttons_block > div button:disabled a {
         color: #939393;
         pointer-events: none; }
@@ -200,9 +200,13 @@
                 box-shadow: inset 0 1px 2px 0 #efefef; }
         .posts .posts_container .posts_container_header .search_block input:focus {
           border: 1px solid #2f83e9; }
+      .posts .posts_container .posts_container_header .search_block.active .search_trigger {
+        background-color: #efefef; }
+        .posts .posts_container .posts_container_header .search_block.active .search_trigger img {
+          opacity: 1; }
       .posts .posts_container .posts_container_header .search_block .search_trigger {
         cursor: pointer;
-        background-color: #eeeeee;
+        background-color: #f5f5f5;
         width: 60px;
         border: 1px solid #bebebe;
         border-left: none;
@@ -220,7 +224,12 @@
           -o-object-fit: contain;
              object-fit: contain;
           width: 13px;
+          opacity: .6;
           height: 13px; }
+        .posts .posts_container .posts_container_header .search_block .search_trigger:hover {
+          background-color: #efefef; }
+          .posts .posts_container .posts_container_header .search_block .search_trigger:hover img {
+            opacity: 1; }
     .posts .posts_container .posts_container_header .remove_search_content {
       cursor: pointer;
       position: absolute;
@@ -449,8 +458,10 @@
     width: -moz-fit-content;
     width: fit-content;
     padding: 10px 15px;
-    border: 1px solid #b3b3b3;
+    border: 1px solid #e3e3e3;
     border-radius: 2px;
+    -webkit-box-shadow: 0 0 3px 1px #f8f8f8;
+            box-shadow: 0 0 3px 1px #f8f8f8;
     -webkit-transform: translate(-10px, -10px);
             transform: translate(-10px, -10px);
     margin-left: 20px; }
@@ -475,7 +486,8 @@
         margin-top: 1px;
         cursor: pointer;
         font: 500 18px "Open Sans";
-        color: #3b3b3b; }
+        color: #3b3b3b;
+        opacity: .9; }
     .posts .posts_container div.posts_block .tag .tag_footer {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -483,7 +495,7 @@
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center;
-      border-top: 1px solid #b5b5b5;
+      border-top: 1px solid #dfdfdf;
       padding: 15px 0px;
       padding-bottom: 10px; }
       .posts .posts_container div.posts_block .tag .tag_footer p {

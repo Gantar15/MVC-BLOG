@@ -347,8 +347,19 @@ export default class CommentsPagination{
     //Рендер ответов под определенным комментом
     async renderAnswers(parentNode, commentId){
         if (this.commentsWithAnswers[commentId].isAnswersCodesReady) {
-            for (const answer of this.commentsWithAnswers[commentId].answersFinallyCodes) {
-                parentNode.insertAdjacentHTML('beforeend', answer);
+
+            async function* getAnswersAsync(answers, timeout) {
+                for (let answer of answers) {
+                    await new Promise(resolve => setTimeout(resolve, timeout));
+                    yield answer;
+                }
+            }
+
+            //Вставляем ответы на страницу асинхронно(то есть один коммент за время timeout)
+            let answersGenerator = getAnswersAsync(this.commentsWithAnswers[commentId].answersFinallyCodes, this.commentTimeout);
+
+            for await (let answerCode of answersGenerator) {
+                parentNode.insertAdjacentHTML('beforeend', answerCode);
                 this.forbidEdit(parentNode.lastElementChild);   //Запрещаем изменение айди комментария
             }
 
@@ -464,11 +475,8 @@ export default class CommentsPagination{
             if (this.isCommentsReady) {
 
                 async function* getCommentAsync(comments, timeout) {
-                    let firsttimeout = timeout;
-                    timeout = 0;
                     for (let comm of comments) {
                         await new Promise(resolve => setTimeout(resolve, timeout));
-                        timeout = firsttimeout;
                         yield comm;
                     }
                 }
@@ -520,7 +528,7 @@ export default class CommentsPagination{
         for (let i = 0; i < str.length; i++) {
             let character = str.charCodeAt(i);
             hash = ((hash<<5)-hash)+character;
-            hash = hash & hash; // Convert to 32bit integer
+            hash = hash & hash; // Конвертируем в 32-битное целое
         }
         return hash;
     }

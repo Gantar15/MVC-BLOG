@@ -8,7 +8,6 @@ imageUploader('.second_half .add_image > input', `
                     `);
 
 
-
 if(document.querySelector('.delete_category'))
 {
 //Модальное окно для подтверждения удаления

@@ -22,10 +22,9 @@
     <section class="posts_add group_box active_box">
         <div class="add_category">
             <div class="posts_add_header group_box_header">
-                <p>Добавить категорию</p>
+                <p>Изменить категорию</p>
                 <div class="controllers">
                     <div class="trey">&ndash;</div>
-                    <div class="close">&times;</div>
                 </div>
             </div>
             <div class="general_form_message">
@@ -50,12 +49,26 @@
                     </div>
                     <div class="second_half">
                         <div class="add_image">
-                            <input name="icon" type="file">
+                            <input type="text" name="primary_image" value="true" style="display: none">
+                            <input class="uploaded" name="icon" type="file">
+                            <div class="uploaded_image_block">
+                                <img src="/public/categories_icons/<?=$category['id']?>.jpg">
+                                <div class="uploaded_image_reset">
+                                    <div>
+                                        <img src="/public/imgs/undo.svg">
+                                        <p>Отмена</p>
+                                    </div>
+                                </div>
+                                <div class="uploaded_image_info">
+                                    <p><?=$category['id']?>.jpg</p>
+                                    <p><?=round(stat($_SERVER['DOCUMENT_ROOT']."\public\categories_icons\\{$category['id']}.jpg")['size']/1024, 2)?>КБ</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="submit_items_block">
-                    <input type="submit" value="Отправить &#10004;">
+                    <input type="submit" value="Изменить &#10004;">
                     <a href="/admin/categoryedit/<?=$category['id']?>"><input type="button" value="Сбросить &#10006;"></a>
                 </div>
             </form>

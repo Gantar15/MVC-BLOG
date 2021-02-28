@@ -162,8 +162,9 @@
         flex: 0 1 30%;
         width: fit-content;
         padding: 10px 15px;
-        border: 1px solid #b3b3b3;
+        border: 1px solid #e3e3e3;;
         border-radius: 2px;
+        box-shadow: 0 0 3px 1px #f8f8f8;
         transform: translate(-10px, -10px);
         margin-left: 20px;
 
@@ -189,13 +190,14 @@
               cursor: pointer;
               font: 500 18px $fontName;
               color: #3b3b3b;
+              opacity: .9;
             }
           }
         }
         .tag_footer{
           display: flex;
           justify-content: center;
-          border-top: 1px solid #b5b5b5;
+          border-top: 1px solid #dfdfdf;
           padding: 15px 0px;
           padding-bottom: 10px;
 

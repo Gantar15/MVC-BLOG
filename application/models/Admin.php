@@ -174,7 +174,7 @@ class Admin extends Model
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        $categories = $this->db->row('SELECT * FROM categories LIMIT :limit OFFSET :offset', $params);
+        $categories = $this->db->row('SELECT * FROM categories ORDER BY id DESC LIMIT :limit OFFSET :offset', $params);
         if(!empty($categories)) {
             for ($i = 0; $i < count($categories); $i++) {
                 $colOfPosts = $this->colOfPostsInCategory($categories[$i]['id']);
@@ -197,6 +197,20 @@ class Admin extends Model
         return $this->db->lastInsertId();
     }
 
+    public function editCategory($id, $name, $description){
+        $params = [
+            'id' => $id,
+            'name' => $name,
+            'description' => $description
+        ];
+        $response = $this->db->query('UPDATE categories SET name = :name, description = :description WHERE id = :id', $params);
+        if(!$response){
+            $this->error = 'Не удалось изменить категорию';
+            return false;
+        }
+        return true;
+    }
+
     public function deleteCategory($id){
         $this->db->query('DELETE FROM categories WHERE id = :id', ['id' => $id]);
         $posts = $this->db->row('SELECT id, category FROM posts WHERE category = :id', ['id' => $id]);
@@ -204,6 +218,9 @@ class Admin extends Model
             foreach ($posts as $post) {
                 $this->db->query("UPDATE posts SET category = '' WHERE id = :id", ['id' => $post['id']]);
             }
+        }
+        if(file_exists("public/categories_icons/$id.jpg")) {
+            unlink("public/categories_icons/$id.jpg");
         }
     }
 
@@ -226,10 +243,6 @@ class Admin extends Model
         }
         elseif(mb_strlen($name, 'utf-8') > 25) {
             $this->error = 'Длина названия не должна быть больше 25 символов';
-            return false;
-        }
-        elseif($this->categoryExistCheck($name)){
-            $this->error = 'Категория с указанным названием уже существует';
             return false;
         }
         return true;
