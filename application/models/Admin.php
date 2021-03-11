@@ -286,6 +286,12 @@ class Admin extends Model
         }
         return $categories;
     }
+    public function getCategoriesNames(){
+        $categoriesNames = $this->db->row('SELECT name FROM categories');
+        return array_map(function ($el){
+            return $el['name'];
+        }, $categoriesNames);
+    }
 
 
     //Tags-------------------------------------------------

@@ -25,6 +25,7 @@
                 <p>Изменить категорию</p>
                 <div class="controllers">
                     <div class="trey">&ndash;</div>
+                    <div class="remove_search_content">&times;</div>
                 </div>
             </div>
             <div class="general_form_message">

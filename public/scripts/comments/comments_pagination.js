@@ -285,7 +285,7 @@ export default class CommentsPagination{
 
 
                     //Если ответ был сделан на другой ответ, то добавляем в его начало инфу о пользователе, на чей коммент был сделан ответ
-                    let commentFinallyText = this.getTextFromUnicodeStr(answer.comment);
+                    let commentFinallyText = answer.comment;
                     if(answer['upper_comment_user_info']){
                         commentFinallyText = `
                             <a href="/account/userprofile/${answer['upper_comment_user_info'].id}" class="upper_comment_user_href">&#64;${answer['upper_comment_user_info'].name}</a>
@@ -430,7 +430,7 @@ export default class CommentsPagination{
                                             <div class="post_date">${dateStr}</div>
                                         </div>
                                         <p class="comment_text">
-                                            ${this.getTextFromUnicodeStr(comment.comment)}
+                                            ${comment.comment}
                                         </p>
                                         <div class="end_comment_block">
                                             <div class="comment_activities">
@@ -548,18 +548,4 @@ export default class CommentsPagination{
         });
     }
 
-
-    //Переводим строку в строку, содержащюю коды символов коммента в юникоде
-    getCommentUnicodeStr(str){
-        const encoder = new TextEncoder('utf-8');
-        return encoder.encode(str).join(',');
-    }
-
-
-    //Переводим строку с юникод символами в обычный читаемый текст
-    getTextFromUnicodeStr(coddingStr){
-        const decoder = new TextDecoder();
-        const uint8 = new Uint8Array(coddingStr.split(','));
-        return decoder.decode(uint8);
-    }
 }

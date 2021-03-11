@@ -1,5 +1,5 @@
 
-export default function imageUploader(inputSelector, buttonHtml){
+export default function imageUploader(inputSelector, buttonHtml, maxSize = 5){
 
     let _input;
     let _button;
@@ -13,20 +13,31 @@ export default function imageUploader(inputSelector, buttonHtml){
 
     function _uploadImageHandler(){
         const image = _input.files[0];
+        if(image.type.search(/image/)){
+            return;
+        }
+        if((image.size/1048576).toFixed(2) > maxSize){
+            const generalFormMessage = document.querySelector('.general_form_message');
+            generalFormMessage.querySelector('p').textContent = `Размер изображение не должен превышать ${maxSize}Мб`;
+            generalFormMessage.classList.add('active');
+            _inputReset();
+            _setup();
+            return;
+        }
         image && _setUploadedImage(image);
     }
 
     function _setUploadedImage(imageFile){
-        if(imageFile.type.search(/image/)){
-            return;
-        }
-
         const imageSize = _bitesToKbites(imageFile.size);
-        const imageName = imageFile.name.match(/(^.+)\..+$/)[1];
+        let imageName = imageFile.name.match(/(^.+)\..+$/)[1];
         const objectImageURL = URL.createObjectURL(imageFile);
 
         _input.classList.add('uploaded');
         _buttonOldValue = _button.outerHTML;
+
+        if(imageName.length > 25){
+            imageName = imageName.substr(0, 25)+'...';
+        }
         _button.outerHTML = `<div class="uploaded_image_block">
                                 <img src="${objectImageURL}">
                                 <div class="uploaded_image_reset">

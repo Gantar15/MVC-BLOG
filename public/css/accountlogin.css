@@ -522,6 +522,7 @@ body {
       padding: 40px 0px;
       border-radius: 3px;
       border: 1px solid #e9452f;
+      background-color: #e9452f12;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;

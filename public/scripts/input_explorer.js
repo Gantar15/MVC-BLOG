@@ -9,17 +9,15 @@ export default function inputExplore(){
 
         if (textareas.length > 0) {
             textareas.forEach(textarea => {
-                textarea.style.height = '';
-                textarea.style.height = textarea.scrollHeight + 'px';
-
                 textarea.oninput = e => {
                     textarea.style.height = '';
                     textarea.style.height = textarea.scrollHeight + 'px';
                 }
+                textarea.dispatchEvent(new Event('input'));
 
                 const parentForm = textarea.closest('form');
                 parentForm.onreset = () => {
-                    textarea.style.height = '';
+                    setTimeout(()=>textarea.dispatchEvent(new Event('input')));
                 }
             });
         }

@@ -1,6 +1,4 @@
-import inputExplore from "../input_explorer.js";
 
-inputExplore();
 
 //Показываем/скрываем группы в меню админки по нажатию на блок-заголовок группы
 const burger = document.querySelector('.aside_burger');
@@ -68,11 +66,4 @@ document.addEventListener('click', event => {
        const parentGroupBox = target.closest('.group_box');
        parentGroupBox.remove();
    }
-});
-
-
-
-//Добавляем нормализацию размеров textarea после reset формы
-document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('reset', () => inputExplore());
 });

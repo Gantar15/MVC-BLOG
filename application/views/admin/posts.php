@@ -40,6 +40,12 @@
                     <p>Но вы можете создать новый пост</p>
                 </div>
             <?php else:?>
+                <div class="false_post">
+                    <a href="/admin/postadd" class="add_post">
+                        <span>новый пост</span>
+                        <img src="/public/imgs/add.png">
+                    </a>
+                </div>
                 <?php foreach($posts as $post):?>
                     <div class="post">
                         <div class="post_image_preview" style='background-image: url("/public/uploaded_information/<?=$post['id']?>.jpg")'>
@@ -130,10 +136,6 @@
             <?php endif;?>
         </div>
         <div class="posts_footer">
-            <a href="/admin/postadd" class="add_post">
-                <span>новый пост</span>
-                <img src="/public/imgs/add.png">
-            </a>
             <div class="buttons_block">
                 <div>
                     <?=$pagination->getContent()?>

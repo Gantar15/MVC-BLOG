@@ -184,7 +184,7 @@ if(form) {
         let commentWithLines = fData.get('comment');
         commentWithLines = stripTags(commentWithLines);         //Заменяем теги на их безопасные версии
         commentWithLines = commentWithLines.replaceAll('\n', '<br/>');
-        commentWithLines = pagination.getCommentUnicodeStr(commentWithLines);
+        commentWithLines = commentWithLines;
         fData.set('comment', commentWithLines);
         fData.set('record_type', 'comment');
         let response = await fetch(url, {
@@ -498,7 +498,7 @@ commentsBlockBody.addEventListener('click', (event) => {
                     let finallyComment = formDATA.get('answer');
                     finallyComment = stripTags(finallyComment);         //Заменяем теги на их безопасные версии
                     finallyComment = finallyComment.replaceAll('\n', '<br/>');
-                    finallyComment = pagination.getCommentUnicodeStr(finallyComment);        //Переводим обычный текст в юникод строку
+                    finallyComment = finallyComment;        //Переводим обычный текст в юникод строку
                     if(upperCommentId != parentCommentId && getUpperCommentAuthorId(upperComment) != pagination.authorizeUserId){           //Если мы оставляем ответ под ответом, то добавляем в начало коммента имя пользователя, на чей коммент отвечаем
                         formDATA.set('upper_comment_id', upperCommentId);
                     }
@@ -1160,7 +1160,7 @@ function commentsMenusRender(parentBlock) {
                         const formD = new FormData();
                         let commentFinallyText = stripTags(commentText);
                         commentFinallyText = commentFinallyText.replaceAll('\n', '<br/>');
-                        commentFinallyText = pagination.getCommentUnicodeStr(commentFinallyText);
+                        commentFinallyText = commentFinallyText;
                         formD.set('changed_comment_text', commentFinallyText);
                         formD.set('edit_comment_id', editCommentId);
                         fetch('', {

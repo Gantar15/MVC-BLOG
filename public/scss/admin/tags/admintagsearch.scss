@@ -53,13 +53,43 @@
         }
         .tag_footer{
           display: flex;
-          justify-content: center;
+          justify-content: space-between;
+          align-items: center;
           border-top: 1px solid #dfdfdf;
           padding: 15px 0px;
-          padding-bottom: 10px;
+          padding-bottom: 5px;
 
           p{
+            text-align: left;
+            margin-right: 8px;
             font: normal 13px $fontName;
+            display: flex;
+            align-items: center;
+
+            img{
+              object-fit: contain;
+              width: 14px;
+              height: 14px;
+              margin-right: 10px;
+            }
+          }
+
+          .controllers {
+            .delete_tag {
+              text-decoration: none;
+              cursor: pointer;
+              font: 500 12px $fontName;
+              color: #f54545;
+              border: 1px solid #f54545;
+              text-transform: uppercase;
+              padding: 4px 6px;
+              border-radius: 1px;
+              transition: background-color .2s;
+
+              &:hover{
+                background-color: #f5454514;
+              }
+            }
           }
         }
       }

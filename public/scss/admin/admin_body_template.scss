@@ -1,4 +1,13 @@
+
+main{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .posts{
+  max-width: 1120px;
+  width: 100%;
 
   .posts_add {
     margin-top: 21px;

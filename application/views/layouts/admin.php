@@ -20,6 +20,11 @@
         <script src="/public/scripts/admin/category_edit.js" type="module"></script>
     <?php endif;?>
 
+    <?php if($this->route['action'] == 'postadd' || $this->route['action'] == 'postedit'):?>
+        <script src="/public/scripts/admin/post_constructor.js" type="module"></script>
+        <script src="/public/scripts/admin/add_post.js" type="module"></script>
+    <?php endif;?>
+
     <link rel="icon" href="/public/imgs/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="<?= '/public/css/'.$this->route['controller'].$this->route['action'].'.css' ?>">
     <link rel="stylesheet" href="/public/css/modal.css">
@@ -69,7 +74,7 @@
                         </div>
                         <nav class="active">
                             <ul>
-                                <li <?php if($this->route['action'] == 'posts' || $this->route['action'] == 'postsearch'):?>
+                                <li <?php if($this->route['action'] == 'posts' || $this->route['action'] == 'postsearch' || $this->route['action'] == 'postadd' || $this->route['action'] == 'postedit'):?>
                                         class = 'active'
                                     <?php endif;?>>
                                     <a href="/admin/posts/1">

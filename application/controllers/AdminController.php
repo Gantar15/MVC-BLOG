@@ -139,7 +139,11 @@ class AdminController extends Controller {
                 exit(json_encode(['finally_valid' => true]));
             }
         }
-        $this->view->render('Добавление поста');
+
+        $categoriesNames = $this->model->getCategoriesNames();
+        $this->view->render('Добавление поста', [
+            'categoriesNames' => $categoriesNames
+        ]);
     }
 
     //Удаление поста
@@ -254,10 +258,13 @@ class AdminController extends Controller {
             //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
 
-                //Если нам отправили форму со старым изображением категории, то не праверяем его
+                //Если нам отправили форму со старым изображением категории, то не проверяем его
                 if(!isset($_POST['primary_image'])) {
                     if (!file_exists($_FILES['icon']['tmp_name'])) {
                         $this->view->message('Ошибка', 'Выберите изображение', '', 'general');
+                    }
+                    elseif (round($_FILES['icon']['size']/1048576, 2) > 5) {
+                        $this->view->message('Ошибка', 'Размер изображение не должен превышать 5Мб', '', 'general');
                     }
                 }
 

@@ -75,12 +75,15 @@
                     <div class="tag">
                         <div class="tag_body">
                             <p class="tag_name"><span>#</span><?=$tag['name']?></p>
-                            <div class="controllers">
-                                <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete_tag">&times;</a>
-                            </div>
                         </div>
                         <div class="tag_footer">
-                            <p>Постов с данным тегом <?=$tag['col_of_posts']?></p>
+                            <p>
+                                <img src="/public/imgs/posts.svg">
+                                <?=$tag['col_of_posts']?> <?=$this->valuesFormatter($tag['col_of_posts'], 'постов', 'пост', 'поста')?>
+                            </p>
+                            <div class="controllers">
+                                <a href="/admin/tagdelete/<?=$tag['id']?>" class="delete_tag">Удалить</a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach;?>

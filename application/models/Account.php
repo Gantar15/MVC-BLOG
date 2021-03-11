@@ -41,8 +41,8 @@ class Account extends Model {
         return false;
     }
     public function registerNameValidate($name){
-        if(mb_strlen($name, 'utf-8') < 2 || mb_strlen($name, 'utf-8') > 30 ){
-            $this->error[] = ['message' => 'Длина имени должна быть длинной от 2 до 30 символов', 'field_name' => 'name'];
+        if(mb_strlen($name, 'utf-8') < 2 || mb_strlen($name, 'utf-8') > 23 ){
+            $this->error[] = ['message' => 'Длина имени должна быть длинной от 2 до 23 символов', 'field_name' => 'name'];
         }
         elseif(!preg_match('/^[a-zа-я ]*$/iu', $name)){
             $this->error[] = ['message' => 'Имя должно состоять только из букв', 'field_name' => 'name'];

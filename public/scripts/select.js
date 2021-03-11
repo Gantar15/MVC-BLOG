@@ -9,7 +9,7 @@ function getTemplate(placeholder = "Select :3", data = []){
         <div class="background__element"></div>
         <div class="select__input" data-type="input">
             <span data-type="value">${placeholder}</span>
-            <i class="fa fa-chevron-down" aria-hidden="true" data-type="arrow"></i>
+            <i data-type="arrow"></i>
         </div>
         <div class="select__dropdown">
             <ul class="select__list">
@@ -20,9 +20,9 @@ function getTemplate(placeholder = "Select :3", data = []){
 }
 
 
-export class Select{
+export default class Select{
 
-    constructor(selector, options, callback){
+    constructor(selector, options, callback = ()=>{}){
         this.$element = document.querySelector(selector);
         this.options = options;
         this.selectedId = options.selectedId;
@@ -43,7 +43,6 @@ export class Select{
     }
 
     setup(){
-        document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">`);
         this.clickHandler = this.clickHandler.bind(this);
 
         this.$element.addEventListener("click", this.clickHandler);
@@ -67,7 +66,7 @@ export class Select{
     }
 
     get selectedItem(){
-        return this.options.data.find((el => el.id === this.selectedId));
+        return this.options.data.find((el => el.id == this.selectedId));
     }
 
     select(id){

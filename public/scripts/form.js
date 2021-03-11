@@ -23,15 +23,15 @@ import inputExplore from "./input_explorer.js";
         onOpenObj: openObj
     });
 
+    const buttons = document.querySelectorAll('button[data-parent-form-name], input[data-parent-form-name]');
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
 
-        //Если у формы указан специальный атрибут non-validate, то не делаем валидацию этой формы
+        //Если у формы указан специальный атрибут data = non-validate, то не делаем валидацию этой формы
         if(form.dataset.nonValidate) return;
 
-        async function formWorker(isUserSubmit = false, input = false){
+        async function formWorker(isUserSubmit = false, input = false, submitButton){
             if(!form.isLoading) {
-                const submitButton = event.target.closest('form').querySelector('button[type="submit"], input[type="submit"]');
                 submitButton.style.pointerEvents = 'none';
 
                 const loader = new LoadParser(submitButton, 200, '/public/imgs/loading.gif');
@@ -126,17 +126,21 @@ import inputExplore from "./input_explorer.js";
             }
         }
 
-        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+        let submitButton = [...buttons].find(button => button.dataset.parentFormName == form.name);
+        if(!submitButton){
+            submitButton = document.querySelector('button[type="submit"], input[type="submit"]');
+        }
 
         form.isLoading = false;     //Ключ для того, чтобы пользователь не мог отправить форму еще раз во врпемя загрузки этой формы
         form.onsubmit = submitButton.onclick = function(event) {
             const isUserSubmit = true;              //Ключ для того, чтоб php понял, что форму отправляет пользователь, а не скрипт для валидации полей и залогинил его
-            formWorker(isUserSubmit);
+            formWorker(isUserSubmit, false, submitButton);
         };
 
         const inputs = form.querySelectorAll('input, textarea');
 
         form.addEventListener('reset', ()=>{
+            inputExplore();
             inputs.forEach(input => {
                 if(!input.value)
                     input.classList.remove('invalid');
@@ -168,12 +172,11 @@ import inputExplore from "./input_explorer.js";
 
             input.addEventListener('blur', function (event) {
                 if (this.value) {
-                    formWorker(undefined, input);
+                    formWorker(undefined, input, submitButton);
                 }
             });
 
         });
     });
 
-
-    inputExplore();
+inputExplore();
