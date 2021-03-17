@@ -1,14 +1,13 @@
 $select_width: 100%;
-$color_of_selected: #2f83e9;
 $font: $fontName;
 $font_size: 16px;
-$font_color: #7e8188;
+$font_color: #71747a;
 
 .select{
     font: 300 $font_size $font;
     color: $font_color;
     position: relative;
-    $select_height: 46px;
+    $select_height: 50px;
     width: $select_width;
 
     .background__element{
@@ -66,11 +65,13 @@ $font_color: #7e8188;
         box-sizing: border-box;
         border-radius: 6px;
         top: $select_height;
+        transform: translateY(-1px);
+        box-shadow: -3px 3px 2px 0 #2f83e908;
         left: 0;
         right: 0;
         max-height: 0;
         overflow-y: auto;
-        border: 1px solid #dedede;
+        border: 1px solid #d7dbe5;
         opacity: 0;
         transition: max-height 0.3s, opacity 0.3s;
 
@@ -78,16 +79,17 @@ $font_color: #7e8188;
             width: 10px;
         }
         &::-webkit-scrollbar-track{
-            border: 1px solid #dedede;
+            border: 1px solid #d7dbe5;
             border-right: none;
             border-radius: 12px;
+            background-color: transparent;
         }
         &::-webkit-scrollbar-thumb{
-            background: rgba(162, 162, 162, 0.37);
+            background: rgb(209, 211, 217);
             border-radius: 12px;
             width: 7px;
             &:hover{
-                background: rgba(179, 179, 179, 0.56);
+                background: rgb(200, 203, 210);
             }
         }
     }
@@ -110,11 +112,11 @@ $font_color: #7e8188;
             border-bottom: 0;
         }
         &:hover{
-            background: rgba(174, 174, 174, 0.1);
+            background: #edf0f5;
             cursor: pointer;
         }
         &.selected{
-            background: $color_of_selected;
+            background-color: #2f83e999;
             color: #ffffff;
         }
         &:nth-of-type(n+2){

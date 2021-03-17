@@ -234,7 +234,6 @@ class MainController extends Controller {
             View::errorCode('404');
         }
 
-
         $userId = '';
         if(isset($_COOKIE['authorize'])){
             $userId = $_COOKIE['authorize'];
@@ -325,11 +324,20 @@ class MainController extends Controller {
             $this->view->response($colOfComments);
         }
 
+        $author = [];
+        if(intval($post['author_id']) === 0){
+            $author['name'] = 'administrator';
+        }
+        else{
+            $author = $this->model->getUserData($post['author_id']);
+        }
+
         $params = [
             'post' => $post,
             'userData' => $userData,
-            'colOfComments' => $colOfComments
+            'colOfComments' => $colOfComments,
+            'author' => $author
         ];
-        $this->view->render('Пост', $params);
+        $this->view->render($post['name'], $params);
     }
 }

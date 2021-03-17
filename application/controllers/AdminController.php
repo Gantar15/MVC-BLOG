@@ -116,28 +116,31 @@ class AdminController extends Controller {
     //Добавление поста
     public function postaddAction(){
         if(!empty($_POST)){
-            if($this->model->postValidate($_POST, 'add')) {
-                $id = $this->model->postAdd($_POST);
-                if($id) {
-                    if(!$this->model->uploadImage($id, $_FILES['image']['tmp_name'])){
-                        $this->model->postDelete($id);
-                        $this->view->message('Ошибка', $this->model->error, '', 'popup');
-                    }
-                } else{
-                    $this->view->message('Ошибка связи с бд', $this->model->error, '', 'popup');
-                }
-            } else{
-                $this->view->message('Ошибка добавления поста', $this->model->error, '', 'popup');
-            }
+            $this->model->postValidate($_POST, 'add');
 
-            //Если запрос прислал пользователь, а не js для проверки полей, то логинимся
+            if(!empty($this->model->error))
+                $this->view->message('валидация', $this->model->error, '', 'validation');
+
+            //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
+                $id = $this->model->postAdd($_POST);
+                if (!$id || !$this->model->uploadImage($id, $_FILES['post_icon']['tmp_name'],  "public/uploaded_information")) {
+                    $this->model->postDelete($id);
+                    $this->view->message('валидация', $this->model->error, '', 'general');
+                }
                 $this->view->message('Успех', 'Пост добавлен', true, 'popup');
             }
             //Если данные верны, но все еще приходят проверки на валидность полей от js, то говорим, что все поля валидны
             else{
                 exit(json_encode(['finally_valid' => true]));
             }
+        }
+
+        //Ищем теги, похожие на вводимые пользователем, и отправляем их
+        $data = json_decode(stripslashes(file_get_contents("php://input")), true);
+        if(isset($data['tag_name'])){
+            $similarTags = $this->model->getSimilarTags($data['tag_name'], $data['col_of_max_tags']);
+            $this->view->response($similarTags);
         }
 
         $categoriesNames = $this->model->getCategoriesNames();
@@ -402,6 +405,9 @@ class AdminController extends Controller {
                 $this->view->message('Ошибка', $this->model->error, '', 'validation');
             }
             else{
+                if($this->model->tagExistCheck($_POST['name'])){
+                    $this->view->message('Ошибка', 'Данный тег уже существует. Придумайте другой :3', '', 'general');
+                }
                 $this->model->tagValidate($_POST['name']);
                 if(!empty($this->model->error)) {
                     $this->view->message('Ошибка', $this->model->error, '', 'general');

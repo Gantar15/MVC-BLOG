@@ -17,5 +17,14 @@ uploadedImageReset.onclick = () => {
                             <p>загрузите изображение</p>
                             <img src="/public/imgs/add_image.svg">
                         </div>
-                    `);
+                    `,
+        (errorMessage) => {
+            const generalFormMessage = document.querySelector('.general_form_message');
+            generalFormMessage.querySelector('p').textContent = errorMessage;
+            generalFormMessage.classList.add('active');
+        }, 5,
+        (input) => {
+            //Удаляем общее сообщение о ошибке при выборе изображения
+            input.closest('.add_category')?.querySelector('.general_form_message.active')?.classList.remove('active');
+        });
 };

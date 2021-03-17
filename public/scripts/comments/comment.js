@@ -15,7 +15,7 @@ const form = document.querySelector(".comments_send_block > form"),
        formInput = form.querySelector('textarea');
     }
 
-inputExplore();     //Делаем динамическим размер поля инпута
+window.addEventListener('load', () => inputExplore());     //Делаем динамическим размер поля инпута
 
 const loadBlock = document.createElement('div');  //Блок загрузки комментов
 loadBlock.className = 'load_block';
@@ -99,7 +99,7 @@ window.addEventListener('scroll', ()=>{
 
     if(!loaded) {
         //Подключаем пагинацию комментов
-        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 100, filterMode,() => {
+        pagination = new CommentsPagination('', commentsBlockBody, +colOfComments.innerText, nextCommentsTrigger, 50, filterMode,() => {
             if(nextCommentsTrigger) {
                 loadBlock.style.display = 'none';
             }
@@ -184,7 +184,6 @@ if(form) {
         let commentWithLines = fData.get('comment');
         commentWithLines = stripTags(commentWithLines);         //Заменяем теги на их безопасные версии
         commentWithLines = commentWithLines.replaceAll('\n', '<br/>');
-        commentWithLines = commentWithLines;
         fData.set('comment', commentWithLines);
         fData.set('record_type', 'comment');
         let response = await fetch(url, {
@@ -212,7 +211,7 @@ if(form) {
             setTimeout(()=>{
                 loader.stop();
                 colOfComments.innerText = +colOfComments.innerText + 1;
-                commentsBlockBody.insertAdjacentHTML('afterbegin', getCommentTemplate(comment, commentDataJson, 'comment'));
+                commentsBlockBody.insertAdjacentHTML('afterbegin', getCommentTemplate(`<span class="text">${comment}</span>`, commentDataJson, 'comment'));
                 loadBlock.remove();
                 const recentlyAddedComment = commentsBlockBody.querySelector('.comment');
                 commentsMenusRender(recentlyAddedComment);          //Рендерим меню для комментария
@@ -402,7 +401,7 @@ commentsBlockBody.addEventListener('click', (event)=>{
 
 
 
-//Добавленияе ответов на комментарии
+//Добавление ответов на комментарии
 commentsBlockBody.addEventListener('click', (event) => {
     const target = event.target;
 
@@ -515,6 +514,7 @@ commentsBlockBody.addEventListener('click', (event) => {
                         const commentDataJson = await response.json();
                         let answer = stripTags(answerInput.value);
                         answer = answer.replaceAll('\n', '<br/>');
+                        answer = '<span class="text">' + answer + '</span>';
 
                         //Добавляем информацию о пользователе, на чей ответ мы ответили, в начало коммента
                         const upperCommentUserInfo = commentDataJson['upper_comment_user_info'];
@@ -665,7 +665,7 @@ commentsBlockBody.addEventListener('click', event => {
                             await pagination.renderAnswers(answersBlock, commentId);          //Рендерим ответы для данного коммента
 
                             //Выполняем это после рендера ответов
-                            commentsMenusRender(document.querySelector('.comments_block_body'));
+                            commentsMenusRender(answersBlock);
 
                             //Если не были отренедерены все ответы за раз, то добавляем кнопку получения следующих ответов
                             let showAnswers = undefined;
@@ -690,6 +690,7 @@ commentsBlockBody.addEventListener('click', event => {
                                         const answer = block.firstElementChild;
 
                                         const cloneN = answer.cloneNode(true);
+                                        commentPrepareReset(cloneN);
                                         block.after(cloneN);
                                         commentsMenusRender(cloneN);
                                         pagination.forbidEdit(cloneN);   //Запрещаем изменение айди комментария
@@ -706,7 +707,7 @@ commentsBlockBody.addEventListener('click', event => {
                     }, loadTime);
                 }
             }, 10);
-        };
+        }
 
 
         //Если у нас есть кнопка показать ответы (то есть ответов > 0), проходим дальше
@@ -776,6 +777,7 @@ commentsBlockBody.addEventListener('click', event => {
                                 const answer = block.firstElementChild;
 
                                 const cloneN = answer.cloneNode(true);
+                                commentPrepareReset(cloneN);
                                 block.after(cloneN);
                                 commentsMenusRender(cloneN);
                                 pagination.forbidEdit(cloneN);   //Запрещаем изменение айди комментария
@@ -789,6 +791,7 @@ commentsBlockBody.addEventListener('click', event => {
                                 const answer = block.firstElementChild;
 
                                 const cloneN = answer.cloneNode(true);
+                                commentPrepareReset(cloneN);
                                 block.after(cloneN);
                                 commentsMenusRender(cloneN);
                                 pagination.forbidEdit(cloneN);   //Запрещаем изменение айди комментария
@@ -808,6 +811,7 @@ commentsBlockBody.addEventListener('click', event => {
                             const answer = block.firstElementChild;
 
                             const cloneN = answer.cloneNode(true);
+                            commentPrepareReset(cloneN);
                             block.after(cloneN);
                             commentsMenusRender(cloneN);
                             pagination.forbidEdit(cloneN);   //Запрещаем изменение айди комментария
@@ -862,13 +866,23 @@ const modal = $m.modal(`
     onCloseObj: closeObj
 });
 
+function commentPrepareReset(comment){
+    comment.removeAttribute('data-menu-prepared');
+}
 function commentsMenusRender(parentBlock) {
 
-    let comments = parentBlock.querySelectorAll('.answer, .comment');
+    let comments = parentBlock.querySelectorAll('.answer:not([data-menu-prepared]), .comment:not([data-menu-prepared])');
     if(comments.length === 0){
-        comments = [parentBlock.closest('.answer, .comment')];
+        let comment = parentBlock.closest('.answer:not([data-menu-prepared]), .comment:not([data-menu-prepared])');
+        if(comment)
+            comments = [comment];
     }
+    if(comments.length === 0) return;
+    console.log(comments)
     for(const comment of comments) {
+
+        if(comment.dataset.menuPrepared) continue;                    //Если данный комментарий или ответ уже проходил данный цикл(обработчики событий для меню повешены и тд.), то идем дальше
+        comment.dataset.menuPrepared = true;
 
         const ua = comment.querySelector('.user_avatar');
         const userId = ua.href.match(/.+\/(\d+)/)[1] | 0;
@@ -877,7 +891,6 @@ function commentsMenusRender(parentBlock) {
         if (userId !== (pagination.authorizeUserId | 0)) continue;
 
         const commentMenuTrigger = comment.querySelector('.comment_menu_trigger');
-        commentMenuTrigger.classList.add('displayed');
 
         let yCoord;
         const pageScrollHandler = () => window.scrollTo(0, yCoord);
@@ -891,14 +904,41 @@ function commentsMenusRender(parentBlock) {
             window.removeEventListener('scroll', pageScrollHandler);
         }
 
+
+        let startAnimationTime;
         //Анимация для commentMenuTrigger
         commentMenuTrigger.onmousedown = () => {
             commentMenuTrigger.classList.add('active');
             commentMenuTrigger.classList.add('clicked');
-            setTimeout(() => {
-                commentMenuTrigger.classList.remove('active');
-            }, 200);
+            startAnimationTime = Date.now();
         }
+        commentMenuTrigger.onmouseup = () => {
+            let endAnimationTime = Date.now();
+            if(endAnimationTime - startAnimationTime < 200){
+                let intrvId = setInterval(() => {
+                    endAnimationTime = Date.now();
+                    if(endAnimationTime - startAnimationTime > 200){
+                        commentMenuTrigger.classList.remove('active');
+                        clearInterval(intrvId);
+                    }
+                }, 20)
+            }
+            else {
+                commentMenuTrigger.classList.remove('active');
+            }
+        }
+
+        //Добавляем появление кнопки открытия меню при наведении на комментарий
+        commentMenuTrigger.classList.remove('displayed');
+        comment.onpointerenter = () => {
+            if(comment.querySelector('.comments_send_block.editor')) return;
+            commentMenuTrigger.classList.add('displayed');
+        };
+        comment.onpointerleave = () => {
+            if(commentMenuTrigger.classList.contains('clicked')) return;
+            commentMenuTrigger.classList.remove('displayed');
+        };
+
         let commentMenu;
         commentMenuTrigger.onclick = () => {
             //Если у нас уже есть активное меню, удаляем его
@@ -947,6 +987,10 @@ function commentsMenusRender(parentBlock) {
 
                 if (!comment.contains(event.target) || comment.contains(event.target.closest('.answers_block, .after_loaded_answers_block'))) {
                     document.removeEventListener('click', fnct);
+                }
+
+                if(!comment.contains(event.target)){
+                    commentMenuTrigger.classList.remove('displayed');
                 }
             };
             document.addEventListener('click', fnct);
@@ -1103,7 +1147,7 @@ function commentsMenusRender(parentBlock) {
                             }
                         }
                     };
-                    const oldInputValue = beforeElementsArr.commentText.innerText;
+                    let oldInputValue = beforeElementsArr.commentText.querySelector('.text').innerText;
 
                     const answerSendTemplate = `
                             <div class="comments_send_block editor">
@@ -1151,7 +1195,7 @@ function commentsMenusRender(parentBlock) {
 
                         //Отображаем загрузку
                         const editAnswerLoader = new LoadParser(answerSendBlock, 0, '/public/imgs/comment_loading.gif');
-                        beforeElementsArr.commentText.innerText = commentText;
+                        beforeElementsArr.commentText.querySelector('.text').innerText = commentText;
                         beforeElementsArr.userAvatar = comment.querySelector('.user_avatar');
                         beforeElementsArr.hideElements();
                         editAnswerLoader.start();
@@ -1160,7 +1204,6 @@ function commentsMenusRender(parentBlock) {
                         const formD = new FormData();
                         let commentFinallyText = stripTags(commentText);
                         commentFinallyText = commentFinallyText.replaceAll('\n', '<br/>');
-                        commentFinallyText = commentFinallyText;
                         formD.set('changed_comment_text', commentFinallyText);
                         formD.set('edit_comment_id', editCommentId);
                         fetch('', {
@@ -1195,7 +1238,7 @@ function commentsMenusRender(parentBlock) {
 
                                         //Удаляем ответ из блока ранее добавленных ответов
                                         if (commentToDelete) {
-                                            commentToDelete.querySelector('.comment_text').innerText = commentText;
+                                            commentToDelete.querySelector('.comment_text .text').innerText = commentText;
                                         }
                                     }
                                 }
@@ -1219,7 +1262,7 @@ function commentsMenusRender(parentBlock) {
 
                                         //Удаляем ответ из блока только добавленных ответов, или весь блок, если в нем не осталось ответов
                                         if (commentToDelete) {
-                                            commentToDelete.querySelector('.comment_text').innerText = commentText;
+                                            commentToDelete.querySelector('.comment_text .text').innerText = commentText;
                                         }
                                     }
                                 }
@@ -1231,7 +1274,6 @@ function commentsMenusRender(parentBlock) {
                     resetButton.onclick = () => {
                         resetButton.onclick = null;
                         answerSendBlock.remove();
-                        commentMenuTrigger.classList.add('displayed');
 
                         //Показываем элементы коммента, которые были спрятаны
                         beforeElementsArr.showElements();

@@ -7,9 +7,9 @@
             <div class="post_sub_block">
                 <div class="header_post_inf">
                     <div class="author">
-                        <a href="/account/userprofile/64">
-                            <img src="/public/users_icons/64.png">
-                            <span>Имя Автора</span>
+                        <a href="/account/userprofile/<?=$post['author_id']?>">
+                            <img src="/public/users_icons/<?=$post['author_id']?>.png">
+                            <span><?=$author['name']?></span>
                         </a>
                     </div>
                     <p>&bull;</p>
@@ -103,7 +103,7 @@
                         </a>
                         <div class="name_block">
                             <a class="name" href="/account/userprofile/64">
-                                <p>Gnida</p>
+                                <p><?=$author['name']?></p>
                             </a>
                             <p class="subscribers">234 подписчика</p>
                         </div>

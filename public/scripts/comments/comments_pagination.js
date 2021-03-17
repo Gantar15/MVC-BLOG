@@ -285,7 +285,7 @@ export default class CommentsPagination{
 
 
                     //Если ответ был сделан на другой ответ, то добавляем в его начало инфу о пользователе, на чей коммент был сделан ответ
-                    let commentFinallyText = answer.comment;
+                    let commentFinallyText = '<span class="text">' + answer.comment + '</span>';
                     if(answer['upper_comment_user_info']){
                         commentFinallyText = `
                             <a href="/account/userprofile/${answer['upper_comment_user_info'].id}" class="upper_comment_user_href">&#64;${answer['upper_comment_user_info'].name}</a>
@@ -430,7 +430,7 @@ export default class CommentsPagination{
                                             <div class="post_date">${dateStr}</div>
                                         </div>
                                         <p class="comment_text">
-                                            ${comment.comment}
+                                            <span class="text">${comment.comment}</span>
                                         </p>
                                         <div class="end_comment_block">
                                             <div class="comment_activities">

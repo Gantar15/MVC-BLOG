@@ -6,7 +6,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form name="admin_login" action="/admin/login" method="post">
+                    <form name="admin_login" data-non-autosubmit action="/admin/login" method="post">
                         <div class="form-group">
                             <input autofocus required type="text" name="login" id="inputF1">
                             <label for="inputF1">Логин</label>

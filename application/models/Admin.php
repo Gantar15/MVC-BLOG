@@ -31,29 +31,34 @@ class Admin extends Model
 
     public function postValidate($post, $type = ''){
 
-            if (strlen($post['name']) < 3 || strlen($post['name']) > 145) {
-                $this->error = 'Длина имени должна быть 5-145 символов';
-                return false;
-            } else if (strlen($post['description']) < 20 || strlen($post['description']) > 400) {
-                $this->error = 'Длина описания должна быть 20-400 символов';
-                return false;
-            } else if (strlen($post['text']) < 30 || strlen($post['text']) > 45300) {
-                $this->error = 'Длина текста должна быть от 30 до 45300 символов';
-                return false;
+            if(empty($post['category'])){
+                $this->error[] = ['message' => 'Выберите категорию', 'field_name' => 'category'];
+            }
+            if(empty($post['post_name'])){
+                $this->error[] = ['message' => 'Введите название поста', 'field_name' => 'post_name'];
+            }
+            else if (mb_strlen($post['post_name']) < 3 || mb_strlen($post['post_name']) > 140) {
+                $this->error[] = ['message' => 'Длина названия поста должна быть 3-140 символов', 'field_name' => 'post_name'];
+            }
+
+            if(empty($post['description'])){
+                $this->error[] = ['message' => 'Введите описание поста', 'field_name' => 'description'];
+            }
+            else if (mb_strlen($post['description']) < 20 || mb_strlen($post['description']) > 400) {
+                $this->error[] = ['message' => 'Длина описания должна быть 20-400 символов', 'field_name' => 'description'];
             }
 
             if($type === 'add') {
-                if (empty($_FILES['image']['tmp_name'])) {
-                    $this->error = 'Изображение не выбрано';
+                if (!file_exists($_FILES['post_icon']['tmp_name'])) {
+                    $this->error[] = ['message' => 'Изображение не выбрано', 'field_name' => 'post_icon'];
                     return false;
-                } else if ($_FILES['image']['error'] == 1 || $_FILES['image']['error'] == 2) {
-                    $this->error = 'Превышен максимальный размер файла';
+                }
+                else if ($_FILES['post_icon']['error'] > 2) {
+                    $this->error[] = ['message' => 'Ошибка загрузки файла', 'field_name' => 'post_icon'];
                     return false;
-                } else if ($_FILES['image']['error'] > 2) {
-                    $this->error = 'Ошибка загрузки файла';
-                    return false;
-                } else if (!preg_match('#^image/#', $_FILES['image']['type'])) {
-                    $this->error = 'Неподходящий формат изображения';
+                }
+                else if (!preg_match('#^image/#', $_FILES['post_icon']['type'])) {
+                    $this->error[] = ['message' => 'Неподходящий формат изображения', 'field_name' => 'post_icon'];
                     return false;
                 }
             }
@@ -86,13 +91,45 @@ class Admin extends Model
     }
 
     public function postAdd($post){
+
+        if(!$this->categoryExistCheck($post['category'])){
+            $this->error = 'Не удалось добавить пост';
+            return false;
+        }
+        $categoryId = $this->getCategoryByName($post['category'])['id'];
+
+        $tagsArr = [];
+        $tagsIds = '';
+        if(!empty($post['tags'])){
+            $tagsArr = explode(' ', $post['tags']);
+        }
+        if(!empty($tagsArr)){
+            foreach ($tagsArr as $tag){
+                if(!$this->tagExistCheck($tag)){
+                    if($this->tagValidate($tag)){
+                        $this->addTag($tag);
+                        $tagsIds .= $this->db->lastInsertId().' ';
+                    }
+                    else{
+                        $this->error = 'Не удалось добавить пост';
+                        return false;
+                    }
+                }
+                else{
+                    $tagsIds .= $this->getTagByName($tag)['id'].' ';
+                }
+            }
+        }
+
         $params = [
-            'name' => $post['name'],
+            'name' => $post['post_name'],
             'description' => $post['description'],
-            'text' => nl2br($post['text']),
-            'date_of_create' => date('y.m.d', time())
+            'date_of_create' => date('y.m.d', time()),
+            'category' => $categoryId,
+            'tags' => $tagsIds,
+            'author_id' => 0
         ];
-        $response = $this->db->query('INSERT INTO posts (name, description, text, date_of_create) VALUES (:name, :description, :text, :date_of_create)', $params);
+        $response = $this->db->query('INSERT INTO posts (name, description, date_of_create, category, tags, author_id) VALUES (:name, :description, :date_of_create, :category, :tags, :author_id)', $params);
         if(!$response){
             $this->error = 'Не удалось добавить пост';
             return false;
@@ -236,6 +273,10 @@ class Admin extends Model
         return $this->db->row('SELECT * FROM categories WHERE id = :id', ['id' => $id])[0];
     }
 
+    public function getCategoryByName($name){
+        return $this->db->row('SELECT * FROM categories WHERE name = :name', ['name' => $name])[0];
+    }
+
     public function categoryNameValidate($name){
         if(mb_strlen($name, 'utf-8') < 2) {
             $this->error = 'Длина названия не должна быть меньше 2 символов';
@@ -296,6 +337,10 @@ class Admin extends Model
 
     //Tags-------------------------------------------------
 
+    public function getSimilarTags($tagName, $colOfMaxTags){
+        return $this->db->row('SELECT name FROM tags WHERE name REGEXP :tag_name LIMIT :col_of_max_tags', ['tag_name' => $tagName, 'col_of_max_tags' => $colOfMaxTags]);
+    }
+
     public function colOfPostsWithTag($tagId){
         return $this->db->column('SELECT COUNT(id) FROM posts WHERE tags REGEXP :tag_id', ['tag_id' => $tagId]);
     }
@@ -305,18 +350,15 @@ class Admin extends Model
     }
 
     public function tagValidate($tagName){
-        if($this->tagExistCheck($_POST['name'])){
-            $this->error = 'Данный тег уже существует. Придумайте другой :3';
-        }
-        elseif(mb_strlen($tagName, 'utf-8') < 2) {
-            $this->error = 'Длина тега не может быть меньше 2 символов';
-        }
-        elseif(mb_strlen($tagName, 'utf-8') > 25) {
+        if(mb_strlen($tagName, 'utf-8') > 25) {
             $this->error = 'Длина тега не может быть беольше 25 символов';
+            return false;
         }
-        elseif(preg_match("# #", $tagName)){
-            $this->error = 'Тег не может содержать пробелы';
+        elseif(!preg_match("#^[\dа-яa-z_-]*$#iu", $tagName)){
+            $this->error = 'Тег может содержать только буквы, цифры, символы _ и -';
+            return false;
         }
+        return true;
     }
 
     public function addTag($tagName){
@@ -339,6 +381,10 @@ class Admin extends Model
 
     public function getTagById($id){
         return $this->db->row('SELECT * FROM tags WHERE id = :id', ['id' => $id])[0];
+    }
+
+    public function getTagByName($name){
+        return $this->db->row('SELECT * FROM tags WHERE name = :name', ['name' => $name])[0];
     }
 
     public function deleteTag($id)

@@ -6,7 +6,7 @@
             <h3>У вас еще нет аккаунта? <a href="/account/register">Зарегестрироваться</a></h3>
         </div>
         <div class="card-body">
-            <form action="/account/login" method="post">
+            <form action="/account/login" data-non-autosubmit method="post">
                 <div class="form-group">
                     <input autofocus required type="text" name="login" id="inputF3">
                     <label for="inputF3">Логин</label>

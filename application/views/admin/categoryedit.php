@@ -30,7 +30,7 @@
             </div>
             <div class="general_form_message">
                 <p></p>
-                <div onclick="document.querySelector('.general_form_message').classList.remove('active')">&times;</div>
+                <div onclick="document.querySelector('.add_category .general_form_message').classList.remove('active')">&times;</div>
             </div>
             <form method="post" action="">
                 <div class="add_category_flex">

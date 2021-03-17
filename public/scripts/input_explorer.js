@@ -1,11 +1,7 @@
 //Автоматическое изменение размеров текстового поля ввода формы
 export default function inputExplore(){
 
-    window.addEventListener('load', () => {
-        const forms = document.querySelectorAll('form');
-        const textareas = Array.from(forms).reduce((arr, form) => {
-            return arr.concat(...form.querySelectorAll('textarea'));
-        }, []);
+        const textareas = document.querySelectorAll('textarea');
 
         if (textareas.length > 0) {
             textareas.forEach(textarea => {
@@ -21,6 +17,5 @@ export default function inputExplore(){
                 }
             });
         }
-    });
 
 }

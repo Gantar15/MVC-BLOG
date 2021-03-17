@@ -22,11 +22,12 @@ function getTemplate(placeholder = "Select :3", data = []){
 
 export default class Select{
 
-    constructor(selector, options, callback = ()=>{}){
+    constructor(selector, options, callback = ()=>{}, onClick = () => {}){
         this.$element = document.querySelector(selector);
         this.options = options;
         this.selectedId = options.selectedId;
         this.callback = callback;
+        this.onClick = onClick;
 
         this.render();
         this.setup();
@@ -56,6 +57,7 @@ export default class Select{
     }
 
     clickHandler(event){
+        this.onClick();
         if(event.target.closest("[data-type=input]")){
             this.isOpen ? this.close() : this.open();
         } else if(event.target.closest("[data-type=item]")){
