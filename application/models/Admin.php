@@ -91,9 +91,9 @@ class Admin extends Model
     }
 
     public function postAdd($post){
-
+        $this->error = [];
         if(!$this->categoryExistCheck($post['category'])){
-            $this->error = 'Не удалось добавить пост';
+            $this->error[] = ['message' => 'Невалидная категория', 'field_name' => 'category'];
             return false;
         }
         $categoryId = $this->getCategoryByName($post['category'])['id'];
@@ -104,19 +104,26 @@ class Admin extends Model
             $tagsArr = explode(' ', $post['tags']);
         }
         if(!empty($tagsArr)){
-            foreach ($tagsArr as $tag){
+            for ($i = 0; $i < count($tagsArr); $i++){
+                $tag = $tagsArr[$i];
                 if(!$this->tagExistCheck($tag)){
                     if($this->tagValidate($tag)){
                         $this->addTag($tag);
-                        $tagsIds .= $this->db->lastInsertId().' ';
+                        if($i < count($tagsArr) - 1)
+                            $tagsIds .= $this->db->lastInsertId() . ',';
+                        else
+                            $tagsIds .= $this->db->lastInsertId();
                     }
                     else{
-                        $this->error = 'Не удалось добавить пост';
+                        $this->error = 'Указан некорректный тег';
                         return false;
                     }
                 }
                 else{
-                    $tagsIds .= $this->getTagByName($tag)['id'].' ';
+                    if($i < count($tagsArr) - 1)
+                        $tagsIds .= $this->getTagByName($tag)['id'].',';
+                    else
+                        $tagsIds .= $this->getTagByName($tag)['id'];
                 }
             }
         }
@@ -138,14 +145,52 @@ class Admin extends Model
     }
 
     public function postEdit($post, $id){
+        $this->error = [];
+        if(!$this->categoryExistCheck($post['category'])){
+            $this->error[] = ['message' => 'Невалидная категория', 'field_name' => 'category'];
+            return false;
+        }
+        $category = $this->getCategoryByName($post['category'])['id'];
+
+        $tagsArr = [];
+        $tagsIds = '';
+        if(!empty($post['tags'])){
+            $tagsArr = explode(' ', $post['tags']);
+        }
+        if(!empty($tagsArr)){
+            for ($i = 0; $i < count($tagsArr); $i++){
+                $tag = $tagsArr[$i];
+                if(!$this->tagExistCheck($tag)){
+                    if($this->tagValidate($tag)){
+                        $this->addTag($tag);
+                        if($i < count($tagsArr) - 1)
+                            $tagsIds .= $this->db->lastInsertId() . ',';
+                        else
+                            $tagsIds .= $this->db->lastInsertId();
+                    }
+                    else{
+                        $this->error = 'Указан некорректный тег';
+                        return false;
+                    }
+                }
+                else{
+                    if($i < count($tagsArr) - 1)
+                        $tagsIds .= $this->getTagByName($tag)['id'].',';
+                    else
+                        $tagsIds .= $this->getTagByName($tag)['id'];
+                }
+            }
+        }
+
         $params = [
-            'name' => $post['name'],
+            'name' => $post['post_name'],
             'description' => $post['description'],
-            'text' => $post['text'],
             'date_of_last_edit' => date('y.m.d', time()),
+            'tags' => $tagsIds,
+            'category' => $category,
             'id' => $id
         ];
-        $response = $this->db->query('UPDATE posts SET name=:name, description=:description, text=:text, date_of_last_edit=:date_of_last_edit WHERE id = :id', $params);
+        $response = $this->db->query('UPDATE posts SET name=:name, description=:description, date_of_last_edit=:date_of_last_edit, tags = :tags, category = :category WHERE id = :id', $params);
         if(!$response){
             $this->error = 'Не удалось обновить пост';
             return false;

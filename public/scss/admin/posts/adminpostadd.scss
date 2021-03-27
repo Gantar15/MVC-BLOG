@@ -230,6 +230,13 @@ main{
       height: max-content;
 
       .tags, .category{
+        #category_select{
+          &.selected{
+            .select__input {
+              color: #383840;
+            }
+          }
+        }
         p{
           font: 500 15px $fontName;
           color: #61616d;
@@ -293,7 +300,7 @@ main{
             z-index: 10;
             background-color: #ffffff;
             overflow: auto;
-            max-height: 300px;
+            max-height: 330px;
 
             .exist_tag{
               padding: 9px 15px;
@@ -310,6 +317,10 @@ main{
               &:nth-of-type(1){
                 border-top: none;
               }
+
+              &.active{
+                background-color: #eff0f3;
+              }
             }
 
             &.closed{
@@ -317,7 +328,7 @@ main{
             }
 
             &::-webkit-scrollbar{
-              width: 10px;
+              width: 8px;
             }
             &::-webkit-scrollbar-track{
               border: 1px solid #d7dbe5;
@@ -328,7 +339,7 @@ main{
             &::-webkit-scrollbar-thumb{
               background: rgb(209, 211, 217);
               border-radius: 12px;
-              width: 7px;
+
               &:hover{
                 background: rgb(200, 203, 210);
               }
@@ -381,6 +392,7 @@ main{
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 3px 5px 0px #2f83e90a;
             margin: 10px;
             border: 1px solid #d7dbe5;
             border-radius: 3px;

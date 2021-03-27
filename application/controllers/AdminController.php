@@ -83,24 +83,28 @@ class AdminController extends Controller {
             View::errorCode(404);
         }
         if(!empty($_POST)){
-            if($this->model->postValidate($_POST)) {
-                    if($this->model->postEdit($_POST, $this->route['id'])) {
+            //Если нам отправили форму со старым изображением, то не проверяем его на валидность
+            if (isset($_POST['primary_image']))
+                $this->model->postValidate($_POST, 'edit');
+            else
+                $this->model->postValidate($_POST, 'add');
 
-                        if($_FILES['image']['tmp_name']) {
-                            if (!$this->model->uploadImage($this->route['id'], $_FILES['image']['tmp_name'], 'public/uploaded_information')) {
-                                $this->view->message('Ошибка', $this->model->error, '', 'popup');
-                            }
-                        }
-
-                    } else{
-                        $this->view->message('Ошибка связи с бд', $this->model->error, '', 'popup');
-                    }
-            } else{
-                $this->view->message('Ошибка изменения поста', $this->model->error, '', 'popup');
-            }
-
-            //Если запрос прислал пользователь, а не js для проверки полей, то логинимся
+            //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
+                $this->model->postEdit($_POST, $this->route['id']);
+
+                if(!empty($this->model->error) && is_array($this->model->error))
+                    $this->view->message('валидация', $this->model->error, '', 'validation');
+                elseif(!is_array($this->model->error))
+                    $this->view->message('валидация', $this->model->error, '', 'general');
+
+                //Если нам отправили форму со старым изображением, то не загружаем его
+                if (!isset($_POST['primary_image'])) {
+                    if (!$this->route['id'] || !$this->model->uploadImage($this->route['id'], $_FILES['post_icon']['tmp_name'], "public/uploaded_information")) {
+                        $this->view->message('валидация', $this->model->error, '', 'general');
+                    }
+                }
+
                 $this->view->message('Успех', 'Пост изменен', true, 'popup');
             }
             //Если данные верны, но все еще приходят проверки на валидность полей от js, то говорим, что все поля валидны
@@ -109,8 +113,32 @@ class AdminController extends Controller {
             }
         }
 
-        $inf = $this->model->db->row('SELECT * FROM posts WHERE id = :id', ['id' => $this->route['id']])[0];
-        $this->view->render("Изменение поста {$this->route['id']}", $inf);
+        //Ищем теги, похожие на вводимые пользователем, и отправляем их
+        $data = json_decode(stripslashes(file_get_contents("php://input")), true);
+        if(isset($data['tag_name'])){
+            $similarTags = $this->model->getSimilarTags($data['tag_name'], $data['col_of_max_tags']);
+            $this->view->response($similarTags);
+        }
+
+        //Получаем теги
+        $inf = $this->model->getPostById($this->route['id']);
+        if(!empty($inf['tags'])) {
+            $tagsIdsArr = explode(',', $inf['tags']);
+            $inf['tags'] = [];
+            foreach ($tagsIdsArr as $tagId) {
+                $inf['tags'][] = $this->model->getTagById($tagId)['name'];
+            }
+        }
+        else
+            $inf['tags'] = [];
+
+        //Получаем категории
+        $categoriesNames = $this->model->getCategoriesNames();
+        $inf['category'] = $this->model->getCategoryById($inf['category'])['name'];
+        $this->view->render("Изменение поста", [
+            'postInformation' => $inf,
+            'categoriesNames' => $categoriesNames
+        ]);
     }
 
     //Добавление поста
@@ -124,7 +152,13 @@ class AdminController extends Controller {
             //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
                 $id = $this->model->postAdd($_POST);
-                if (!$id || !$this->model->uploadImage($id, $_FILES['post_icon']['tmp_name'],  "public/uploaded_information")) {
+
+                if(!empty($this->model->error) && is_array($this->model->error))
+                    $this->view->message('валидация', $this->model->error, '', 'validation');
+                elseif(!is_array($this->model->error))
+                    $this->view->message('валидация', $this->model->error, '', 'general');
+
+                if (!$this->model->uploadImage($id, $_FILES['post_icon']['tmp_name'],  "public/uploaded_information")) {
                     $this->model->postDelete($id);
                     $this->view->message('валидация', $this->model->error, '', 'general');
                 }

@@ -251,8 +251,8 @@ class MainController extends Controller {
 
 
         //Отображаем комментарии через js
-        $commentsOnPageLimit = 15; //Количество отображаемых комментов за раз
-        $answersOnPageLimit = 7; //Количество отображаемых ответов на коммент за раз
+        $commentsOnPageLimit = 25; //Количество отображаемых комментов за раз
+        $answersOnPageLimit = 10; //Количество отображаемых ответов на коммент за раз
         if( isset($_POST['offset']) ) {
             if(isset($_POST['first_comments']))
                 $this->commentsOffset($userId, $commentsOnPageLimit, $postId, $_POST['filter_mode'], true);

@@ -68,7 +68,7 @@ import inputExplore from "./input_explorer.js";
                     form.isLoading = false;
 
                     const json = await response.json();
-
+                    console.log(json);
                     if (json.url) {
                         window.location.href = json.url;
                     }

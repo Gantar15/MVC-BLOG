@@ -64,13 +64,6 @@
                         </p>
                     </p>
                 </div>
-                <div class="post_text">
-                    <p><span>Главная часть</span><br>
-                        <p class="text">
-                            <?=htmlspecialchars($post['text'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
-                        </p>
-                    </p>
-                </div>
             </div>
 
             <div class="post_activities">

@@ -167,22 +167,6 @@ a{
             line-height: 1.4em;
         }
     }
-    .post_text{
-        p{
-            font: normal 15px $fontName;
-        }
-        p:first-of-type {
-            margin-bottom: 10px;
-
-            span {
-                color: #3e3e3e;
-                font: 500 20px $fontName;
-            }
-        }
-        .text{
-            line-height: 1.4em;
-        }
-    }
 
     .post_activities {
         .post_marks_block{

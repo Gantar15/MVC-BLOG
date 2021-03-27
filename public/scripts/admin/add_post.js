@@ -1,6 +1,5 @@
 import PostConstructor from "./post_constructor.js";
 import imageUploader from "../image_uploader.js";
-import LoadParser from "../loadParser.js";
 import Select from "../select.js";
 
 
@@ -11,55 +10,81 @@ const categoriesNames = categoriesNamesBlock.querySelectorAll('p');
 const namesData = [...categoriesNames].map((nameNode, i) => {
     return {id:i+1, value:nameNode.innerText};
 });
+
+//Получаем выбранную категорию, если такая есть
+const selectedCategoryNameNode = document.getElementById('selected_category_name');
+const selectedCategoryName = selectedCategoryNameNode?.innerText;
+let selectedCategoryId = '';
+if(selectedCategoryName)
+    selectedCategoryId = namesData.findIndex(el => el.value === selectedCategoryName)+1;
+selectedCategoryNameNode?.remove();
+
 categoriesNamesBlock.remove();
-const categorySelect = document.querySelector('.post_filters #category_select'),
-categorySelectBox = document.querySelector('.post_filters .category');
+const categorySelect = document.querySelector('.post_filters #category_select');
 const select = new Select(".post_filters #category_select", {
     placeholder: "Выберите категорию",
-    selectedId: "",
+    selectedId: selectedCategoryId,
     data: namesData
 },({value})=>{
     categorySelect.dataset.inputValue = value;
+    categorySelect.classList.add('selected');
 },()=>{
     closeFormMes();
     categorySelect.classList.remove('invalid');
 });
 
 
+const add_image = document.querySelector('.add_image'),
+    uploadedImageReset = add_image?.querySelector('.uploaded_image_reset');
 
-//Загрузка изображения
-imageUploader('#post_icon #fg4', `
+function uploadIMG(inputSelector){
+    //Загрузка изображения
+    imageUploader(inputSelector, `
                         <div class="add_image_trigger">
                             <p>загрузите обложку поста</p>
                             <img src="/public/imgs/add_image.svg">
                         </div>
                     `,
-    (errorMessage) => {
-        const postIconInput = document.querySelector('#post_icon #fg4');
-        let fieldErrorNode = postIconInput.parentNode.querySelector('.field_error_inf');
-        postIconInput.classList.add('invalid');
-        if(!fieldErrorNode) {
-            fieldErrorNode = document.createElement('div');
-            fieldErrorNode.className = 'field_error_inf';
-            const wrongFieldIcon = document.createElement('div');
-            wrongFieldIcon.className = 'wrong_field_icon';
-            fieldErrorNode.prepend(wrongFieldIcon);
+        (errorMessage) => {
+            const postIconInput = document.querySelector('#post_icon #fg4');
+            let fieldErrorNode = postIconInput.parentNode.querySelector('.field_error_inf');
+            postIconInput.classList.add('invalid');
+            if (!fieldErrorNode) {
+                fieldErrorNode = document.createElement('div');
+                fieldErrorNode.className = 'field_error_inf';
+                const wrongFieldIcon = document.createElement('div');
+                wrongFieldIcon.className = 'wrong_field_icon';
+                fieldErrorNode.prepend(wrongFieldIcon);
 
-            fieldErrorNode.insertAdjacentHTML('beforeend', `
+                fieldErrorNode.insertAdjacentHTML('beforeend', `
                                         <p>${errorMessage}</p>
                                     `);
-            postIconInput.after(fieldErrorNode);
-        }
-        else {
-            fieldErrorNode.textContent = errorMessage;
-        }
-    }, 5,
-    (input) => {
-        //Удаляем сообщение о ошибке при выборе изображения
-        input.closest('#post_icon')?.querySelector('.field_error_inf')?.remove();
-        input.classList.remove('invalid');
-        closeFormMes();
-    });
+                postIconInput.after(fieldErrorNode);
+            } else {
+                fieldErrorNode.textContent = errorMessage;
+            }
+        }, 5,
+        (input) => {
+            //Удаляем сообщение о ошибке при выборе изображения
+            input.closest('#post_icon')?.querySelector('.field_error_inf')?.remove();
+            input.classList.remove('invalid');
+            closeFormMes();
+        });
+}
+if(add_image) {
+//Подгружаем с начала уже существующее изображение и подключаем возможность изменить его
+    uploadedImageReset.onclick = () => {
+        add_image.innerHTML = `
+        <div class="add_image">
+           <input name="post_icon" type="file">
+        </div>
+        `;
+        uploadIMG('.add_image > input');
+    };
+}
+else{
+    uploadIMG('#post_icon > input');
+}
 
 
 
@@ -74,8 +99,13 @@ const tagsInput = document.querySelector('.post_filters .tag_input input'),
         generalFormMessage.classList.remove('active');
     }
 
-    const tagsInputObj = {                  //Объект для взаимодействия с полем инпут тегов
-        tagsInput: tagsInput,
+    class TagsInputObj {                  //Класс для взаимодействия с полем инпут тегов
+        tagsInput;
+
+        constructor(tagsInput) {
+            this.tagsInput = tagsInput;
+        }
+
         _getErrorNode(text){
             const fieldErrorNode = document.createElement('div');
             fieldErrorNode.className = 'field_error_inf';
@@ -87,7 +117,8 @@ const tagsInput = document.querySelector('.post_filters .tag_input input'),
                                         <p>${text}</p>
                                     `);
             return fieldErrorNode;
-        },
+        }
+
         addValidateError(errorText) {
             const fieldErrorInf = this.tagsInput.parentElement.parentElement.querySelector('.field_error_inf');
             this.tagsInput.parentElement.classList.add('invalid');
@@ -99,10 +130,11 @@ const tagsInput = document.querySelector('.post_filters .tag_input input'),
                 this.tagsInput.parentElement.after(fieldErrorNode);
             }
 
-            this.tagsInput.addEventListener('focus', this.removeValidateError.bind(this));
-            this.tagsInput.addEventListener('input', this.removeValidateError.bind(this));
-        },
-        removeValidateError(){
+            this.tagsInput.addEventListener('focus', this.removeValidateError);
+            this.tagsInput.addEventListener('input', this.removeValidateError);
+        }
+
+        removeValidateError = ()=>{
             const fieldErrorInf = this.tagsInput.parentElement.parentElement.querySelector('.field_error_inf');
             this.tagsInput.parentElement.classList.remove('invalid');
             fieldErrorInf?.remove();
@@ -110,6 +142,7 @@ const tagsInput = document.querySelector('.post_filters .tag_input input'),
             this.tagsInput.removeEventListener('input', this.removeValidateError);
         }
     }
+    const tagsInputObj = new TagsInputObj(tagsInput);
 
 
 //Класс-предаставление меню с существующими тегами, которые похожи на вводимый тег
@@ -118,6 +151,9 @@ class existingTagsMenu{
     maxColOfTags;
     existingTagsBlock;
     tagsInput;
+    _activeTagIndex = -1;
+    existingTagsArr;
+    isExistActiveTag = false;
 
     constructor(existingTagsBlock, tagsInput, maxColOfTags = 12) {
         this.existingTagsBlock = existingTagsBlock;
@@ -136,9 +172,37 @@ class existingTagsMenu{
         });
     }
 
-    menuCloseHandler(event){
+    setActiveTag(index){
+        this.isExistActiveTag = true;
+        const arrLength = this.existingTagsArr.length;
+        this.existingTagsArr.forEach(el => el.classList.remove('active'));
+        index = index < 0 ? arrLength-1 : index;
+        index = index >= arrLength ? 0 : index;
+
+        this._activeTagIndex = index;
+        existingTagsBlock.scrollTop = this.getActiveTag.offsetTop - Math.round(existingTagsBlock.offsetHeight/2);   //Настраиваем скролл
+        this.getActiveTag.classList.add('active');
+    }
+
+    get getActiveTag(){
+        return this.existingTagsArr[this._activeTagIndex];
+    }
+
+    _menuCloseHandler = (event) => {
         if(event.target.closest('.existing_tags')) return;
         this.close();
+    }
+
+    _navigateMenuHandler = (event) => {
+        if(event.key == 'ArrowDown' || event.key == 'ArrowRight') {
+            this.setActiveTag(++this._activeTagIndex);
+        }
+        else if(event.key == 'ArrowUp' || event.key == 'ArrowLeft'){
+            this.setActiveTag(--this._activeTagIndex);
+        }
+
+        if(event.key !== 'Enter' || this._activeTagIndex === -1) return;
+            addTagInList(this.getActiveTag.textContent);
     }
 
     clear(){
@@ -148,12 +212,18 @@ class existingTagsMenu{
     close(){
         this.clear();
         this.existingTagsBlock.classList.add('closed');
-        document.removeEventListener('click', this.menuCloseHandler.bind(this));
+        document.removeEventListener('click', this._menuCloseHandler);
+        document.removeEventListener('keydown', this._navigateMenuHandler);
     }
 
     open(){
+        this.isExistActiveTag = false;
+        this._activeTagIndex = -1;
+        existingTagsBlock.scrollTop = 0;
+        this.existingTagsArr = Array.from(this.existingTagsBlock.querySelectorAll('.exist_tag'));
         this.existingTagsBlock.classList.remove('closed');
-        document.addEventListener('click', this.menuCloseHandler.bind(this));
+        document.addEventListener('click', this._menuCloseHandler);
+        document.addEventListener('keydown', this._navigateMenuHandler);
     }
 
     addTag(tagName){
@@ -238,7 +308,7 @@ let actualActiveTags = {        //Объект для работы с добав
         this.addedTagsBlock.dataset.inputValue = [...this._activeTags.values()].join(' ');
     }
 };
-//Добавление тега на страницу
+//Добавление тега на страницу(главная функция для добавления тегов)
 function addTagInList(tagsInputValue){
     if(tagsInputValue.length === 0) return;
 
@@ -307,11 +377,20 @@ addTagButton.onclick = () => {
         addTagInList(tagsInputObj.tagsInput.value);
 };
 tagsInputObj.tagsInput.onkeydown = (ev) => {
-    if(ev.key === 'Enter'){
+    if(ev.key === 'Enter' && !existingTags.isExistActiveTag){
         if(actualActiveTags.length < existingTags.maxColOfTags)
             addTagInList(tagsInputObj.tagsInput.value);
     }
 };
+
+
+//Рендер выбранных для этого поста тегов
+const selectedTagsNamesNode = document.getElementById('selected_tags_names');
+let selectedTagsNames = [];
+if(selectedTagsNamesNode?.innerText.trim())
+    selectedTagsNames = JSON.parse(selectedTagsNamesNode.innerText);
+selectedTagsNames.forEach(el => addTagInList(el));
+selectedTagsNamesNode?.remove();
 
 
 

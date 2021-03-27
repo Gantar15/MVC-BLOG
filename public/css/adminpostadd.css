@@ -87,7 +87,7 @@
     -webkit-transition: max-height 0.3s, opacity 0.3s;
     transition: max-height 0.3s, opacity 0.3s; }
     .select__dropdown::-webkit-scrollbar {
-      width: 10px; }
+      width: 8px; }
     .select__dropdown::-webkit-scrollbar-track {
       border: 1px solid #d7dbe5;
       border-right: none;
@@ -380,6 +380,8 @@ main {
       height: -webkit-max-content;
       height: -moz-max-content;
       height: max-content; }
+      .card form .post_filters .tags #category_select.selected .select__input, .card form .post_filters .category #category_select.selected .select__input {
+        color: #383840; }
       .card form .post_filters .tags p, .card form .post_filters .category p {
         font: 500 15px "Open Sans";
         color: #61616d;
@@ -435,7 +437,7 @@ main {
             z-index: 10;
             background-color: #ffffff;
             overflow: auto;
-            max-height: 300px; }
+            max-height: 330px; }
             .card form .post_filters .tags .tag_input .existing_tags .exist_tag {
               padding: 9px 15px;
               border-top: 1px solid #d4d8e2;
@@ -448,10 +450,12 @@ main {
                 background-color: #eff0f3; }
               .card form .post_filters .tags .tag_input .existing_tags .exist_tag:nth-of-type(1) {
                 border-top: none; }
+              .card form .post_filters .tags .tag_input .existing_tags .exist_tag.active {
+                background-color: #eff0f3; }
             .card form .post_filters .tags .tag_input .existing_tags.closed {
               display: none; }
             .card form .post_filters .tags .tag_input .existing_tags::-webkit-scrollbar {
-              width: 10px; }
+              width: 8px; }
             .card form .post_filters .tags .tag_input .existing_tags::-webkit-scrollbar-track {
               border: 1px solid #d7dbe5;
               border-right: none;
@@ -459,8 +463,7 @@ main {
               background-color: transparent; }
             .card form .post_filters .tags .tag_input .existing_tags::-webkit-scrollbar-thumb {
               background: #d1d3d9;
-              border-radius: 12px;
-              width: 7px; }
+              border-radius: 12px; }
               .card form .post_filters .tags .tag_input .existing_tags::-webkit-scrollbar-thumb:hover {
                 background: #c8cbd2; }
           .card form .post_filters .tags .tag_input .add_tag_button {
@@ -522,6 +525,8 @@ main {
             -webkit-box-pack: justify;
                 -ms-flex-pack: justify;
                     justify-content: space-between;
+            -webkit-box-shadow: 0 3px 5px 0px #2f83e90a;
+                    box-shadow: 0 3px 5px 0px #2f83e90a;
             margin: 10px;
             border: 1px solid #d7dbe5;
             border-radius: 3px;

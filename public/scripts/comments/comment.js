@@ -878,7 +878,7 @@ function commentsMenusRender(parentBlock) {
             comments = [comment];
     }
     if(comments.length === 0) return;
-    console.log(comments)
+
     for(const comment of comments) {
 
         if(comment.dataset.menuPrepared) continue;                    //Если данный комментарий или ответ уже проходил данный цикл(обработчики событий для меню повешены и тд.), то идем дальше
@@ -978,7 +978,7 @@ function commentsMenusRender(parentBlock) {
             }
 
             //Удаляем меню при клике вне самого меню или вне commentMenuTrigger
-            let fnct = (event) => {
+            function fnctHandler (event) {
                 if (commentMenu.contains(event.target) || commentMenuTrigger.contains(event.target)) return;
 
                 allowPageScroll();
@@ -986,14 +986,14 @@ function commentsMenusRender(parentBlock) {
                 commentMenuTrigger.classList.remove('clicked');
 
                 if (!comment.contains(event.target) || comment.contains(event.target.closest('.answers_block, .after_loaded_answers_block'))) {
-                    document.removeEventListener('click', fnct);
+                    document.removeEventListener('click', fnctHandler);
                 }
 
                 if(!comment.contains(event.target)){
                     commentMenuTrigger.classList.remove('displayed');
                 }
             };
-            document.addEventListener('click', fnct);
+            document.addEventListener('click', fnctHandler);
 
 
             //Обработка нажатия на удаление или редактирование комментария или ответа

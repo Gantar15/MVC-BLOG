@@ -1318,15 +1318,6 @@ a {
         font: 500 20px "Open Sans"; }
     .post .post_description .descrpton {
       line-height: 1.4em; }
-  .post .post_text p {
-    font: normal 15px "Open Sans"; }
-  .post .post_text p:first-of-type {
-    margin-bottom: 10px; }
-    .post .post_text p:first-of-type span {
-      color: #3e3e3e;
-      font: 500 20px "Open Sans"; }
-  .post .post_text .text {
-    line-height: 1.4em; }
   .post .post_activities .post_marks_block {
     display: -webkit-box;
     display: -ms-flexbox;
