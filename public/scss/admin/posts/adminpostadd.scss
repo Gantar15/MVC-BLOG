@@ -7,6 +7,8 @@ main{
   align-items: flex-start;
 }
 
+
+
 .posts {
   max-width: 1120px;
   width: 100%;
@@ -22,6 +24,7 @@ main{
   font: 500 14px $fontName;
   background-color: #ffffff;
   border-radius: 3px;
+  box-shadow: 0 1px 2px 4px #e0e6ed;
 
   .posts_add_header{
     display: flex;

@@ -11,28 +11,21 @@
 
     <div class="column pd_s">
         <div class="recordings_container">
+            <div class="first_section_title">
+                <img src="/public/imgs/posts_blue.svg">
+                <p>Все посты</p>
+            </div>
             <section class="blog_recordings">
-                <?php if (empty($posts)): ?>
-                    <p>Посты закончились, зай :3</p>
+                <?php if (empty($allPosts)): ?>
+                    <p>Посты закончились</p>
                 <?php else: ?>
-                    <?php foreach ($posts as $post): ?>
+                    <?php foreach ($allPosts as $post): ?>
                         <article class="blog_recording">
                             <div class="blog_img">
                                 <img src="/public/uploaded_information/<?=$post["id"]?>.jpg">
-                                <div class="hidden_inf">
-                                    <div class="likes">
-                                        <img src="/public/imgs/like.svg"/>
-                                        <p><?=$post['likes'] . ' ' . $this->valuesFormatter($post['likes'], 'лайков', 'лайк', 'лайка')?></p>
-                                    </div>
-                                    <div class="comments">
-                                        <img src="/public/imgs/comments.svg"/>
-                                        <p><?=$post['col_of_comments'] . ' ' . $this->valuesFormatter($post['col_of_comments'], 'комментариев', 'комментарий', 'комментария')?></p>
-                                    </div>
-                                    <div class="comments">
-                                        <img src="/public/imgs/eye.svg"/>
-                                        <p><?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?></p>
-                                    </div>
-                                </div>
+                                <?php if(!empty($post['category'])):?>
+                                    <div class="category"><?=$post['category']?></div>
+                                <?php endif;?>
                             </div>
                             <div class="main_post_content">
                                 <div class="record_container">
@@ -96,6 +89,14 @@
                                     </div>
 
                                     <div class="last_block_info">
+                                        <div class="likes">
+                                            <img src="/public/imgs/like.svg"/>
+                                            <p><?=$post['likes'] . ' ' . $this->valuesFormatter($post['likes'], 'лайков', 'лайк', 'лайка')?></p>
+                                        </div>
+                                        <div class="views">
+                                            <img src="/public/imgs/eye.svg"/>
+                                            <p><?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?></p>
+                                        </div>
                                         <div class="share">
                                             <img src="/public/imgs/share.svg"/>
                                             <p>Поделиться</p>

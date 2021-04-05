@@ -82,6 +82,13 @@ class AdminController extends Controller {
         if(!$this->model->postExistCheck($this->route['id'])) {
             View::errorCode(404);
         }
+
+        //Получаем максимальное количество тегов
+        $MAX_COL_OF_TAGS = 5;
+        if(isset($_POST['max_col_of_tags'])){
+            $MAX_COL_OF_TAGS = $_POST['max_col_of_tags'];
+        }
+
         if(!empty($_POST)){
             //Если нам отправили форму со старым изображением, то не проверяем его на валидность
             if (isset($_POST['primary_image']))
@@ -89,16 +96,19 @@ class AdminController extends Controller {
             else
                 $this->model->postValidate($_POST, 'add');
 
+            if(!empty($this->model->error))
+                $this->view->message('валидация', $this->model->error, '', 'validation');
+
             //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
-                $this->model->postEdit($_POST, $this->route['id']);
+                $this->model->postEdit($_POST, $this->route['id'], $MAX_COL_OF_TAGS);
 
                 if(!empty($this->model->error) && is_array($this->model->error))
                     $this->view->message('валидация', $this->model->error, '', 'validation');
                 elseif(!is_array($this->model->error))
                     $this->view->message('валидация', $this->model->error, '', 'general');
 
-                //Если нам отправили форму со старым изображением, то не загружаем его
+                //Если нам отправили форму со старым изображением поста, то не загружаем его
                 if (!isset($_POST['primary_image'])) {
                     if (!$this->route['id'] || !$this->model->uploadImage($this->route['id'], $_FILES['post_icon']['tmp_name'], "public/uploaded_information")) {
                         $this->view->message('валидация', $this->model->error, '', 'general');
@@ -134,7 +144,13 @@ class AdminController extends Controller {
 
         //Получаем категории
         $categoriesNames = $this->model->getCategoriesNames();
-        $inf['category'] = $this->model->getCategoryById($inf['category'])['name'];
+        //Получаем категорию данного поста
+        $category = $this->model->getCategoryById($inf['category']);
+        if(is_array($category))
+            $inf['category'] = $category['name'];
+        else
+            $inf['category'] = $category;
+
         $this->view->render("Изменение поста", [
             'postInformation' => $inf,
             'categoriesNames' => $categoriesNames
@@ -143,6 +159,13 @@ class AdminController extends Controller {
 
     //Добавление поста
     public function postaddAction(){
+
+        //Получаем максимальное количество тегов
+        $MAX_COL_OF_TAGS = 5;
+        if(isset($_POST['max_col_of_tags'])){
+            $MAX_COL_OF_TAGS = $_POST['max_col_of_tags'];
+        }
+
         if(!empty($_POST)){
             $this->model->postValidate($_POST, 'add');
 
@@ -151,7 +174,7 @@ class AdminController extends Controller {
 
             //Если запрос прислал пользователь, а не js для проверки полей, то продолжаем
             if(isset($_POST['login_trusted'])) {
-                $id = $this->model->postAdd($_POST);
+                $id = $this->model->postAdd($_POST, $MAX_COL_OF_TAGS);
 
                 if(!empty($this->model->error) && is_array($this->model->error))
                     $this->view->message('валидация', $this->model->error, '', 'validation');

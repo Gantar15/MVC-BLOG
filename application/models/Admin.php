@@ -54,7 +54,7 @@ class Admin extends Model
                     return false;
                 }
                 else if ($_FILES['post_icon']['error'] > 2) {
-                    $this->error[] = ['message' => 'Ошибка загрузки файла', 'field_name' => 'post_icon'];
+                    $this->error[] = ['message' => 'Ошибка загрузки изображения', 'field_name' => 'post_icon'];
                     return false;
                 }
                 else if (!preg_match('#^image/#', $_FILES['post_icon']['type'])) {
@@ -90,7 +90,7 @@ class Admin extends Model
         }
     }
 
-    public function postAdd($post){
+    public function postAdd($post, $MAX_COL_OF_TAGS){
         $this->error = [];
         if(!$this->categoryExistCheck($post['category'])){
             $this->error[] = ['message' => 'Невалидная категория', 'field_name' => 'category'];
@@ -103,6 +103,12 @@ class Admin extends Model
         if(!empty($post['tags'])){
             $tagsArr = explode(' ', $post['tags']);
         }
+
+        if(count($tagsArr) > $MAX_COL_OF_TAGS){
+            $this->error = 'Максимальое количество тегов - '.$MAX_COL_OF_TAGS;
+            return false;
+        }
+
         if(!empty($tagsArr)){
             for ($i = 0; $i < count($tagsArr); $i++){
                 $tag = $tagsArr[$i];
@@ -144,7 +150,7 @@ class Admin extends Model
         return $this->db->lastInsertId();
     }
 
-    public function postEdit($post, $id){
+    public function postEdit($post, $id, $MAX_COL_OF_TAGS){
         $this->error = [];
         if(!$this->categoryExistCheck($post['category'])){
             $this->error[] = ['message' => 'Невалидная категория', 'field_name' => 'category'];
@@ -157,6 +163,12 @@ class Admin extends Model
         if(!empty($post['tags'])){
             $tagsArr = explode(' ', $post['tags']);
         }
+
+        if(count($tagsArr) > $MAX_COL_OF_TAGS){
+            $this->error = 'Максимальое количество тегов - '.$MAX_COL_OF_TAGS;
+            return false;
+        }
+
         if(!empty($tagsArr)){
             for ($i = 0; $i < count($tagsArr); $i++){
                 $tag = $tagsArr[$i];
@@ -266,6 +278,17 @@ class Admin extends Model
         return $categories;
     }
 
+    public function getCategories(){
+        $categories = $this->db->row('SELECT * FROM categories ORDER BY id DESC ');
+        if(!empty($categories)) {
+            for ($i = 0; $i < count($categories); $i++) {
+                $colOfPosts = $this->colOfPostsInCategory($categories[$i]['id']);
+                $categories[$i]['col_of_posts'] = $colOfPosts;
+            }
+        }
+        return $categories;
+    }
+
     public function addCategory($post){
         $params = [
             'name' => $post['name'],
@@ -315,7 +338,10 @@ class Admin extends Model
     }
 
     public function getCategoryById($id){
-        return $this->db->row('SELECT * FROM categories WHERE id = :id', ['id' => $id])[0];
+        $categoryArr = $this->db->row('SELECT * FROM categories WHERE id = :id', ['id' => $id]);
+        if(!empty($categoryArr))
+            return $categoryArr[0];
+        return '';
     }
 
     public function getCategoryByName($name){

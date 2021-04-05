@@ -24,7 +24,7 @@ $font_color: #71747a;
         z-index: 1;
         
         .select__dropdown{
-            max-height: 200px;
+            max-height: 290px;
             opacity: 1;
         }
         .background__element{
@@ -65,13 +65,13 @@ $font_color: #71747a;
         box-sizing: border-box;
         border-radius: 6px;
         top: $select_height;
-        transform: translateY(-1px);
         box-shadow: -3px 3px 2px 0 #2f83e908;
         left: 0;
         right: 0;
         max-height: 0;
         overflow-y: auto;
         border: 1px solid #d7dbe5;
+        border-top: none;
         opacity: 0;
         transition: max-height 0.3s, opacity 0.3s;
 

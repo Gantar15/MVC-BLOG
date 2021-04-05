@@ -19,9 +19,11 @@ class MainController extends Controller {
     }
 
     public function indexAction(){
+        $admin = new Admin();
+
         //Количество отображаемых на странице постов за раз
-        $limit = 3;
-        $pagination = new Pagination($this->route, $this->model->getNewestPostsCount(), $limit);
+        $limit = 4;
+        $pagination = new Pagination($this->route, $this->model->getAllPostsCount(), $limit);
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
         }
@@ -31,10 +33,14 @@ class MainController extends Controller {
         $paginationContent = $pagination->getContent();
 
         //Получаем информацию о постах
-        $posts = $this->model->getNewestPostsByLimit($limit, $pagination->currentPage);
-        if(!empty($posts)) {
-            for ($i = 0; $i < count($posts); $i++) {
-                $posts[$i]['col_of_comments'] = $this->model->commentsCount($posts[$i]['id']);
+        $allPosts = $this->model->getAllPostsByLimit($limit, $pagination->currentPage);
+        if(!empty($allPosts)) {
+            for ($i = 0; $i < count($allPosts); $i++) {
+                $inf = $admin->getCategoryById($allPosts[$i]['category']);
+                if(is_array($inf))
+                    $allPosts[$i]['category'] = $inf['name'];
+                else
+                    $allPosts[$i]['category'] = $inf;
             }
         }
 
@@ -42,7 +48,7 @@ class MainController extends Controller {
         $userData = $this->account->getAuthorizeData();
 
         $this->view->render('Главная страница', [
-            'posts' => $posts,
+            'allPosts' => $allPosts,
             'pagination' => $paginationContent,
             'userData' => $userData
         ]);
@@ -323,6 +329,24 @@ class MainController extends Controller {
         if(isset($_POST['get_comments_count'])) {
             $this->view->response($colOfComments);
         }
+        //Получаем категорию
+        $category = $admin->getCategoryById($post['category']);
+        $post['category_id'] = $post['category'];
+        if(is_array($category))
+            $post['category'] = $category['name'];
+        else
+            $post['category'] = $category;
+
+        //Получаем теги
+        if(!empty($post['tags'])) {
+            $tagsIdsArr = explode(',', $post['tags']);
+            $post['tags'] = [];
+            foreach ($tagsIdsArr as $tagId) {
+                $post['tags'][] = ['name' => $admin->getTagById($tagId)['name'], 'id' => $tagId];
+            }
+        }
+        else
+            $post['tags'] = [];
 
         $author = [];
         if(intval($post['author_id']) === 0){
@@ -339,5 +363,43 @@ class MainController extends Controller {
             'author' => $author
         ];
         $this->view->render($post['name'], $params);
+    }
+
+
+    //Категории------------------------------------------------------------
+    public function categoriesAction(){
+        $admin = new Admin();
+
+        $categories = $admin->getCategories();
+        $params = [
+            'categories' => $categories
+        ];
+        $this->view->render('Категории', $params);
+    }
+
+    public function categorypageAction(){
+        $admin = new Admin();
+        $category = $admin->getCategoryById($this->route['id']);
+        if(!isset($this->route['page'])) $this->route['page'] = 0;
+
+        //Количество отображаемых на странице постов за раз
+        $limit = 5;
+        $pagination = new Pagination($this->route, $this->model->getColOfPostsByCategoryId($this->route['id']), $limit, 5, $this->route['id'].';');
+        if(!isset($this->route['page'])){
+            $this->route['page'] = 1;
+        }
+        if($this->route['page'] > $pagination->totalPageCount){
+            $this->view->redirect('main/categorypage/'.$this->route['id'].';'.$pagination->totalPageCount);
+        }
+        $paginationContent = $pagination->getContent();
+
+        //Получаем посты данной категории
+        $posts = $this->model->getPostsByCategoryId($this->route['id'], $limit, $pagination->currentPage);
+
+        $this->view->render('Категория - '.$category['name'], [
+            'category' => $category,
+            'pagination' => $paginationContent,
+            'posts' => $posts
+        ]);
     }
 }

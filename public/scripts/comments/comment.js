@@ -27,6 +27,7 @@ let pagination;
 let filterMode = 'popular';
 //Загрузка комментов
 let loaded = false;
+let isCommentsRendered = false;     //Отрендерены ли комментарии
 
 
 
@@ -132,6 +133,7 @@ window.addEventListener('scroll', ()=>{
                     clearInterval(Id);
                     await pagination.render();
                     commentsMenusRender(document.querySelector('.comments_block_body'));
+                    isCommentsRendered = true;
                 }
             }, loadTime);
         }
@@ -1292,13 +1294,14 @@ const filtersMenu = document.querySelector('.filters');
 
 filtersMenu.addEventListener('click', (event) => {
 
-    if(colOfComments.textContent != 0) {
+    if(colOfComments.textContent != 0 && isCommentsRendered) {
         const prepareCommentBlock = () => {
             commentsBlockBody.style.paddingBottom = '0px';
             nextCommentsTrigger.style.display = 'none';
             loadBlock.style.display = '';
             commentsBlockBody.querySelectorAll('.comment').forEach(comment => comment.remove());
             loaded = false;
+            isCommentsRendered = false;
             window.dispatchEvent(new Event('scroll'));
         };
 

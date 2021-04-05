@@ -71,7 +71,7 @@
 <div class="error_block">
     <div>
         <div class="error_inf">
-            <img src="/public/imgs/header_logo.png">
+            <a href="/"><img src="/public/imgs/header_logo.png"></a>
             <h3>403. <span>Ошибка</span></h3>
             <p>Отказано доступе при загрузке <span><?php
                     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

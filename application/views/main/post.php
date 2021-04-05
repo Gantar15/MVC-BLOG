@@ -46,12 +46,49 @@
 
                 <div class="post_information">
                     <div class="post_name"><?=htmlspecialchars($post['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?></div>
-                    <div class="inf">
+                </div>
+
+                <?php if(!empty($post['category'])):?>
+                    <div class="category">
+                        <a href="/categorypage/<?=$post['category_id']?>" class="category_box"><?=$post['category']?></a>
+                    </div>
+                <?php endif;?>
+
+                <div class="post_subinf">
+                    <?php if(count($post['tags']) > 0):?>
+                        <div class="tags">
+                            <?php foreach ($post['tags'] as $tag):?>
+                                <a href="/tags/<?=$tag['id']?>" class="tag_box">#<?=$tag['name']?></a>
+                            <?php endforeach;?>
+                        </div>
+                    <?php endif;?>
+                    <div class="inf" style="<?php if(count($post['tags']) == 0):?>justify-content: space-between; width: 100%;<?php endif;?>">
                         <div class="views">
                             <img src="/public/imgs/eye.svg">
                             <span>
                                 <?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?>
                             </span>
+                        </div>
+                        <div class="dope_group">
+                            <div class="comments">
+                                <img src="/public/imgs/comments.svg"/>
+                                <span><?php
+                                    if(count($post['tags']) == 0)
+                                        echo $colOfComments . ' ' . $this->valuesFormatter($colOfComments, 'комментариев', 'комментарий', 'комментария');
+                                    else
+                                        echo $colOfComments;
+                                    ?></span>
+                            </div>
+                            <div class="likes">
+                                <img src="/public/imgs/like.svg"/>
+                                <span>
+                                    <?php
+                                    if(count($post['tags']) == 0)
+                                        echo $post['likes'] . ' ' . $this->valuesFormatter($post['likes'], 'лайков', 'лайк', 'лайка');
+                                    else
+                                        echo $post['likes'];
+                                    ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>

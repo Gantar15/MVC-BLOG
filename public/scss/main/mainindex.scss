@@ -80,15 +80,34 @@ a{
 }
 
 .recordings_container{
-    margin: 0 auto;
     margin-top: 50px;
     width: 72%;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
 
+    .first_section_title{
+        display: flex;
+        align-items: center;
+        padding: 11px 13px;
+        background-color: #f3f3f3;
+        margin-left: -8px;
+
+        img{
+            object-fit: cover;
+            width: 20px;
+            height: 20px;
+        }
+        p{
+            font: 500 15px $fontName;
+            text-transform: uppercase;
+            margin-left: 13px;
+        }
+    }
 }
 
 .blog_recordings{
+    margin-top: 30px;
     display: flex;
     padding-bottom: 40px;
     align-items: center;
@@ -110,12 +129,6 @@ a{
             position: relative;
             overflow: hidden;
 
-            &:hover{
-                .hidden_inf {
-                    bottom: 0;
-                }
-            }
-
             img {
                 max-height: 230px;
                 width: 100%;
@@ -123,37 +136,16 @@ a{
                 border-radius: 5px 5px 0 0;
             }
 
-            .hidden_inf {
+            .category{
                 position: absolute;
-                height: 100%;
-                width: 100%;
-                bottom: -100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 5px 5px 0 0;
-                background: linear-gradient(0deg, rgba(0,0,0,0.916) 0%, rgba(0,0,0,0.667) 51%, rgba(0,0,0,0.501) 100%);
-                transition: bottom .2s .2s;
-
-                .likes, .comments {
-                    display: flex;
-                    align-items: center;
-
-                    img {
-                        width: 13px;
-                        height: 13px;
-                        margin-top: 1px;
-                    }
-
-                    p {
-                        color: #ffffff;
-                        font: normal 12px $fontName;
-                        margin-left: 6px;
-                    }
-                }
-                & > div:nth-of-type(n+2){
-                    margin-left: 20px;
-                }
+                bottom: 30px;
+                left: 30px;
+                font: 500 13px $fontName;
+                color: #ffffff;
+                text-transform: uppercase;
+                background-color: #2f83e9;
+                border-radius: 5px;
+                padding: 3px 10px;
             }
         }
         &:nth-of-type(n+2) {
@@ -301,7 +293,7 @@ a{
                 &_info{
                     display: flex;
 
-                    .likes, .comments, .share{
+                    .likes, .share, .views{
                         display: flex;
                         align-items: center;
 
@@ -316,9 +308,13 @@ a{
                             margin-left: 6px;
                         }
                     }
+                    .views{
+                        margin-left: 15px;
+                    }
                     .share{
                         cursor: pointer;
                         user-select: none;
+                        margin-left: 25px;
 
                         p{
                             transition: color .2s;

@@ -6,7 +6,9 @@ return [
         'about',
         'contact',
         'post',
-        'privacy'
+        'privacy',
+        'categories',
+        'categorypage'
 	],
 	'authorize' => [
 	],

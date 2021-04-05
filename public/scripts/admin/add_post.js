@@ -3,6 +3,13 @@ import imageUploader from "../image_uploader.js";
 import Select from "../select.js";
 
 
+const MAX_COL_OF_TAGS = 5;      //Максимальное количество тегов
+let formD = new FormData();
+formD.set('max_col_of_tags', MAX_COL_OF_TAGS);
+fetch('', {
+    method: 'post',
+    body: formD
+})
 
 //Рендерим категории
 const categoriesNamesBlock = document.querySelector('.post_filters .category .categories_list');
@@ -68,6 +75,7 @@ function uploadIMG(inputSelector){
             //Удаляем сообщение о ошибке при выборе изображения
             input.closest('#post_icon')?.querySelector('.field_error_inf')?.remove();
             input.classList.remove('invalid');
+            input.closest('#post_icon')?.querySelector('input[name="primary_image"]')?.remove();
             closeFormMes();
         });
 }
@@ -347,7 +355,7 @@ function addTagInList(tagsInputValue){
         actualActiveTags.deleteTag(oldData);
         tagsInputObj.removeValidateError();
 
-        if(actualActiveTags.length < existingTags.maxColOfTags && prohibitTagsAdd.aldPlaceholder){             //Разрешаем добавлять теги, если их меньше максимального колличества, и добавление было запрещено
+        if(actualActiveTags.length < existingTags.maxColOfTags && prohibitTagsAdd.oldPlaceholder){             //Разрешаем добавлять теги, если их меньше максимального колличества, и добавление было запрещено
             allowTagsAdd();
         }
     };
@@ -361,14 +369,14 @@ function addTagInList(tagsInputValue){
 function prohibitTagsAdd(){
     addTagButton.style.display = 'none';
     tagsInputObj.tagsInput.disabled = true;
-    prohibitTagsAdd.aldPlaceholder = tagsInputObj.tagsInput.placeholder;
+    prohibitTagsAdd.oldPlaceholder = tagsInputObj.tagsInput.placeholder;
     tagsInputObj.tagsInput.placeholder = existingTags.maxColOfTags + ' - максимальное количество тегов';
 }
 //Разрешить добавление тегов
 function allowTagsAdd(){
     addTagButton.style.display = '';
     tagsInputObj.tagsInput.disabled = false;
-    tagsInputObj.tagsInput.placeholder = prohibitTagsAdd.aldPlaceholder;
+    tagsInputObj.tagsInput.placeholder = prohibitTagsAdd.oldPlaceholder;
 }
 
 //Добавление тега при клике на кнопку или нажатии на Enter

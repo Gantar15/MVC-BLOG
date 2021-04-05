@@ -14,13 +14,14 @@ class Pagination
     public $currentPage;
     private $pagesMaxInPagination;
 
-    public function __construct($route, $totalCount, $limit = 9, $pagesMaxInPagination = 5)
+    public function __construct($route, $totalCount, $limit = 9, $pagesMaxInPagination = 5, $baseParams = '')
     {
         $this->route = $route;
         $this->totalCount = $totalCount;
         $this->limit = $limit;
         $this->pagesMaxInPagination = $pagesMaxInPagination;
         $this->totalPageCount = $this->getPageCount();
+        $this->baseParams = $baseParams;
     }
 
     public function getContent(){
@@ -30,9 +31,9 @@ class Pagination
             $limits = $this->getLimits();
             for ($pageId = $limits[0]; $pageId <= $limits[1]; $pageId++) {
                 if ($pageId == $this->currentPage) {
-                    $paginationCode .= "<button class='active'><a href=\"/{$this->route['controller']}/{$this->route['action']}/$pageId\">$pageId</a></button>";
+                    $paginationCode .= "<button class='active'><a href=\"/{$this->route['controller']}/{$this->route['action']}/" . $this->baseParams . "$pageId\">$pageId</a></button>";
                 } else {
-                    $paginationCode .= "<button><a href=\"/{$this->route['controller']}/{$this->route['action']}/$pageId\">$pageId</a></button>";
+                    $paginationCode .= "<button><a href=\"/{$this->route['controller']}/{$this->route['action']}/" . $this->baseParams . "$pageId\">$pageId</a></button>";
                 }
             }
             return $this->finalHtml($paginationCode);
@@ -74,15 +75,15 @@ class Pagination
         $page = $this->currentPage - 1;
         $previous = "
             <div class='buttons_controllers'>
-                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/1\">&laquo;</a></button>
-                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">
+                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/" . $this->baseParams . "1\">&laquo;</a></button>
+                <button $prevDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/" . $this->baseParams . "$page\">
                     <span>&lt;</span><span>Назад</span></a>
                 </button>
             </div>
             ";
         $page = $this->currentPage + 1;
         $next = "
-            <button class='next_page' $nextDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/$page\">
+            <button class='next_page' $nextDis><a href=\"/{$this->route['controller']}/{$this->route['action']}/" . $this->baseParams . "$page\">
                 <span>Вперед</span><span>&gt;</span></a>
             </button>
             ";

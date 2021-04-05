@@ -96,7 +96,7 @@
                     </ul>
                     <div class="search">
                         <img src="/public/imgs/search.png">
-                        <p>search</p>
+                        <p>Поиск</p>
                     </div>
                 </div>
             </div>

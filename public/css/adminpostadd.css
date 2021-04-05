@@ -30,7 +30,7 @@
   .select.open {
     z-index: 1; }
     .select.open .select__dropdown {
-      max-height: 200px;
+      max-height: 290px;
       opacity: 1; }
     .select.open .background__element {
       display: block; }
@@ -74,8 +74,6 @@
             box-sizing: border-box;
     border-radius: 6px;
     top: 50px;
-    -webkit-transform: translateY(-1px);
-            transform: translateY(-1px);
     -webkit-box-shadow: -3px 3px 2px 0 #2f83e908;
             box-shadow: -3px 3px 2px 0 #2f83e908;
     left: 0;
@@ -83,6 +81,7 @@
     max-height: 0;
     overflow-y: auto;
     border: 1px solid #d7dbe5;
+    border-top: none;
     opacity: 0;
     -webkit-transition: max-height 0.3s, opacity 0.3s;
     transition: max-height 0.3s, opacity 0.3s; }
@@ -147,7 +146,9 @@ main {
   width: 100%;
   font: 500 14px "Open Sans";
   background-color: #ffffff;
-  border-radius: 3px; }
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px 4px #e0e6ed;
+          box-shadow: 0 1px 2px 4px #e0e6ed; }
   .card .posts_add_header {
     display: -webkit-box;
     display: -ms-flexbox;

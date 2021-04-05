@@ -49,22 +49,33 @@ class Main extends Model {
         mail('timabam253@idcbill.com', "Сообщение из блога mvcBlog от {$_POST['name']}", $message);
     }
 
-    //Посты
+    //Посты----------------------------------------------------------------------------------------------------------------------
 
-    public function getNewestPostsByLimit($limit, $currentPage){
+    public function getAllPostsByLimit($limit, $currentPage){
         $params = [
             'limit' => $limit,
             'offset' => ($currentPage-1)*$limit
         ];
-        return $this->db->row('SELECT * FROM posts WHERE TO_DAYS(NOW()) - TO_DAYS(date_of_create) <= 30 ORDER BY `date_of_create` DESC LIMIT :limit OFFSET :offset', $params);
+        return $this->db->row('SELECT * FROM `posts` ORDER BY IF(date_of_last_edit is NULL, date_of_create, date_of_last_edit) DESC LIMIT :limit OFFSET :offset', $params);
     }
 
-    public function getNewestPostsCount(){
-        return $this->db->column('SELECT COUNT(id) FROM posts WHERE TO_DAYS(NOW()) - TO_DAYS(date_of_create) <= 30');
+    public function getAllPostsCount(){
+        return $this->db->column('SELECT COUNT(id) FROM posts');
     }
 
+    public function getColOfPostsByCategoryId($id){
+        return $this->db->column('SELECT count(id) FROM posts WHERE category = :id', ['id' => $id]);
+    }
+    public function getPostsByCategoryId($id, $limit, $currentPage){
+        $params = [
+            'limit' => $limit,
+            'offset' => ($currentPage-1)*$limit,
+            'category_id' => $id
+        ];
+        return $this->db->query('SELECT * FROM posts WHERE category = :category_id LIMIT :limit OFFSET :offset', $params);
+    }
 
-    //Комментарии
+    //Комментарии----------------------------------------------------------------------------------------------------------------------
 
     //Постим коммент или ответ
     public function commentPost($authorId, $comment, $postId, $recordType, $upperCommentId = 0){
@@ -391,7 +402,7 @@ class Main extends Model {
         return $this->db->row('SELECT id, name FROM users WHERE id = :id', $params)[0];
     }
 
-    //Пост
+    //Пост----------------------------------------------------------------------------------------------------------------------
 
     //Добавляем информацию о том, кто оценил коммент, какой он оценил коммент и какую оценку поставил(лайк, дизлайк)
     public function setPostMarksData($authorId, $postId, $markType){

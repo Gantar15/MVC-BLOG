@@ -31,7 +31,7 @@ export default class CommentsPagination{
 
     authorizeUserId;                //ID юзера, который авторизирован в данный момент
 
-    isCommentsReady = false;        //Публичное свойство, которое говорит о том готовы ли комментарии к вставке на страницу
+    isCommentsReady = false;        //Публичное свойство, которое говорит о том готовы ли комментарии ко вставке на страницу
 
     finallyCommentsCodes = [];      //Массив готовых html-фрагментов комментариев для вставки на страницу
 
@@ -368,7 +368,7 @@ export default class CommentsPagination{
             this.commentsWithAnswers[commentId].isAnswersCodesReady = false;
             return 'success';
         }
-        throw new Error('answers render error');
+        return new Error('answers render error');
     }
 
 

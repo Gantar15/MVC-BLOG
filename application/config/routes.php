@@ -26,6 +26,18 @@ return [
         'controller' => 'main',
         'action' => 'post'
     ],
+    'categories' => [
+        'controller' => 'main',
+        'action' => 'categories'
+    ],
+    'categorypage/{id:\d+}' => [
+        'controller' => 'main',
+        'action' => 'categorypage'
+    ],
+    'main/categorypage/{id:\d+};{page:\d+}' => [
+        'controller' => 'main',
+        'action' => 'categorypage'
+    ],
 
     //AccountController
     'account/login' => [

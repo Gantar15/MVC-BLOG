@@ -104,8 +104,8 @@ a{
     .post_information{
         width: 100%;
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
+        justify-content: flex-start;
+        margin-bottom: 14px;
 
         .post_name {
             word-break: break-word;
@@ -114,14 +114,44 @@ a{
             text-align: left;
             margin-right: 50px;
         }
+    }
+
+    .category{
+        width: 100%;
+        margin-bottom: 25px;
+        display: flex;
+
+        &_box{
+            background-color: #2f83e9;
+            padding: 4px 15px;
+            border-radius: 3px;
+            color: #ffffff;
+            font: 500 13px $fontName;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+    }
+
+    .post_subinf{
+        margin-bottom: 27px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #d9d9d9;
+        border-left: none;
+        border-right: none;
+        padding: 13px 0;
 
         .inf{
             display: flex;
+            justify-content: flex-start;
             align-items: center;
-            margin-bottom: 20px;
-            margin-top: 10px;
 
-            & > div {
+            & > div, .dope_group > div{
+                &:nth-of-type(n+2){
+                    margin-left: 15px;
+                }
+
                 display: flex;
                 align-items: center;
 
@@ -132,13 +162,34 @@ a{
                 }
 
                 span {
-                    font: 500 13px $fontName;
-                    color: #2d2d2d;
-                    margin-left: 5px;
+                    white-space: nowrap;
+                    font: 500 12px $fontName;
+                    color: #404040;
+                    margin-left: 3px;
+                    margin-bottom: 1px;
+                }
+            }
+        }
+        .tags{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-right: 40px;
+
+            .tag_box{
+                word-break: keep-all;
+                font: 500 12px $fontName;
+                color: #3b3b3b;
+                margin-left: 12px;
+                transform: translateX(-12px);
+
+                &:hover{
+                    color: #7a7a7a;
                 }
             }
         }
     }
+
     &_img{
         border-radius: 3px;
         object-fit: cover;
