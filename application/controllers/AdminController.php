@@ -84,7 +84,7 @@ class AdminController extends Controller {
         }
 
         //Получаем максимальное количество тегов
-        $MAX_COL_OF_TAGS = 5;
+        $MAX_COL_OF_TAGS = 13;
         if(isset($_POST['max_col_of_tags'])){
             $MAX_COL_OF_TAGS = $_POST['max_col_of_tags'];
         }

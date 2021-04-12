@@ -14,7 +14,7 @@ export default class LoadParser{
 
         this.intervalId = setInterval(() => {
             const endTime = Date.now();
-            //Если время от начала отправки формы до появления модального окна меньше startLoadDuration, не показывать загрузку
+            //Если время от начала отправки формы до появления модального окна меньше startLoadDuration, не начинаем загрузку
             if(endTime - startTime > this.startLoadDuration) {
                 const loadGif = document.createElement('img');
                 this.parentNode.innerHTML = '';

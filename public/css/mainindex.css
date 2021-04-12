@@ -990,6 +990,12 @@ footer {
       @media screen and (max-width: 640px) {
         footer .footer_downtown .column > :last-child {
           display: none; } }
+      @media screen and (max-width: 390px) {
+        footer .footer_downtown .column .social {
+          display: none !important; }
+        footer .footer_downtown .column .copyright {
+          width: 100%;
+          text-align: center; } }
       footer .footer_downtown .column .social {
         display: -webkit-box;
         display: -ms-flexbox;

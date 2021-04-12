@@ -6,6 +6,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  background-color: #FAFAFA;
+}
 
 .header{
   width: 100%;
@@ -30,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F9F9F9;
+    background-color: #f0efef;
     background-size: cover;
   }
 

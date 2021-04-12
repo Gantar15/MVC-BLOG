@@ -10,17 +10,17 @@ use application\core\View;
 
 class MainController extends Controller {
 
-    public $account;
+    private $account;
+    private $admin;
 
     public function __construct($route)
     {
         $this->account = new Account();
+        $this->admin = new Admin();
         parent::__construct($route);
     }
 
     public function indexAction(){
-        $admin = new Admin();
-
         //Количество отображаемых на странице постов за раз
         $limit = 4;
         $pagination = new Pagination($this->route, $this->model->getAllPostsCount(), $limit);
@@ -36,9 +36,9 @@ class MainController extends Controller {
         $allPosts = $this->model->getAllPostsByLimit($limit, $pagination->currentPage);
         if(!empty($allPosts)) {
             for ($i = 0; $i < count($allPosts); $i++) {
-                $inf = $admin->getCategoryById($allPosts[$i]['category']);
+                $inf = $this->admin->getCategoryById($allPosts[$i]['category']);
                 if(is_array($inf))
-                    $allPosts[$i]['category'] = $inf['name'];
+                    $allPosts[$i]['category'] = ["name" => $inf['name'], "id" => $allPosts[$i]['category']];
                 else
                     $allPosts[$i]['category'] = $inf;
             }
@@ -234,9 +234,9 @@ class MainController extends Controller {
 
 
     public function postAction(){
-        $admin = new Admin();
+        $this->admin = new Admin();
         $postId = $this->route['id'];
-        if(!$admin->postExistCheck($postId)) {
+        if(!$this->admin->postExistCheck($postId)) {
             View::errorCode('404');
         }
 
@@ -324,13 +324,13 @@ class MainController extends Controller {
         }
 
 
-        $post = $admin->getPostById($postId);
+        $post = $this->admin->getPostById($postId);
         $colOfComments = $this->model->commentsCount($postId);
         if(isset($_POST['get_comments_count'])) {
             $this->view->response($colOfComments);
         }
         //Получаем категорию
-        $category = $admin->getCategoryById($post['category']);
+        $category = $this->admin->getCategoryById($post['category']);
         $post['category_id'] = $post['category'];
         if(is_array($category))
             $post['category'] = $category['name'];
@@ -342,7 +342,7 @@ class MainController extends Controller {
             $tagsIdsArr = explode(',', $post['tags']);
             $post['tags'] = [];
             foreach ($tagsIdsArr as $tagId) {
-                $post['tags'][] = ['name' => $admin->getTagById($tagId)['name'], 'id' => $tagId];
+                $post['tags'][] = ['name' => $this->admin->getTagById($tagId)['name'], 'id' => $tagId];
             }
         }
         else
@@ -368,9 +368,9 @@ class MainController extends Controller {
 
     //Категории------------------------------------------------------------
     public function categoriesAction(){
-        $admin = new Admin();
+        $this->admin = new Admin();
 
-        $categories = $admin->getCategories();
+        $categories = $this->admin->getCategories();
         $params = [
             'categories' => $categories
         ];
@@ -378,12 +378,11 @@ class MainController extends Controller {
     }
 
     public function categorypageAction(){
-        $admin = new Admin();
-        $category = $admin->getCategoryById($this->route['id']);
+        $this->admin = new Admin();
+        $category = $this->admin->getCategoryById($this->route['id']);
         if(!isset($this->route['page'])) $this->route['page'] = 0;
 
-        //Количество отображаемых на странице постов за раз
-        $limit = 5;
+        $limit = 5;           //Количество отображаемых на странице постов за раз
         $pagination = new Pagination($this->route, $this->model->getColOfPostsByCategoryId($this->route['id']), $limit, 5, $this->route['id'].';');
         if(!isset($this->route['page'])){
             $this->route['page'] = 1;
@@ -399,6 +398,49 @@ class MainController extends Controller {
         $this->view->render('Категория - '.$category['name'], [
             'category' => $category,
             'pagination' => $paginationContent,
+            'posts' => $posts
+        ]);
+    }
+
+    //Теги------------------------------------------------------------
+    public function tagpageAction(){
+        $this->admin = new Admin();
+        $tag = $this->admin->getTagById($this->route['id']);
+        $colOfPosts = $this->model->getPostsCountByTagId($this->route['id']);
+
+        function getCategoryInf(&$posts, $admin){
+            if(!empty($posts)) {                                        //Получаем инфу о категориях постов
+                for ($i = 0; $i < count($posts); $i++) {
+                    $inf = $admin->getCategoryById($posts[$i]['category']);
+                    if(is_array($inf))
+                        $posts[$i]['category'] = ["name" => $inf['name'], "id" => $posts[$i]['category']];
+                    else
+                        $posts[$i]['category'] = $inf;
+                }
+            }
+        }
+        $limit = 4;         //Количество отображаемых на странице постов за раз
+        $currentPost = 0;    //Текущее количество отрендеренных постов
+        $posts = $this->model->getPostsByTagId($this->route['id'], $limit, $currentPost);
+        getCategoryInf($posts, $this->admin);
+
+        //Ищем теги, похожие на вводимые пользователем, и отправляем их
+        $data = file_get_contents("php://input");
+        if($data == 'get_info'){
+            $this->view->response(json_encode(['limit' => $limit, 'count' => $colOfPosts]));
+        }
+
+        //Отправляем новую партию постов
+        if(isset($_POST['currentOffset'])){
+            $currentPost = intval($_POST['currentOffset']);
+            $nextPosts = $this->model->getPostsByTagId($this->route['id'], $limit, $currentPost);
+            getCategoryInf($nextPosts, $this->admin);
+            $this->view->response(json_encode($nextPosts));
+        }
+
+        $this->view->render('Категории', [
+            'tagName' => $tag['name'],
+            'colOfPosts' => $colOfPosts,
             'posts' => $posts
         ]);
     }

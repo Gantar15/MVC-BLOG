@@ -8,7 +8,8 @@ return [
         'post',
         'privacy',
         'categories',
-        'categorypage'
+        'categorypage',
+        'tagpage'
 	],
 	'authorize' => [
 	],

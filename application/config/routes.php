@@ -1,7 +1,7 @@
 <?php
 
 return [
-    //MainController
+    //MainController-------------------------------------------------
     '' => [
         'controller' => 'main',
         'action' => 'index'
@@ -30,6 +30,7 @@ return [
         'controller' => 'main',
         'action' => 'categories'
     ],
+    //Categories
     'categorypage/{id:\d+}' => [
         'controller' => 'main',
         'action' => 'categorypage'
@@ -38,8 +39,13 @@ return [
         'controller' => 'main',
         'action' => 'categorypage'
     ],
+    //Tags
+    'tagpage/{id:\d+}' => [
+        'controller' => 'main',
+        'action' => 'tagpage'
+    ],
 
-    //AccountController
+    //AccountController---------------------------------------------
     'account/login' => [
         'controller' => 'account',
         'action' => 'login'
@@ -69,7 +75,7 @@ return [
         'action' => 'logout'
     ],
 
-    //AdminController
+    //AdminController------------------------------------------------
     'admin/login' => [
         'controller' => 'admin',
         'action' => 'login'

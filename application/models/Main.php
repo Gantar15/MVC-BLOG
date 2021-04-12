@@ -72,7 +72,19 @@ class Main extends Model {
             'offset' => ($currentPage-1)*$limit,
             'category_id' => $id
         ];
-        return $this->db->query('SELECT * FROM posts WHERE category = :category_id LIMIT :limit OFFSET :offset', $params);
+        return $this->db->row('SELECT * FROM posts WHERE category = :category_id LIMIT :limit OFFSET :offset', $params);
+    }
+
+    public function getPostsByTagId($id, $limit, $offset){
+        $params = [
+            'limit' => $limit,
+            'offset' => $offset,
+            'tag_id' => $id
+        ];
+        return $this->db->row('SELECT * FROM posts WHERE tags REGEXP :tag_id LIMIT :limit OFFSET :offset', $params);
+    }
+    public function getPostsCountByTagId($id){
+        return $this->db->column('SELECT COUNT(id) FROM posts WHERE tags REGEXP :tag_id', ['tag_id' => $id]);
     }
 
     //Комментарии----------------------------------------------------------------------------------------------------------------------
@@ -402,7 +414,7 @@ class Main extends Model {
         return $this->db->row('SELECT id, name FROM users WHERE id = :id', $params)[0];
     }
 
-    //Пост----------------------------------------------------------------------------------------------------------------------
+    //Страница поста----------------------------------------------------------------------------------------------------------------------
 
     //Добавляем информацию о том, кто оценил коммент, какой он оценил коммент и какую оценку поставил(лайк, дизлайк)
     public function setPostMarksData($authorId, $postId, $markType){

@@ -19,7 +19,7 @@
     <section class="categories_block">
         <?php if (empty($posts)): ?>
             <div class="empty_posts_box">
-                <img src="/public/imgs/empty_box.png">
+                <img src="/public/imgs/ufo.svg">
                 <p>Здесь постов нет</p>
                 <p>Попробуйте поискать посты в других категориях</p>
             </div>

@@ -23,8 +23,8 @@
                         <article class="blog_recording">
                             <div class="blog_img">
                                 <img src="/public/uploaded_information/<?=$post["id"]?>.jpg">
-                                <?php if(!empty($post['category'])):?>
-                                    <div class="category"><?=$post['category']?></div>
+                                <?php if(!empty($post['category']["name"])):?>
+                                    <a href="/categorypage/<?=$post['category']["id"]?>" class="category"><?=$post['category']["name"]?></a>
                                 <?php endif;?>
                             </div>
                             <div class="main_post_content">

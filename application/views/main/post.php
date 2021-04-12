@@ -58,7 +58,7 @@
                     <?php if(count($post['tags']) > 0):?>
                         <div class="tags">
                             <?php foreach ($post['tags'] as $tag):?>
-                                <a href="/tags/<?=$tag['id']?>" class="tag_box">#<?=$tag['name']?></a>
+                                <a href="/tagpage/<?=$tag['id']?>" class="tag_box">#<?=$tag['name']?></a>
                             <?php endforeach;?>
                         </div>
                     <?php endif;?>
