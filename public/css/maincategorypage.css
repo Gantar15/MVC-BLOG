@@ -627,7 +627,8 @@ body {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
-            flex-direction: column; }
+            flex-direction: column;
+    margin-bottom: 35px; }
     .categories_block .empty_posts_box img {
       width: 230px;
       height: 230px;

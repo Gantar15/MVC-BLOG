@@ -132,6 +132,15 @@ body{
     align-content: flex-start;
     position: relative;
 
+    &.js_rendered{
+      opacity: 0;
+      transition: opacity .3s;
+
+      &.visible{
+        opacity: 1;
+      }
+    }
+
     @media all and (max-width: 458px){
       min-width: 245px;
       .blog_date{

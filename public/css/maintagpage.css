@@ -597,6 +597,12 @@ body {
     -ms-flex-line-pack: start;
         align-content: flex-start;
     position: relative; }
+    .posts_block .blog_recording.js_rendered {
+      opacity: 0;
+      -webkit-transition: opacity .3s;
+      transition: opacity .3s; }
+      .posts_block .blog_recording.js_rendered.visible {
+        opacity: 1; }
     @media all and (max-width: 458px) {
       .posts_block .blog_recording {
         min-width: 245px; }

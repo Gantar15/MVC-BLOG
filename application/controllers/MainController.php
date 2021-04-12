@@ -419,7 +419,7 @@ class MainController extends Controller {
                 }
             }
         }
-        $limit = 4;         //Количество отображаемых на странице постов за раз
+        $limit = 9;         //Количество отображаемых на странице постов за раз
         $currentPost = 0;    //Текущее количество отрендеренных постов
         $posts = $this->model->getPostsByTagId($this->route['id'], $limit, $currentPost);
         getCategoryInf($posts, $this->admin);

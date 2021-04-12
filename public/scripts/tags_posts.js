@@ -63,8 +63,12 @@ function getPostHTMLTemplate(post){
         </article>
     `;
 }
-window.addEventListener('scroll', async() => {
-    if(window.pageYOffset+document.documentElement.clientHeight > postsBlock.offsetTop + postsBlock.clientHeight){
+
+async function renderPosts(){
+    if(colOfPosts <= currentOffset){                                //Если все посты отрендеренны, удаляем обработчик
+        window.removeEventListener('scroll', renderPosts);
+    }
+    if(window.pageYOffset+document.documentElement.clientHeight > postsBlock.offsetTop + postsBlock.clientHeight + 60){
         if(!isLoading && postsLimit && colOfPosts > currentOffset){
             isLoading = true;       //Запрещаем запрос следующих постов во время рендеринга и загрузки
 
@@ -92,11 +96,15 @@ window.addEventListener('scroll', async() => {
                     let elem = document.createElement('div');
                     elem.className = 'pre_render_post_template blog_recording';
                     postsBlock.append(elem);
-                    await new Promise(resolve => setTimeout(()=>resolve(), 300));
+                    postsBlock.insertAdjacentHTML('beforeend', getPostHTMLTemplate(post));
+                    const recentlyAddedPost = postsBlock.lastElementChild;
+                    recentlyAddedPost.classList.add('js_rendered');
+                    recentlyAddedPost.style.display = 'none';
                     setTimeout(()=>{
+                        recentlyAddedPost.style.display = '';
                         elem.remove();
-                        postsBlock.insertAdjacentHTML('beforeend', getPostHTMLTemplate(post));
-                        }, 200);
+                        recentlyAddedPost.classList.add('visible');
+                    }, 200);
                     return true;
                 }));
                 currentOffset += posts.length;
@@ -115,4 +123,5 @@ window.addEventListener('scroll', async() => {
             }, 50);
         }
     }
-});
+}
+window.addEventListener('scroll', renderPosts);
