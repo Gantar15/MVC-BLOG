@@ -11,8 +11,9 @@
         </div>
     </section>
 </header>
+<script src="/public/scripts/index.js" defer></script>
 
-<div class="column main_content">
+    <div class="column main_content">
     <div class="first_section_title">
         <img src="/public/imgs/posts_blue.svg">
         <p>Все посты</p>
@@ -29,15 +30,15 @@
                 </a>
                 <div class="last_block">
                     <div class="first_flex">
-                        <div class="likes">
+                        <div class="likes annotation_block" data-annotation-content = "понравилось">
                             <img src="/public/imgs/likeWhite.svg"/>
                             <p><?=$post['likes']?></p>
                         </div>
-                        <div class="views">
+                        <div class="views annotation_block" data-annotation-content = "посмотрело">
                             <img src="/public/imgs/eyeWhite.svg"/>
                             <p><?=$post['views']?></p>
                         </div>
-                        <div class="blog_date">
+                        <div class="blog_date annotation_block" data-annotation-content = "последнее изменение">
                             <img src="/public/imgs/clockWhite.svg"/>
                             <p>
                                 <?php
@@ -78,4 +79,9 @@
     </section>
 </div>
 
+<script type="module">
+    import Annotations from "/public/scripts/annotations.js";
+    let annotations = new Annotations('.annotation_block');
+    annotations.dispatch();
+</script>
 <script src="/public/scripts/tags_posts.js" type="module"></script>

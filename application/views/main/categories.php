@@ -9,6 +9,7 @@
         </div>
     </div>
 </header>
+<script src="/public/scripts/index.js" defer></script>
 
 <div class="column">
     <section class="category_block">

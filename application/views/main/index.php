@@ -36,7 +36,7 @@
                                             </a>
 
                                             <div class="info-block">
-                                                <div class="blog_date">
+                                                <div class="blog_date annotation_block" data-annotation-content = "последнее изменение">
                                                     <img src="/public/imgs/clock.svg"/>
                                                    <p>
                                                        <?php
@@ -66,7 +66,7 @@
                                                        ?>
                                                    </p>
                                                 </div>
-                                                <div class="author_name">
+                                                <div class="author_name annotation_block" data-annotation-content = "автор">
                                                     <a href="/account/userprofile/(userid)">
                                                         <img src="/public/imgs/pen.svg"/>
                                                         <span>Имя Автора</span>
@@ -89,15 +89,15 @@
                                     </div>
 
                                     <div class="last_block_info">
-                                        <div class="likes">
+                                        <div class="likes annotation_block">
                                             <img src="/public/imgs/like.svg"/>
                                             <p><?=$post['likes'] . ' ' . $this->valuesFormatter($post['likes'], 'лайков', 'лайк', 'лайка')?></p>
                                         </div>
-                                        <div class="views">
+                                        <div class="views annotation_block">
                                             <img src="/public/imgs/eye.svg"/>
                                             <p><?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?></p>
                                         </div>
-                                        <div class="share">
+                                        <div class="share annotation_block">
                                             <img src="/public/imgs/share.svg"/>
                                             <p>Поделиться</p>
                                         </div>
@@ -114,3 +114,8 @@
             </section>
         </div>
     </div>
+    <script type="module">
+        import Annotations from "/public/scripts/annotations.js";
+        let annotations = new Annotations('.annotation_block');
+        annotations.dispatch();
+    </script>

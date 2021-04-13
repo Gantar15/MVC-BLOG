@@ -9,6 +9,7 @@ const filtersBlock = document.querySelector('.filters_block'),
             //Открытие и закрытие меню фильтров
             if (filtersOpenTrigger.contains(event.target)) {
                 filtersBlock.classList.toggle('active');
+                filtersOpenTrigger.lastElementChild.style.display = "none";
             }
 
             //Закрытие меню фильтров по клику вне его

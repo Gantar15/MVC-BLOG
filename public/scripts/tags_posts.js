@@ -1,5 +1,6 @@
 
 import LoadParser from "./loadParser.js";
+import Annotations from "/public/scripts/annotations.js";
 
 const postsBlock = document.querySelector('.posts_block');
 
@@ -40,15 +41,15 @@ function getPostHTMLTemplate(post){
                 </a>
                 <div class="last_block">
                     <div class="first_flex">
-                        <div class="likes">
+                        <div class="likes annotation_block" data-annotation-content = "понравилось">
                             <img src="/public/imgs/likeWhite.svg"/>
                             <p>${post.likes}</p>
                         </div>
-                        <div class="views">
+                        <div class="views annotation_block" data-annotation-content = "посмотрело">
                             <img src="/public/imgs/eyeWhite.svg"/>
                             <p>${post.views}</p>
                         </div>
-                        <div class="blog_date">
+                        <div class="blog_date annotation_block" data-annotation-content = "дата изменения">
                             <img src="/public/imgs/clockWhite.svg"/>
                             <p>
                                 ${dateStr}
@@ -119,6 +120,10 @@ async function renderPosts(){
                     //Рендер постов
                     await postsRender();
                     isLoading = false;
+
+                    //Рендерим аннотации для лайков, просмотров, даты и т.д.
+                    let annotations = new Annotations('.annotation_block');
+                    annotations.dispatch();
                 }
             }, 50);
         }

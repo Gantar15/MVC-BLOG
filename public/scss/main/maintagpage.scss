@@ -16,12 +16,13 @@ body{
 .header{
   width: 100%;
   box-shadow: none;
+  padding-bottom: 50px;
 
   .tag_header{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 50px 0;
+    margin-top: 60px;
 
     @media all and (max-width: 450px){
       flex-direction: column;
@@ -57,6 +58,16 @@ body{
           font-weight: 500;
         }
       }
+    }
+  }
+
+  &_line{
+    top: -40px;
+    transition: top .15s ease;
+    border: none !important;
+
+    &.active{
+      box-shadow: 0px -5px 5px 3px #727272 !important;
     }
   }
 }

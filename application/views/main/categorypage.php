@@ -1,4 +1,3 @@
-</header>
 
 <div class="header_flex" style="background-image: url('/public/categories_icons/<?=$category['id']?>.jpg')">
     <div class="bg_shadow"></div>
@@ -14,6 +13,7 @@
     </div>
 </div>
 </header>
+<script src="/public/scripts/index.js" defer></script>
 
 <div class="column main_content">
     <section class="categories_block">
@@ -38,7 +38,7 @@
                                     </a>
 
                                     <div class="info-block">
-                                        <div class="author_name">
+                                        <div class="author_name annotation_block" data-annotation-content = "автор">
                                             <a href="/account/userprofile/(userid)">
                                                 <img src="/public/imgs/pen.svg"/>
                                                 <span>Имя Автора</span>
@@ -62,11 +62,11 @@
                                     <img src="/public/imgs/eye.svg"/>
                                     <p><?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?></p>
                                 </div>
-                                <div class="share">
+                                <div class="share annotation_block" data-annotation-content = "поделиться">
                                     <img src="/public/imgs/share.svg"/>
                                 </div>
                             </div>
-                            <div class="blog_date">
+                            <div class="blog_date annotation_block" data-annotation-content = "последнее изменение">
                                 <img src="/public/imgs/clock.svg"/>
                                 <p>
                                     <?php
@@ -109,3 +109,9 @@
         <?php endif;?>
     </section>
 </div>
+
+<script type="module">
+    import Annotations from "/public/scripts/annotations.js";
+    let annotations = new Annotations('.annotation_block');
+    annotations.dispatch();
+</script>

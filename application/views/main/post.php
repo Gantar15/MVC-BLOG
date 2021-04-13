@@ -6,14 +6,14 @@
         <div class="column">
             <div class="post_sub_block">
                 <div class="header_post_inf">
-                    <div class="author">
+                    <div class="author annotation_block" data-annotation-content = "автор">
                         <a href="/account/userprofile/<?=$post['author_id']?>">
                             <img src="/public/users_icons/<?=$post['author_id']?>.png">
                             <span><?=$author['name']?></span>
                         </a>
                     </div>
                     <p>&bull;</p>
-                    <div class="date">
+                    <div class="date annotation_block" data-annotation-content = "последнее изменение">
                         <span>
                             <?php
                                 $postDateStr = $post['date_of_create'];
@@ -63,14 +63,14 @@
                         </div>
                     <?php endif;?>
                     <div class="inf" style="<?php if(count($post['tags']) == 0):?>justify-content: space-between; width: 100%;<?php endif;?>">
-                        <div class="views">
+                        <div class="views annotation_block" data-annotation-content = "посмотрело" data-annotation-top>
                             <img src="/public/imgs/eye.svg">
                             <span>
                                 <?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?>
                             </span>
                         </div>
                         <div class="dope_group">
-                            <div class="comments">
+                            <div class="comments annotation_block" data-annotation-content = "прокомментировало" data-annotation-top>
                                 <img src="/public/imgs/comments.svg"/>
                                 <span><?php
                                     if(count($post['tags']) == 0)
@@ -79,7 +79,7 @@
                                         echo $colOfComments;
                                     ?></span>
                             </div>
-                            <div class="likes">
+                            <div class="likes annotation_block" data-annotation-content = "понравилось" data-annotation-top>
                                 <img src="/public/imgs/like.svg"/>
                                 <span>
                                     <?php
@@ -106,11 +106,11 @@
             <div class="post_activities">
                 <div class="post_marks_block">
                     <div class="post_marks">
-                        <div class="likes <?php if(empty($userData)) echo 'non-authorize';?>">
+                        <div class="likes <?php if(empty($userData)) echo 'non-authorize';?> annotation_block" data-annotation-content = "нравится" data-annotation-top>
                             <div class="img"></div>
                             <p></p>
                         </div>
-                        <div class="dislikes <?php if(empty($userData)) echo 'non-authorize';?>">
+                        <div class="dislikes <?php if(empty($userData)) echo 'non-authorize';?> annotation_block" data-annotation-content = "не нравится" data-annotation-top>
                             <div class="img"></div>
                             <p></p>
                         </div>
@@ -131,8 +131,8 @@
                         <a class="author_icon_block" href="/account/userprofile/64">
                             <img src="/public/users_icons/64.png">
                         </a>
-                        <div class="name_block">
-                            <a class="name" href="/account/userprofile/64">
+                        <div class="name_block annotation_block" data-annotation-content = "<?=$author['name']?>">
+                            <a class="name href="/account/userprofile/64">
                                 <p><?=$author['name']?></p>
                             </a>
                             <p class="subscribers">234 подписчика</p>
@@ -144,7 +144,7 @@
                                 Подписаться
                             </p>
                         </div>
-                        <div class="notifications <?php if(empty($userData)) echo 'non-authorize';?>">
+                        <div class="notifications <?php if(empty($userData)) echo 'non-authorize';?> annotation_block" data-annotation-content = "уведомления" data-annotation-top>
                             <img src="/public/imgs/notification.svg"/>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                                 <?=$this->valuesFormatter($colOfComments, 'комментариев', 'комментарий', 'комментария')?>
                             </p>
                             <div class="filters_block">
-                                <div class="filters_open_trigger">
+                                <div class="filters_open_trigger annotation_block" data-annotation-content = "Сортировать комментарии">
                                     <img src="/public/imgs/burger_comments.png" alt="filter picture">
                                     <p>Сортировать</p>
                                 </div>
@@ -214,6 +214,11 @@
         </div>
     </article>
 
+    <script type="module">
+        import Annotations from "/public/scripts/annotations.js";
+        let annotations = new Annotations('.annotation_block');
+        annotations.dispatch();
+    </script>
     <script>
         //Скрываем верхнее меню-бургер при скроле страницы
         window.addEventListener('scroll', () => {
