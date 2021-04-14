@@ -28,7 +28,7 @@ class AdminController extends Controller {
                 $this->model->error[] = ['message' => 'Введите логин', 'field_name' => 'login'];
             }
             if (empty($_POST['password'])) {
-                $this->model->error[] = ['message' => 'Введите пороль', 'field_name' => 'password'];
+                $this->model->error[] = ['message' => 'Введите пароль', 'field_name' => 'password'];
             }
 
             if(!empty($this->model->error)){

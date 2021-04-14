@@ -54,14 +54,14 @@ class AccountController extends Controller
             }
 
             if(empty($_POST['password'])){
-                $this->model->error[] = ['message' => 'Введите пороль', 'field_name' => 'password'];
+                $this->model->error[] = ['message' => 'Введите пароль', 'field_name' => 'password'];
             }
             else{
                 $this->model->passwordValidate($_POST['password']);
             }
 
             if(empty($_POST['password_repeat'])){
-                $this->model->error[] = ['message' => 'Введите пороль еще раз', 'field_name' => 'password_repeat'];
+                $this->model->error[] = ['message' => 'Введите пароль еще раз', 'field_name' => 'password_repeat'];
             }
             elseif($_POST['password_repeat'] !== $_POST['password']){
                 $this->model->error[] = ['message' => 'Введенные вами пороли не совпадают', 'field_name' => 'password_repeat'];
@@ -103,7 +103,7 @@ class AccountController extends Controller
                 $this->model->error[] = ['message' => 'Введите логин', 'field_name' => 'login'];
             }
             if(empty($_POST['password'])){
-                $this->model->error[] = ['message' => 'Введите пороль', 'field_name' => 'password'];
+                $this->model->error[] = ['message' => 'Введите пароль', 'field_name' => 'password'];
             }
 
             if(!empty($this->model->error)){

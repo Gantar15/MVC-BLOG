@@ -21,16 +21,16 @@
                     </div>
                     <div class="form-group">
                         <input class="password" required type="password" name="password" id="inputF4">
-                        <label for="inputF4">Пороль</label>
+                        <label for="inputF4">Пароль</label>
                     </div>
                     <div class="form-group">
                         <input class="password" required type="password" name="password_repeat" id="inputF5">
-                        <label for="inputF5">Повторите пороль</label>
+                        <label for="inputF5">Повторите пароль</label>
                     </div>
                     <div class="submit_block">
                         <div>
                             <div class="view_password"></div>
-                            <p class="view_password_label">Показать пороль</p>
+                            <p class="view_password_label">Показать пароль</p>
                         </div>
                         <button type="submit">Отправить</button>
                     </div>

@@ -5,7 +5,8 @@ function renderNonAuthorizePopup(nonAuthorizeBlock, popupText){
     //Если у нас уже было активное модальное окно в этом элементе не создаем новое
     if(nonAuthorizeBlock.querySelector('.non-authorize-popup')) return;
 
-    nonAuthorizeBlock.lastElementChild.style.display = "none";
+    if(nonAuthorizeBlock.lastElementChild.matches('.annotation_message_box'))
+        nonAuthorizeBlock.lastElementChild.style.display = "none";
 
     const popupTemplate = `
             <div class="non-authorize-popup">

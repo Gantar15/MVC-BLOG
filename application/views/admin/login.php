@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <input required class="password" type="password" name="password" id="inputF2">
                             <div class="view_password"></div>
-                            <label for="inputF2">Пороль</label>
+                            <label for="inputF2">Пароль</label>
                         </div>
                         <div class="submit_block">
                             <div class="remember_block">

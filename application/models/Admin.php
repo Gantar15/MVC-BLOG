@@ -13,7 +13,7 @@ class Admin extends Model
     {
         $config = require 'application/config/admin.php';
         if($config['login'] !== $post['login']) {
-            $this->error = 'Неправильный логин или пороль';
+            $this->error = 'Неправильный логин или пароль';
             return false;
         }
         return true;
@@ -23,7 +23,7 @@ class Admin extends Model
     {
         $config = require 'application/config/admin.php';
         if($config['password'] !== $post['password']) {
-            $this->error = 'Неправильный логин или пороль';
+            $this->error = 'Неправильный логин или пароль';
             return false;
         }
         return true;

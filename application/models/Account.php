@@ -72,7 +72,7 @@ class Account extends Model {
             $this->error[] = ['message' => 'Длина пороля должна быть в пределах 6-20 символов', 'field_name' => 'password'];
         }
         elseif(!preg_match('/^(?=.*[a-z])(?=.*\d)[a-z\d!@#$%^&*]*$/i', $password)){
-            $this->error[] = ['message' => 'Пороль обязан содержать цифры(0-9) и латинские буквы(a-z, A-Z), а так же может содердать символы !@#$%^&*', 'field_name' => 'password'];
+            $this->error[] = ['message' => 'Пароль обязан содержать цифры(0-9) и латинские буквы(a-z, A-Z), а так же может содердать символы !@#$%^&*', 'field_name' => 'password'];
         }
     }
 
@@ -145,7 +145,7 @@ class Account extends Model {
 
         $userId = $this->db->column('SELECT id FROM users WHERE login = :login', $params);
         if(!$userId){
-            $this->error = 'Неправильный логин или пороль';
+            $this->error = 'Неправильный логин или пароль';
             return false;
         }
 
@@ -155,7 +155,7 @@ class Account extends Model {
     public function loggingPasswordValidate($userId, $post){
         $userData = $this->getUserData($userId);
         if(!password_verify($post['password'], $userData['password'])){
-            $this->error = 'Неправильный логин или пороль';
+            $this->error = 'Неправильный логин или пароль';
             return false;
         }
     }
