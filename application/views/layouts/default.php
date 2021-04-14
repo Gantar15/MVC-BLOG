@@ -14,7 +14,6 @@
         <script src="/public/scripts/form.js" type="module"></script>
     <?php endif; ?>
     <script src="/public/scripts/mainburger.js" defer></script>
-    <script src="/public/scripts/share_link.js" defer></script>
 </head>
 <body>
     <header class="header">

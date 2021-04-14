@@ -163,7 +163,7 @@
                                 <?=$this->valuesFormatter($colOfComments, 'комментариев', 'комментарий', 'комментария')?>
                             </p>
                             <div class="filters_block">
-                                <div class="filters_open_trigger annotation_block" data-annotation-content = "Сортировать комментарии">
+                                <div class="filters_open_trigger annotation_block" data-annotation-content = "Сортировать комментарии" data-annotation-top>
                                     <img src="/public/imgs/burger_comments.png" alt="filter picture">
                                     <p>Сортировать</p>
                                 </div>
@@ -228,6 +228,15 @@
                 points && points.classList.remove('active');
             }
         });
+    </script>
+    <script type="module">
+        import shareLink from "/public/scripts/share_link.js";
+        let srcNode = document.createElement('a');
+        srcNode.style.display = 'none';
+        srcNode.href = location.href;
+        srcNode.className = "src_node";
+        document.body.append(srcNode);
+        shareLink('body', '.share', '.src_node');
     </script>
     <script src="/public/scripts/post/non-authorize-popup.js"></script>
     <script src="/public/scripts/post/post_marks.js" type="module"></script>

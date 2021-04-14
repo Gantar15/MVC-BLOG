@@ -33,10 +33,8 @@ function getPostHTMLTemplate(post){
     return `
         <article class="blog_recording" style="background-image: url('/public/uploaded_information/${post.id}.jpg')">
                 <div class="bg_card_shadow"></div>
-                <?php if(!empty($post['category']["name"])):?>
-                    <a href="/categorypage/${post.id}" class="category">${post.category.name}</a>
-                <?php endif;?>
-                <a href="<?='/post/'.$post['id']?>" class="blog_name">
+                <a href="/categorypage/${post.id}" class="category">${post.category.name}</a>
+                <a href="/post/${post.id}" class="blog_name">
                     ${post.name}
                 </a>
                 <div class="last_block">

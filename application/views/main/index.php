@@ -119,3 +119,8 @@
         let annotations = new Annotations('.annotation_block');
         annotations.dispatch();
     </script>
+    <script type="module">
+        import shareLink from "/public/scripts/share_link.js";
+        shareLink('.blog_recording', '.share', '.blog_name');
+    </script>
+
