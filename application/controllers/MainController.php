@@ -371,8 +371,12 @@ class MainController extends Controller {
         $this->admin = new Admin();
 
         $categories = $this->admin->getCategories();
+
+        //Получаем инфу о пользователе, если он залогинился
+        $userData = $this->account->getAuthorizeData();
         $params = [
-            'categories' => $categories
+            'categories' => $categories,
+            'userData' => $userData
         ];
         $this->view->render('Категории', $params);
     }
@@ -395,10 +399,13 @@ class MainController extends Controller {
         //Получаем посты данной категории
         $posts = $this->model->getPostsByCategoryId($this->route['id'], $limit, $pagination->currentPage);
 
+        //Получаем инфу о пользователе, если он залогинился
+        $userData = $this->account->getAuthorizeData();
         $this->view->render('Категория - '.$category['name'], [
             'category' => $category,
             'pagination' => $paginationContent,
-            'posts' => $posts
+            'posts' => $posts,
+            'userData' => $userData
         ]);
     }
 
@@ -438,10 +445,14 @@ class MainController extends Controller {
             $this->view->response(json_encode($nextPosts));
         }
 
+        //Получаем инфу о пользователе, если он залогинился
+        $userData = $this->account->getAuthorizeData();
+
         $this->view->render('Категории', [
             'tagName' => $tag['name'],
             'colOfPosts' => $colOfPosts,
-            'posts' => $posts
+            'posts' => $posts,
+            'userData' => $userData
         ]);
     }
 }

@@ -201,10 +201,14 @@ class AccountController extends Controller
         }
 
         $userId = $this->route['id'];
-        $userData = $this->model->getUserData($userId);
+        $userPageData = $this->model->getUserData($userId);
+
+        //Получаем инфу о пользователе, если он залогинился
+        $userData = $this->model->getAuthorizeData();
 
         $this->view->render('Профиль ' . $userData['name'], [
-            'userData' => $userData
+            'userData' => $userData,
+            'userPageData' => $userPageData
         ]);
     }
 }
