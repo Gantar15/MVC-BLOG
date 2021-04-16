@@ -3,10 +3,26 @@
     <section class="user_header">
         <div class="user_icon_block">
             <img class="user_header_icon" src="/public/users_icons/<?=$userData['id']?>.png"/>
-            <p class="user_name"><?=$userData['name']?></p>
+            <div class="name_block">
+                <div class="flex">
+                    <p class="user_name"><?=$userData['name']?></p>
+                    <a class="settings" href="/account/settings">
+                        <p>настройки</p>
+                        <img src="/public/imgs/user_block_settings.png">
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="hd_flex">
-            <p class="user_name"><?=$userData['name']?></p>
+            <div class="name_block">
+                <div class="flex">
+                    <p class="user_name"><?=$userData['name']?></p>
+                    <a class="settings" href="/account/settings">
+                        <p>настройки</p>
+                        <img src="/public/imgs/user_block_settings.png">
+                    </a>
+                </div>
+            </div>
             <p class="user_description">Lorem ipsum ntur, corporis cum debitis deleniti dicta dolore enim ex explicabo facilis id imbcaecati perferendis quas qui quibusdam recusandae reiciendis rem repellat saepe tenetur totam voluptas voluptatum.</p>
             <div class="subscribers_block">
                 <p class="subscribers_count">319 тыс. подписчиков</p>

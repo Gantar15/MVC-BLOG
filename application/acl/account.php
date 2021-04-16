@@ -6,10 +6,10 @@ return [
         'register',
         'confirm',
         'preconfirm',
-        'userprofile'
+        'userprofile',
+        'profile'
     ],
     'authorize' => [
-        'profile',
         'logout'
     ],
     'guest' => [

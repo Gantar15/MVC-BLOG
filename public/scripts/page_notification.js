@@ -2,21 +2,21 @@
 export default class pageNotification{
 
     messageBox;
-    isBoxActive = false;    //Флаг говорито том, что уведомление еще не закрыто
+    isBoxActive = false;    //Флаг говорит о том, что уведомление еще не закрыто
 
     constructor() {
         this.messageBox = document.createElement('div');
         this.messageBox.style.cssText = `
-            background-color: #202021e3;
+            background-color: #2b2b2df2;
             border-radius: 3px;
             font: normal 14px Open Sans;
             padding: 15px 13px;
-            color: white;
+            color: rgb(239, 239, 239);
             white-space: pre;
-            transition: all 150ms ease-out;
+            transition: all 150ms ease-in;
             position: fixed;
-            left: 13px;
             opacity: 0;
+            left: 13px;
             z-index: 10;
         `;
         document.body.append(this.messageBox);
@@ -34,9 +34,9 @@ export default class pageNotification{
             this.messageBox.style.opacity = 0;
             setTimeout(() => {
                 this.messageBox.style.display = 'none';
-                this.isBoxActive = false;
+                setTimeout(() => this.isBoxActive = false, 100);
             }, 150);
-        }, 750);
+        }, 1050);
     }
 
     render(text){
@@ -46,7 +46,6 @@ export default class pageNotification{
                 setTimeout(() => this.displayBox(text));
                 return;
             }
-            else setTimeout(offHandl, 50);
         };
         offHandl();
     }

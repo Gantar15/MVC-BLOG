@@ -24,21 +24,23 @@ body{
     display: flex;
     align-items: flex-start;
 
-    @media all and (max-width: 650px){
+    @media all and (max-width: 550px){
       flex-direction: column;
 
       .hd_flex{
-        margin-left: 0px;
+        margin-left: 0px !important;
 
-        .user_name{
-          display: none;
+        .name_block{
+          display: none !important;
         }
       }
       .user_icon_block {
+        width: 100%;
         margin: 0 auto;
         margin-bottom: 20px;
 
-        .user_name{
+        .name_block{
+          margin-left: 20px;
           display: block !important;
         }
       }
@@ -53,29 +55,102 @@ body{
         object-fit: cover;
         border-radius: 50%;
       }
-      .user_name{
-        margin-left: 15px;
+      .name_block {
+        width: 100%;
         display: none;
-        font: bold 22px $fontName;
-        color: #2a2a2a;
+
+        .flex{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .user_name {
+          font: bold 22px $fontName;
+          color: #2a2a2a;
+        }
+        .settings{
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          margin-left: 20px;
+          text-decoration: none;
+
+          p{
+            font: 500 13px $fontName;
+            color: #454444;
+          }
+          img{
+            will-change: contents;
+            filter: invert(30%);
+            object-fit: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            transition: transform .2s;
+          }
+
+          &:hover{
+            img{
+              transform: rotateZ(30deg);
+            }
+          }
+        }
       }
     }
     .hd_flex{
       width: 100%;
-      margin-left: 20px;
+      margin-left: 25px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
 
-      .user_name{
-        font: bold 22px $fontName;
-        color: #2a2a2a;
+      .name_block {
+        width: 100%;
+
+        .flex{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .user_name {
+          font: bold 22px $fontName;
+          color: #2a2a2a;
+        }
+        .settings{
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          margin-left: 20px;
+          text-decoration: none;
+
+          p{
+            font: 500 13px $fontName;
+            color: #454444;
+          }
+          img{
+            will-change: contents;
+            filter: invert(30%);
+            object-fit: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            transition: transform .2s;
+          }
+
+          &:hover{
+            img{
+              transform: rotateZ(30deg);
+            }
+          }
+        }
       }
+
       .user_description{
         margin-top: 15px;
         font: normal 15px $fontName;
         color: #565656;
+        white-space: pre-wrap;
         line-height: 23px;
       }
       .subscribers_block{
@@ -141,7 +216,7 @@ body{
       flex-direction: column;
 
       p:first-of-type{
-        color: #3b3b3b;
+        color: #4f5051;
         text-align: center;
         font: normal 15px $fontName;
       }

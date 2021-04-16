@@ -13,7 +13,7 @@ export default class Annotations{
     addStyles(annotationBlock){
         annotationBlock.classList.add('annotation_message_box');
         annotationBlock.style.cssText = `
-            background-color: rgba(72, 72, 75, 0.76);
+            background-color: #4a4a4deb;
             border-radius: 3px;
             font: normal 13px Open Sans;
             padding: 7px 8px;

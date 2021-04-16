@@ -469,20 +469,22 @@ body {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start; }
-    @media all and (max-width: 650px) {
+    @media all and (max-width: 550px) {
       .user_main.column .user_header {
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
             -ms-flex-direction: column;
                 flex-direction: column; }
         .user_main.column .user_header .hd_flex {
-          margin-left: 0px; }
-          .user_main.column .user_header .hd_flex .user_name {
-            display: none; }
+          margin-left: 0px !important; }
+          .user_main.column .user_header .hd_flex .name_block {
+            display: none !important; }
         .user_main.column .user_header .user_icon_block {
+          width: 100%;
           margin: 0 auto;
           margin-bottom: 20px; }
-          .user_main.column .user_header .user_icon_block .user_name {
+          .user_main.column .user_header .user_icon_block .name_block {
+            margin-left: 20px;
             display: block !important; } }
     .user_main.column .user_header .user_icon_block {
       display: -webkit-box;
@@ -497,14 +499,54 @@ body {
         -o-object-fit: cover;
            object-fit: cover;
         border-radius: 50%; }
-      .user_main.column .user_header .user_icon_block .user_name {
-        margin-left: 15px;
-        display: none;
-        font: bold 22px "Open Sans";
-        color: #2a2a2a; }
+      .user_main.column .user_header .user_icon_block .name_block {
+        width: 100%;
+        display: none; }
+        .user_main.column .user_header .user_icon_block .name_block .flex {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+                  justify-content: space-between; }
+        .user_main.column .user_header .user_icon_block .name_block .user_name {
+          font: bold 22px "Open Sans";
+          color: #2a2a2a; }
+        .user_main.column .user_header .user_icon_block .name_block .settings {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          cursor: pointer;
+          margin-left: 20px;
+          text-decoration: none; }
+          .user_main.column .user_header .user_icon_block .name_block .settings p {
+            font: 500 13px "Open Sans";
+            color: #454444; }
+          .user_main.column .user_header .user_icon_block .name_block .settings img {
+            will-change: contents;
+            -webkit-filter: invert(30%);
+                    filter: invert(30%);
+            -o-object-fit: contain;
+               object-fit: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            -webkit-transition: -webkit-transform .2s;
+            transition: -webkit-transform .2s;
+            transition: transform .2s;
+            transition: transform .2s, -webkit-transform .2s; }
+          .user_main.column .user_header .user_icon_block .name_block .settings:hover img {
+            -webkit-transform: rotateZ(30deg);
+                    transform: rotateZ(30deg); }
     .user_main.column .user_header .hd_flex {
       width: 100%;
-      margin-left: 20px;
+      margin-left: 25px;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -518,13 +560,55 @@ body {
       -webkit-box-pack: start;
           -ms-flex-pack: start;
               justify-content: flex-start; }
-      .user_main.column .user_header .hd_flex .user_name {
-        font: bold 22px "Open Sans";
-        color: #2a2a2a; }
+      .user_main.column .user_header .hd_flex .name_block {
+        width: 100%; }
+        .user_main.column .user_header .hd_flex .name_block .flex {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+                  justify-content: space-between; }
+        .user_main.column .user_header .hd_flex .name_block .user_name {
+          font: bold 22px "Open Sans";
+          color: #2a2a2a; }
+        .user_main.column .user_header .hd_flex .name_block .settings {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          cursor: pointer;
+          margin-left: 20px;
+          text-decoration: none; }
+          .user_main.column .user_header .hd_flex .name_block .settings p {
+            font: 500 13px "Open Sans";
+            color: #454444; }
+          .user_main.column .user_header .hd_flex .name_block .settings img {
+            will-change: contents;
+            -webkit-filter: invert(30%);
+                    filter: invert(30%);
+            -o-object-fit: contain;
+               object-fit: contain;
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            -webkit-transition: -webkit-transform .2s;
+            transition: -webkit-transform .2s;
+            transition: transform .2s;
+            transition: transform .2s, -webkit-transform .2s; }
+          .user_main.column .user_header .hd_flex .name_block .settings:hover img {
+            -webkit-transform: rotateZ(30deg);
+                    transform: rotateZ(30deg); }
       .user_main.column .user_header .hd_flex .user_description {
         margin-top: 15px;
         font: normal 15px "Open Sans";
         color: #565656;
+        white-space: pre-wrap;
         line-height: 23px; }
       .user_main.column .user_header .hd_flex .subscribers_block {
         margin-top: 30px;
@@ -602,7 +686,7 @@ body {
           -ms-flex-direction: column;
               flex-direction: column; }
       .user_main.column .posts_block .empty_posts_box p:first-of-type {
-        color: #3b3b3b;
+        color: #4f5051;
         text-align: center;
         font: normal 15px "Open Sans"; }
     .user_main.column .posts_block > p:first-of-type {

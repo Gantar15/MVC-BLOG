@@ -24,11 +24,11 @@ body{
     display: flex;
     align-items: flex-start;
 
-    @media all and (max-width: 650px){
+    @media all and (max-width: 550px){
       flex-direction: column;
 
       .hd_flex{
-        margin-left: 0px;
+        margin-left: 0px !important;
 
         .user_name{
           display: none;
@@ -83,7 +83,7 @@ body{
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         .subscribe_button{
           border-radius: 2px;
@@ -156,7 +156,7 @@ body{
       flex-direction: column;
 
       p:first-of-type{
-        color: #3b3b3b;
+        color: #4f5051;
         text-align: center;
         font: normal 15px $fontName;
       }
