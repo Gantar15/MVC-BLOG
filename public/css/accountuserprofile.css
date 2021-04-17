@@ -33,6 +33,10 @@
   .user_block:active, .user_block.active {
     background-color: #f1f2f4; }
   .user_block_head {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -44,23 +48,20 @@
       font: 500 14px "Open Sans";
       word-break: keep-all;
       color: #4b4b4b;
+      margin-left: 10px;
       position: relative; }
     .user_block_head .user_avatar {
       z-index: 1;
       width: 30px;
       height: 30px;
-      margin-left: 5px;
       border-radius: 50%;
       -o-object-fit: cover;
          object-fit: cover; }
-    .user_block_head .down_arrow {
-      margin-left: 10px;
-      width: 10px;
-      height: 10px;
-      margin-top: 3px;
-      background: url("/public/imgs/down-arrow.svg") no-repeat;
-      background-size: contain; }
   .user_block_body {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     width: 210px;
     background-color: #ffffff;
     -webkit-box-shadow: 0 0 5px 1px rgba(52, 52, 52, 0.12);
@@ -458,8 +459,11 @@
 body {
   background-color: #FAFAFA; }
 
+.header_line .register_box {
+  display: none; }
+
 .user_main.column {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   margin-top: 50px; }
   .user_main.column .user_header {
@@ -477,12 +481,14 @@ body {
                 flex-direction: column; }
         .user_main.column .user_header .hd_flex {
           margin-left: 0px !important; }
-          .user_main.column .user_header .hd_flex .user_name {
+          .user_main.column .user_header .hd_flex .name_block {
             display: none; }
         .user_main.column .user_header .user_icon_block {
+          width: 100%;
           margin: 0 auto;
           margin-bottom: 20px; }
-          .user_main.column .user_header .user_icon_block .user_name {
+          .user_main.column .user_header .user_icon_block .name_block {
+            margin-left: 20px;
             display: block !important; } }
     .user_main.column .user_header .user_icon_block {
       display: -webkit-box;
@@ -497,11 +503,85 @@ body {
         -o-object-fit: cover;
            object-fit: cover;
         border-radius: 50%; }
-      .user_main.column .user_header .user_icon_block .user_name {
-        margin-left: 15px;
-        display: none;
-        font: bold 22px "Open Sans";
-        color: #2a2a2a; }
+      .user_main.column .user_header .user_icon_block .name_block {
+        width: 100%;
+        display: none; }
+        .user_main.column .user_header .user_icon_block .name_block .flex {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+                  justify-content: space-between; }
+        .user_main.column .user_header .user_icon_block .name_block .user_name {
+          font: bold 22px "Open Sans";
+          color: #2a2a2a; }
+        .user_main.column .user_header .user_icon_block .name_block .notifications {
+          text-transform: uppercase;
+          cursor: pointer;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center; }
+@-webkit-keyframes image_shake {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); }
+  20% {
+    -webkit-transform: rotateZ(-5deg);
+            transform: rotateZ(-5deg); }
+  40% {
+    -webkit-transform: rotateZ(-10deg);
+            transform: rotateZ(-10deg); }
+  60% {
+    -webkit-transform: rotateZ(5deg);
+            transform: rotateZ(5deg); }
+  80% {
+    -webkit-transform: rotateZ(10deg);
+            transform: rotateZ(10deg); }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); } }
+@keyframes image_shake {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); }
+  20% {
+    -webkit-transform: rotateZ(-5deg);
+            transform: rotateZ(-5deg); }
+  40% {
+    -webkit-transform: rotateZ(-10deg);
+            transform: rotateZ(-10deg); }
+  60% {
+    -webkit-transform: rotateZ(5deg);
+            transform: rotateZ(5deg); }
+  80% {
+    -webkit-transform: rotateZ(10deg);
+            transform: rotateZ(10deg); }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); } }
+          .user_main.column .user_header .user_icon_block .name_block .notifications p {
+            font: 500 12px "Open Sans"; }
+          .user_main.column .user_header .user_icon_block .name_block .notifications img {
+            width: 20px;
+            height: 20px;
+            -o-object-fit: cover;
+               object-fit: cover;
+            margin-left: 5px;
+            -webkit-transform-origin: top center;
+                    transform-origin: top center; }
+          .user_main.column .user_header .user_icon_block .name_block .notifications:hover img {
+            -webkit-animation: image_shake .5s linear;
+                    animation: image_shake .5s linear; }
     .user_main.column .user_header .hd_flex {
       width: 100%;
       margin-left: 20px;
@@ -518,9 +598,65 @@ body {
       -webkit-box-pack: start;
           -ms-flex-pack: start;
               justify-content: flex-start; }
-      .user_main.column .user_header .hd_flex .user_name {
-        font: bold 22px "Open Sans";
-        color: #2a2a2a; }
+      .user_main.column .user_header .hd_flex .name_block {
+        width: 100%; }
+        .user_main.column .user_header .hd_flex .name_block .flex {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+                  justify-content: space-between; }
+        .user_main.column .user_header .hd_flex .name_block .user_name {
+          font: bold 22px "Open Sans";
+          color: #2a2a2a; }
+        .user_main.column .user_header .hd_flex .name_block .notifications {
+          text-transform: uppercase;
+          cursor: pointer;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center; }
+@keyframes image_shake {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); }
+  20% {
+    -webkit-transform: rotateZ(-5deg);
+            transform: rotateZ(-5deg); }
+  40% {
+    -webkit-transform: rotateZ(-10deg);
+            transform: rotateZ(-10deg); }
+  60% {
+    -webkit-transform: rotateZ(5deg);
+            transform: rotateZ(5deg); }
+  80% {
+    -webkit-transform: rotateZ(10deg);
+            transform: rotateZ(10deg); }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg); } }
+          .user_main.column .user_header .hd_flex .name_block .notifications p {
+            font: 500 12px "Open Sans"; }
+          .user_main.column .user_header .hd_flex .name_block .notifications img {
+            width: 20px;
+            height: 20px;
+            -o-object-fit: cover;
+               object-fit: cover;
+            margin-left: 5px;
+            -webkit-transform-origin: top center;
+                    transform-origin: top center; }
+          .user_main.column .user_header .hd_flex .name_block .notifications:hover img {
+            -webkit-animation: image_shake .5s linear;
+                    animation: image_shake .5s linear; }
       .user_main.column .user_header .hd_flex .user_description {
         margin-top: 15px;
         font: normal 15px "Open Sans";
@@ -578,7 +714,7 @@ body {
       text-transform: uppercase;
       border-bottom: 2px solid #dcdce0; }
       .user_main.column .user_activities_menu .item:hover {
-        color: #343435;
+        color: #616166;
         border-bottom: 2px solid #4e4a4a; }
       .user_main.column .user_activities_menu .item.active {
         color: #343435;

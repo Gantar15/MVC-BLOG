@@ -44,6 +44,10 @@
   .user_block:active, .user_block.active {
     background-color: #f1f2f4; }
   .user_block_head {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -55,23 +59,20 @@
       font: 500 14px "Open Sans";
       word-break: keep-all;
       color: #4b4b4b;
+      margin-left: 10px;
       position: relative; }
     .user_block_head .user_avatar {
       z-index: 1;
       width: 30px;
       height: 30px;
-      margin-left: 5px;
       border-radius: 50%;
       -o-object-fit: cover;
          object-fit: cover; }
-    .user_block_head .down_arrow {
-      margin-left: 10px;
-      width: 10px;
-      height: 10px;
-      margin-top: 3px;
-      background: url("/public/imgs/down-arrow.svg") no-repeat;
-      background-size: contain; }
   .user_block_body {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     width: 210px;
     background-color: #ffffff;
     -webkit-box-shadow: 0 0 5px 1px rgba(52, 52, 52, 0.12);
@@ -478,6 +479,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center; }
+  @media all and (max-width: 540px) {
+    .about h2 {
+      white-space: normal !important; } }
   .about > div {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -488,8 +492,7 @@ body {
             flex-direction: column;
     -webkit-box-align: center;
         -ms-flex-align: center;
-            align-items: center;
-    width: 400px; }
+            align-items: center; }
   .about img {
     -o-object-fit: contain;
        object-fit: contain;
@@ -499,7 +502,8 @@ body {
     text-align: center;
     color: #353535;
     font: 500 25px "Open Sans";
-    margin-bottom: 5px; }
+    margin-bottom: 20px;
+    white-space: pre; }
   .about p {
     text-align: center;
     color: #454545;
@@ -507,7 +511,7 @@ body {
     .about p span {
       font-weight: 500; }
   .about button {
-    margin-top: 25px;
+    margin-top: 12px;
     outline: none;
     width: 90px;
     height: 30px;

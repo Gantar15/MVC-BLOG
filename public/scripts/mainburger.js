@@ -48,7 +48,7 @@ document.addEventListener('click', (event) => {
 
 
 //Прячем верхнюю панель навигации в бургер меню при уменьшении размера страницы
-const headerMainNavigation = document.querySelector('.main_navigation');
+const headerMainNavigation = document.querySelector('.header .main_navigation');
 window.addEventListener('resize', () => {
     if(!headerMainNavigation) return;
     if(window.innerWidth <= 828){

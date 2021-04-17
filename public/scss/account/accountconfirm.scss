@@ -35,11 +35,16 @@ body{
   flex-direction: column;
   align-items: center;
 
+  @media all and (max-width: 540px){
+    h2{
+      white-space: normal !important;
+    }
+  }
+
   &>div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
   }
   img{
     object-fit: contain;
@@ -50,7 +55,8 @@ body{
     text-align: center;
     color: #353535;
     font: 500 25px $fontName;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+    white-space: pre;
   }
   p{
     text-align: center;
@@ -62,7 +68,7 @@ body{
     }
   }
   button{
-    margin-top: 25px;
+    margin-top: 12px;
     outline: none;
     width: 90px;
     height: 30px;

@@ -51,6 +51,7 @@
         max-width: 370px;
         margin-top: 10px;
         text-align: start;
+        overflow-wrap: break-word;
         font-family: "Open Sans";
         font-size: 14px;
         color: #3b3b3b;

@@ -15,8 +15,14 @@ body{
   background-color: #FAFAFA;
 }
 
+.header_line {
+  .register_box {
+    display: none;
+  }
+}
+
 .user_main.column{
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   margin-top: 50px;
 
@@ -30,15 +36,17 @@ body{
       .hd_flex{
         margin-left: 0px !important;
 
-        .user_name{
+        .name_block{
           display: none;
         }
       }
       .user_icon_block {
+        width: 100%;
         margin: 0 auto;
         margin-bottom: 20px;
 
-        .user_name{
+        .name_block{
+          margin-left: 20px;
           display: block !important;
         }
       }
@@ -53,11 +61,65 @@ body{
         object-fit: cover;
         border-radius: 50%;
       }
-      .user_name{
-        margin-left: 15px;
+      .name_block {
+        width: 100%;
         display: none;
-        font: bold 22px $fontName;
-        color: #2a2a2a;
+
+        .flex {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .user_name {
+          font: bold 22px $fontName;
+          color: #2a2a2a;
+        }
+        .notifications{
+          text-transform: uppercase;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @keyframes image_shake {
+            0%{
+              transform: rotateZ(0deg);
+            }
+            20%{
+              transform: rotateZ(-5deg);
+            }
+            40%{
+              transform: rotateZ(-10deg);
+            }
+            60%{
+              transform: rotateZ(5deg);
+            }
+            80%{
+              transform: rotateZ(10deg);
+            }
+            100%{
+              transform: rotateZ(0deg);
+            }
+          }
+
+          p{
+            font: 500 12px $fontName;
+          }
+          img{
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            margin-left: 5px;
+            transform-origin: top center;
+          }
+
+          &:hover{
+            img{
+              animation: image_shake .5s linear;
+            }
+          }
+        }
       }
     }
     .hd_flex{
@@ -68,10 +130,66 @@ body{
       align-items: flex-start;
       justify-content: flex-start;
 
-      .user_name{
-        font: bold 22px $fontName;
-        color: #2a2a2a;
+      .name_block {
+        width: 100%;
+
+        .flex {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .user_name {
+          font: bold 22px $fontName;
+          color: #2a2a2a;
+        }
+        .notifications{
+          text-transform: uppercase;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @keyframes image_shake {
+            0%{
+              transform: rotateZ(0deg);
+            }
+            20%{
+              transform: rotateZ(-5deg);
+            }
+            40%{
+              transform: rotateZ(-10deg);
+            }
+            60%{
+              transform: rotateZ(5deg);
+            }
+            80%{
+              transform: rotateZ(10deg);
+            }
+            100%{
+              transform: rotateZ(0deg);
+            }
+          }
+
+          p{
+            font: 500 12px $fontName;
+          }
+          img{
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+            margin-left: 5px;
+            transform-origin: top center;
+          }
+
+          &:hover{
+            img{
+              animation: image_shake .5s linear;
+            }
+          }
+        }
       }
+
       .user_description{
         margin-top: 15px;
         font: normal 15px $fontName;
@@ -129,7 +247,7 @@ body{
       border-bottom: 2px solid #dcdce0;
 
       &:hover{
-        color: #343435;
+        color: #616166;
         border-bottom: 2px solid #4e4a4a;
       }
       &.active{

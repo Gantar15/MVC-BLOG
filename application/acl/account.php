@@ -7,10 +7,11 @@ return [
         'confirm',
         'preconfirm',
         'userprofile',
-        'profile'
     ],
     'authorize' => [
-        'logout'
+        'logout',
+        'profile',
+        'settings',
     ],
     'guest' => [
     ],

@@ -3,10 +3,26 @@
     <section class="user_header">
         <div class="user_icon_block">
             <img class="user_header_icon" src="/public/users_icons/<?=$userPageData['id']?>.png"/>
-            <p class="user_name"><?=$userPageData['name']?></p>
+            <div class="name_block">
+                <div class="flex">
+                    <p class="user_name"><?=$userPageData['name']?></p>
+                    <div class="notifications">
+                        <p>Уведомления</p>
+                        <img src="/public/imgs/notification.svg">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="hd_flex">
-            <p class="user_name"><?=$userPageData['name']?></p>
+            <div class="name_block">
+                <div class="flex">
+                    <p class="user_name"><?=$userPageData['name']?></p>
+                    <div class="notifications">
+                        <p>Уведомления</p>
+                        <img src="/public/imgs/notification.svg">
+                    </div>
+                </div>
+            </div>
             <p class="user_description">Lorem ipsum ntur, corporis cum debitis deleniti dicta dolore enim ex explicabo facilis id imbcaecati perferendis quas qui quibusdam recusandae reiciendis rem repellat saepe tenetur totam voluptas voluptatum.</p>
             <div class="subscribers_block">
                 <div class="subscribe_button">Подписаться</div>
@@ -15,7 +31,7 @@
         </div>
     </section>
     <section class="user_activities_menu">
-        <div class="item user_posts active">Посты</div>
+        <div class="item user_posts active">Публикации</div>
         <div class="item user_subscribes">Подписки</div>
         <div class="item about_author">Об авторе</div>
     </section>

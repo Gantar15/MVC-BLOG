@@ -5,6 +5,7 @@ namespace application\controllers;
 
 use application\core\Controller;
 use application\core\View;
+use application\lib\RequireModules;
 
 class AccountController extends Controller
 {
@@ -180,11 +181,18 @@ class AccountController extends Controller
     //Профиль авторизованного ползователя
 
     public function profileAction(){
+        $profileModulesRQ = new RequireModules("./application/views/account/profile_modules/");
+
         //Получаем инфу о пользователе, если он залогинился
         $userData = $this->model->getAuthorizeData();
 
+        //Запрашиваем содержимое компонентапрофиля
+        $moduleContent = $profileModulesRQ->requireModule("posts", [
+        ]);
+
         $this->view->render('Ваш профиль', [
-            'userData' => $userData
+            'userData' => $userData,
+            'moduleContent' => $moduleContent
         ]);
     }
 
@@ -206,7 +214,7 @@ class AccountController extends Controller
         //Получаем инфу о пользователе, если он залогинился
         $userData = $this->model->getAuthorizeData();
 
-        $this->view->render('Профиль ' . $userData['name'], [
+        $this->view->render('Профиль ' . $userPageData['name'], [
             'userData' => $userData,
             'userPageData' => $userPageData
         ]);

@@ -49,7 +49,7 @@
     }
     .error_block .error_inf p {
         max-width: 290px;
-        word-break: break-word;
+        overflow-wrap: break-word;
         margin-top: 10px;
         text-align: start;
         font-family: "Open Sans";

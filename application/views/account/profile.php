@@ -2,7 +2,14 @@
 <section class="user_main column">
     <section class="user_header">
         <div class="user_icon_block">
-            <img class="user_header_icon" src="/public/users_icons/<?=$userData['id']?>.png"/>
+            <a class="user_header_icon annotation_block" href="/account/settings" data-annotation-content = "Изменить фото">
+                <div>
+                    <img src="/public/users_icons/<?=$userData['id']?>.png"/>
+                    <div class="overflow_display">
+                        <img src="/public/imgs/replace_user.svg">
+                    </div>
+                </div>
+            </a>
             <div class="name_block">
                 <div class="flex">
                     <p class="user_name"><?=$userData['name']?></p>
@@ -29,91 +36,36 @@
             </div>
         </div>
     </section>
-    <section class="user_activities_menu">
-        <div class="item user_posts active">Посты</div>
-        <div class="item user_subscribes">Подписки</div>
-        <div class="item about_author">О профиле</div>
+    <section class="activities_slider">
+        <section class="user_activities_menu">
+            <div class="item user_posts active">Публикации</div>
+            <div class="item user_subscribes">Подписки</div>
+            <div class="item about_author">О профиле</div>
+            <nav class="item profile_submenu">
+                <img src="/public/imgs/sub_menu.svg">
+            </nav>
+        </section>
+        <section class="user_activities_menu">
+            <nav class="item profile_submenu">
+                <img src="/public/imgs/sub_menu.svg">
+            </nav>
+            <a href="/account/posts" class="item profile_posts">
+                <p>Подписчики</p>
+                <img src="/public/imgs/posts.svg">
+            </a>
+            <a href="/account/notifications" class="item profile_notifications">
+                <p>Уведомления</p>
+                <img src="/public/imgs/notification.svg">
+            </a>
+            <a href="/account/notifications" class="item profile_notifications">
+                <p>Комментарии</p>
+                <img src="/public/imgs/empty_pen.svg">
+            </a>
+        </section>
     </section>
-    <section class="posts_block">
-        <?php if (empty($posts)): ?>
-            <div class="empty_posts_box">
-                <p>У вас нет постов</p>
-            </div>
-        <?php else: ?>
-            <?php foreach ($posts as $post): ?>
-                <article class="blog_recording">
-                    <a href="<?='/post/'.$post['id']?>" class="blog_img">
-                        <img src="/public/uploaded_information/<?=$post["id"]?>.jpg">
-                    </a>
-                    <div class="main_post_content">
-                        <div class="record_container">
-                            <div class="blog_recording_block">
-                                <div class="name_block">
-                                    <a href="<?='/post/'.$post['id']?>" class="blog_name">
-                                        <?=htmlspecialchars($post['name'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
-                                    </a>
-                                    <div class="blog_description">
-                                        <?=htmlspecialchars($post['description'], ENT_QUOTES|ENT_HTML5, 'UTF-8', true);?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="last_block">
-                            <div class="last_block_info">
-                                <div class="likes">
-                                    <img src="/public/imgs/like.svg"/>
-                                    <p><?=$post['likes'] . ' ' . $this->valuesFormatter($post['likes'], 'лайков', 'лайк', 'лайка')?></p>
-                                </div>
-                                <div class="views">
-                                    <img src="/public/imgs/eye.svg"/>
-                                    <p><?=$post['views'] . ' ' . $this->valuesFormatter($post['views'], 'просмотров', 'просмотр', 'просмотра')?></p>
-                                </div>
-                                <div class="share annotation_block" data-annotation-content = "поделиться">
-                                    <img src="/public/imgs/share.svg"/>
-                                </div>
-                            </div>
-                            <div class="blog_date annotation_block" data-annotation-content = "последнее изменение">
-                                <img src="/public/imgs/clock.svg"/>
-                                <p>
-                                    <?php
-                                    $postDateStr = $post['date_of_create'];
-                                    if($post['date_of_last_edit']) {
-                                        $postDateStr = $post['date_of_last_edit'];
-                                    }
-                                    $postDate = strtotime($postDateStr);
 
-                                    $arr = [
-                                        'января',
-                                        'февраля',
-                                        'марта',
-                                        'апреля',
-                                        'мая',
-                                        'июня',
-                                        'июля',
-                                        'августа',
-                                        'сентября',
-                                        'октября',
-                                        'ноября',
-                                        'декабря'
-                                    ];
-
-                                    $month = $arr[date('n', $postDate)-1];
-                                    echo date('j ', $postDate) . $month . date(' Y', $postDate);
-                                    ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        <?php endif; ?>
-
-        <?php if(!empty($pagination)):?>
-            <div class="buttons_block">
-                <?=$pagination?>
-            </div>
-        <?php endif;?>
-    </section>
+    <!-- Вставляем содержимое модуля-->
+    <?=$moduleContent?>
 </section>
 
 <footer>
@@ -160,3 +112,6 @@
     import shareLink from "/public/scripts/share_link.js";
     shareLink('.blog_recording', '.share', '.blog_name');
 </script>
+
+<!--profile sub menu-->
+<script src="/public/scripts/account/profile_sub_menu.js"></script>

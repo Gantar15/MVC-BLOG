@@ -62,6 +62,11 @@ return [
         'controller' => 'account',
         'action' => 'preconfirm'
     ],
+    'account/logout' => [
+        'controller' => 'account',
+        'action' => 'logout'
+    ],
+    //Profile
     'account/profile' => [
         'controller' => 'account',
         'action' => 'profile'
@@ -69,10 +74,6 @@ return [
     'account/userprofile/{id:\d+}' => [
         'controller' => 'account',
         'action' => 'userprofile'
-    ],
-    'account/logout' => [
-        'controller' => 'account',
-        'action' => 'logout'
     ],
 
     //AdminController------------------------------------------------

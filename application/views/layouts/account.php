@@ -24,9 +24,8 @@
                         <?php else: ?>
                             <div class="user_block">
                                 <div class="user_block_head">
-                                    <p><?=$userData['name']?></p>
                                     <img class="user_avatar" src="/public/users_icons/<?=$userData['id']?>.png">
-                                    <div class="down_arrow"></div>
+                                    <p><?=$userData['name']?></p>
                                 </div>
                                 <div class="user_block_body">
                                     <div></div>

@@ -48,6 +48,7 @@ export default class Annotations{
     }
 
     showAnnotationsHandler = event => {
+        if(event.target.closest('.annotation_message_box')) return;
         const parentNode = event.target.closest(this.parentNodeSelector);
         if(!parentNode || !parentNode.dataset.annotationContent || parentNode.isSettled) return;
 
