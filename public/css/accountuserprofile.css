@@ -690,67 +690,107 @@ body {
         .user_main.column .user_header .hd_flex .subscribers_block .subscribers_count {
           font: 500 13px "Open Sans";
           color: #454444; }
-  .user_main.column .user_activities_menu {
-    margin-top: 45px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    width: 100%; }
-    .user_main.column .user_activities_menu .item {
-      text-decoration: none;
-      width: 100%;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-      -ms-flex-negative: 1;
-          flex-shrink: 1;
-      text-align: center;
-      padding: 15px;
-      cursor: pointer;
-      font: bold 11px "Open Sans";
-      color: #818080;
+  .user_main.column .activities_slider {
+    overflow: hidden;
+    margin-top: 55px;
+    height: 47px; }
+    .user_main.column .activities_slider .user_activities_menu {
       position: relative;
-      overflow: hidden;
-      white-space: nowrap;
-      -webkit-transition: border-bottom .2s;
-      transition: border-bottom .2s;
-      text-transform: uppercase;
-      border-bottom: 2px solid #dcdce0;
+      width: 100%;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center; }
-      .user_main.column .user_activities_menu .item.hidden {
+      bottom: 2px;
+      -webkit-transition: bottom .2s ease-out;
+      transition: bottom .2s ease-out; }
+      .user_main.column .activities_slider .user_activities_menu .bottom_line {
+        background-color: #2f83e9;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        z-index: 1;
+        -webkit-transition: left .2s ease-in-out;
+        transition: left .2s ease-in-out;
         display: none; }
-      .user_main.column .user_activities_menu .item:hover {
-        color: #616166;
-        border-bottom: 2px solid #828286; }
-      .user_main.column .user_activities_menu .item.active {
-        color: #343435;
-        border-bottom: 2px solid #2f83e9; }
-      .user_main.column .user_activities_menu .item.profile_submenu {
-        -ms-flex-negative: 2;
-            flex-shrink: 2; }
-        .user_main.column .user_activities_menu .item.profile_submenu img {
-          -webkit-user-select: none;
-             -moz-user-select: none;
-              -ms-user-select: none;
-                  user-select: none;
-          -o-object-fit: cover;
-             object-fit: cover;
-          width: 17px;
+        .user_main.column .activities_slider .user_activities_menu .bottom_line.visible {
+          display: block; }
+      .user_main.column .activities_slider .user_activities_menu .item {
+        text-decoration: none;
+        width: 100%;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
+        -ms-flex-negative: 1;
+            flex-shrink: 1;
+        text-align: center;
+        padding: 15px;
+        cursor: pointer;
+        font: bold 11px "Open Sans";
+        color: #818080;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        -webkit-transition: border-bottom .2s;
+        transition: border-bottom .2s;
+        text-transform: uppercase;
+        border-bottom: 2px solid #dcdce0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center; }
+        .user_main.column .activities_slider .user_activities_menu .item.hidden {
+          display: none; }
+        .user_main.column .activities_slider .user_activities_menu .item:hover {
+          color: #616166;
+          border-bottom: 2px solid #828286; }
+        .user_main.column .activities_slider .user_activities_menu .item.active {
+          color: #343435; }
+          .user_main.column .activities_slider .user_activities_menu .item.active img {
+            -webkit-filter: invert(25%) !important;
+                    filter: invert(25%) !important; }
+        .user_main.column .activities_slider .user_activities_menu .item.profile_submenu {
+          -ms-flex-negative: 2;
+              flex-shrink: 2; }
+          .user_main.column .activities_slider .user_activities_menu .item.profile_submenu img {
+            -webkit-user-select: none;
+               -moz-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+            -o-object-fit: cover;
+               object-fit: cover;
+            width: 17px;
+            height: 15px;
+            -webkit-filter: invert(45%);
+                    filter: invert(45%); }
+          .user_main.column .activities_slider .user_activities_menu .item.profile_submenu:hover img {
+            -webkit-filter: invert(30%);
+                    filter: invert(30%); }
+      .user_main.column .activities_slider .user_activities_menu:nth-of-type(2) .item:not(.profile_submenu) {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center; }
+        .user_main.column .activities_slider .user_activities_menu:nth-of-type(2) .item:not(.profile_submenu) img {
+          -webkit-filter: invert(35%);
+                  filter: invert(35%);
+          -o-object-fit: contain;
+             object-fit: contain;
+          width: 15px;
           height: 15px;
-          -webkit-filter: invert(45%);
-                  filter: invert(45%); }
-        .user_main.column .user_activities_menu .item.profile_submenu:hover img {
-          -webkit-filter: invert(30%);
-                  filter: invert(30%); }
+          margin-left: 7px; }
+        .user_main.column .activities_slider .user_activities_menu:nth-of-type(2) .item:not(.profile_submenu):hover img {
+          -webkit-filter: invert(25%);
+                  filter: invert(25%); }
   .user_main.column .posts_block {
     margin-top: 40px;
     margin-bottom: 50px;

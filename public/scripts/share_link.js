@@ -13,7 +13,7 @@ export default function shareLink(parentNodeSelector, triggerNodeSelector, linkN
         if (!triggerNode) return;
 
         const urlText = event.target.closest(parentNodeSelector).querySelector(linkNodeSelector).href;
-        navigator.clipboard.writeText(urlText).then(() => {
+        navigator.clipboard?.writeText(urlText).then(() => {
             notificationSubject.render('Ссылка скопирована в буфер обмена');
         }).catch(() => {
             notificationSubject.render('Ошибка копирования в буфер обмена');

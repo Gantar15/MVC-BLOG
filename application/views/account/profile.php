@@ -38,26 +38,28 @@
     </section>
     <section class="activities_slider">
         <section class="user_activities_menu">
-            <div class="item user_posts active">Публикации</div>
-            <div class="item user_subscribes">Подписки</div>
-            <div class="item about_author">О профиле</div>
+            <div class="bottom_line visible"></div>
+            <div class="item user_posts active" data-module-button="posts">Публикации</div>
+            <div class="item user_subscribes" data-module-button="subscribes">Подписки</div>
+            <div class="item about_author" data-module-button="about">О профиле</div>
             <nav class="item profile_submenu">
                 <img src="/public/imgs/sub_menu.svg">
             </nav>
         </section>
         <section class="user_activities_menu">
+            <div class="bottom_line"></div>
             <nav class="item profile_submenu">
                 <img src="/public/imgs/sub_menu.svg">
             </nav>
-            <div class="item profile_posts">
+            <div class="item profile_posts" data-module-button="subscribers">
                 <p>Подписчики</p>
                 <img src="/public/imgs/posts.svg">
             </div>
-            <div class="item profile_notifications">
+            <div class="item profile_notifications" data-module-button="notifications">
                 <p>Уведомления</p>
                 <img src="/public/imgs/notification.svg">
             </div>
-            <div class="item profile_notifications">
+            <div class="item profile_notifications" data-module-button="comments">
                 <p>Комментарии</p>
                 <img src="/public/imgs/empty_pen.svg">
             </div>
@@ -115,3 +117,5 @@
 
 <!--profile sub menu-->
 <script src="/public/scripts/account/profile_sub_menu.js" type="module"></script>
+
+<script src="/public/scripts/account/profile_page_controller.js"></script>

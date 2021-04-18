@@ -219,15 +219,31 @@ body{
 
   .activities_slider {
     overflow: hidden;
-    margin-top: 45px;
+    margin-top: 55px;
     height: 47px;
 
     .user_activities_menu {
       position: relative;
       width: 100%;
       display: flex;
-      bottom: 1px;
+      bottom: 0px;
       transition: bottom .2s ease-out;
+
+      .bottom_line{
+        background-color: #2f83e9;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        z-index: 1;
+        transition: left .2s ease-in-out;
+        display: none;
+
+        &.visible{
+          display: block;
+        }
+      }
 
       .item {
         text-decoration: none;
@@ -259,7 +275,10 @@ body{
 
         &.active {
           color: #343435;
-          border-bottom: 2px solid #2f83e9;
+
+          img{
+            filter: invert(25%) !important;
+          }
         }
 
         &.profile_submenu {

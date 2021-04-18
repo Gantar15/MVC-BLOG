@@ -182,13 +182,19 @@ class AccountController extends Controller
 
     public function profileAction(){
         $profileModulesRQ = new RequireModules("./application/views/account/profile_modules/");
+        $userData = $this->model->getAuthorizeData();       //Получаем инфу о пользователе, если он залогинился
 
-        //Получаем инфу о пользователе, если он залогинился
-        $userData = $this->model->getAuthorizeData();
-
-        //Запрашиваем содержимое компонентапрофиля
-        $moduleContent = $profileModulesRQ->requireModule("posts", [
-        ]);
+        $moduleContent = '';        //Содержимое запрашиваемого html одуля
+        if(isset($_POST['module_name'])){
+            $moduleName = $_POST['module_name'];        //Название html модуля для подгрузки
+            $moduleContent = $profileModulesRQ->requireModule($moduleName, [        //Запрашиваем содержимое html модуля
+            ]);
+            $this->view->response(['content' => $moduleContent]);
+        }
+        else {
+            $moduleContent = $profileModulesRQ->requireModule('posts', [        //Запрашиваем содержимое html модуля
+            ]);
+        }
 
         $this->view->render('Ваш профиль', [
             'userData' => $userData,

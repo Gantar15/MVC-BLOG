@@ -175,6 +175,8 @@ class Account extends Model {
     //******************************
 
 
+    //Пользователь ******************************
+
     public function getUserData($id){
         $params = [
             'id' => $id
@@ -206,5 +208,7 @@ class Account extends Model {
 
         return $userData;
     }
+
+    //******************************
 
 }

@@ -30,10 +30,13 @@
             </div>
         </div>
     </section>
-    <section class="user_activities_menu">
-        <div class="item user_posts active">Публикации</div>
-        <div class="item user_subscribes">Подписки</div>
-        <div class="item about_author">Об авторе</div>
+    <section class="activities_slider">
+        <section class="user_activities_menu">
+            <div class="bottom_line visible"></div>
+            <div class="item user_posts active">Публикации</div>
+            <div class="item user_subscribes">Подписки</div>
+            <div class="item about_author">Об авторе</div>
+        </section>
     </section>
     <section class="posts_block">
         <?php if (empty($posts)): ?>
@@ -161,9 +164,6 @@
     import shareLink from "/public/scripts/share_link.js";
     shareLink('.blog_recording', '.share', '.blog_name');
 </script>
-<script type="module">
-    import waveButtonDispatcher from "/public/scripts/wave_button.js";
-    //Анимация при нажатии на пункт из панели пользователя
-    const menuButtons = document.querySelectorAll('.user_activities_menu .item:not(.profile_submenu)');
-    waveButtonDispatcher([...menuButtons]);
-</script>
+
+<!--profile sub menu-->
+<script src="/public/scripts/account/profile_sub_menu.js" type="module"></script>

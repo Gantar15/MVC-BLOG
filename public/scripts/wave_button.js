@@ -39,6 +39,8 @@ export default function waveButtonDispatcher(buttonsSubject, waveColor = "#83838
             x: clickCoords.x - rect.left,
             y: clickCoords.y - rect.top
         }
+        this.style.overflow = "hidden";
+        surfaceChild(this, 1);
         this.append(waveElem);
 
         waveElem.style.top = waveStartCoords.y + "px";
@@ -50,6 +52,7 @@ export default function waveButtonDispatcher(buttonsSubject, waveColor = "#83838
         });
 
         removeWave(waveElem);
+        diveChild(this);
     }
 
     function addStyles(waveElem){
@@ -71,5 +74,15 @@ export default function waveButtonDispatcher(buttonsSubject, waveColor = "#83838
 
     function scaleWave(waveElem, scaleRatio){
         waveElem.style.transform = `scale(${scaleRatio})`;
+    }
+
+    function surfaceChild(parentNode, step){
+        const children = parentNode.children;
+        [...children].forEach(elem => elem.style.zIndex = step);
+    }
+
+    function diveChild(parentNode){
+        const children = parentNode.children;
+        [...children].forEach(elem => elem.style.zIndex = '');
     }
 }
