@@ -49,18 +49,18 @@
             <nav class="item profile_submenu">
                 <img src="/public/imgs/sub_menu.svg">
             </nav>
-            <a href="/account/posts" class="item profile_posts">
+            <div class="item profile_posts">
                 <p>Подписчики</p>
                 <img src="/public/imgs/posts.svg">
-            </a>
-            <a href="/account/notifications" class="item profile_notifications">
+            </div>
+            <div class="item profile_notifications">
                 <p>Уведомления</p>
                 <img src="/public/imgs/notification.svg">
-            </a>
-            <a href="/account/notifications" class="item profile_notifications">
+            </div>
+            <div class="item profile_notifications">
                 <p>Комментарии</p>
                 <img src="/public/imgs/empty_pen.svg">
-            </a>
+            </div>
         </section>
     </section>
 
@@ -114,4 +114,4 @@
 </script>
 
 <!--profile sub menu-->
-<script src="/public/scripts/account/profile_sub_menu.js"></script>
+<script src="/public/scripts/account/profile_sub_menu.js" type="module"></script>

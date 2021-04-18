@@ -670,14 +670,15 @@ body {
       display: -ms-flexbox;
       display: flex;
       bottom: 1px;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
       -webkit-transition: bottom .2s ease-out;
       transition: bottom .2s ease-out; }
       .user_main.column .activities_slider .user_activities_menu .item {
         text-decoration: none;
         width: 100%;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
         -ms-flex-negative: 1;
             flex-shrink: 1;
         text-align: center;
@@ -685,16 +686,24 @@ body {
         cursor: pointer;
         font: bold 11px "Open Sans";
         color: #818080;
+        position: relative;
+        overflow: hidden;
         white-space: nowrap;
         -webkit-transition: border-bottom .2s;
         transition: border-bottom .2s;
         text-transform: uppercase;
-        border-bottom: 2px solid #dcdce0; }
+        border-bottom: 2px solid #dcdce0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center; }
         .user_main.column .activities_slider .user_activities_menu .item.hidden {
           display: none; }
         .user_main.column .activities_slider .user_activities_menu .item:hover {
           color: #616166;
-          border-bottom: 2px solid #747579; }
+          border-bottom: 2px solid #828286; }
         .user_main.column .activities_slider .user_activities_menu .item.active {
           color: #343435;
           border-bottom: 2px solid #2f83e9; }
@@ -709,7 +718,7 @@ body {
             -o-object-fit: cover;
                object-fit: cover;
             width: 17px;
-            height: 10px;
+            height: 15px;
             -webkit-filter: invert(45%);
                     filter: invert(45%); }
           .user_main.column .activities_slider .user_activities_menu .item.profile_submenu:hover img {

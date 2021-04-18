@@ -161,3 +161,9 @@
     import shareLink from "/public/scripts/share_link.js";
     shareLink('.blog_recording', '.share', '.blog_name');
 </script>
+<script type="module">
+    import waveButtonDispatcher from "/public/scripts/wave_button.js";
+    //Анимация при нажатии на пункт из панели пользователя
+    const menuButtons = document.querySelectorAll('.user_activities_menu .item:not(.profile_submenu)');
+    waveButtonDispatcher([...menuButtons]);
+</script>

@@ -233,26 +233,55 @@ body{
     align-items: center;
     width: 100%;
 
-    .item{
+    .item {
+      text-decoration: none;
       width: 100%;
+      user-select: none;
       flex-shrink: 1;
       text-align: center;
       padding: 15px;
       cursor: pointer;
       font: bold 11px $fontName;
       color: #818080;
+      position: relative;
+      overflow: hidden;
       white-space: nowrap;
       transition: border-bottom .2s;
       text-transform: uppercase;
       border-bottom: 2px solid #dcdce0;
+      display: flex;
+      justify-content: center;
 
-      &:hover{
-        color: #616166;
-        border-bottom: 2px solid #4e4a4a;
+      &.hidden {
+        display: none;
       }
-      &.active{
+
+      &:hover {
+        color: #616166;
+        border-bottom: 2px solid #828286;
+      }
+
+      &.active {
         color: #343435;
         border-bottom: 2px solid #2f83e9;
+      }
+
+      &.profile_submenu {
+        flex-shrink: 2;
+
+        img {
+          user-select: none;
+          object-fit: cover;
+          width: 17px;
+          height: 15px;
+          filter: invert(45%);
+        }
+
+        &:hover {
+          img {
+            filter: invert(30%);
+          }
+        }
       }
     }
   }

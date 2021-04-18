@@ -227,22 +227,26 @@ body{
       width: 100%;
       display: flex;
       bottom: 1px;
-      align-items: center;
       transition: bottom .2s ease-out;
 
       .item {
         text-decoration: none;
         width: 100%;
+        user-select: none;
         flex-shrink: 1;
         text-align: center;
         padding: 15px;
         cursor: pointer;
         font: bold 11px $fontName;
         color: #818080;
+        position: relative;
+        overflow: hidden;
         white-space: nowrap;
         transition: border-bottom .2s;
         text-transform: uppercase;
         border-bottom: 2px solid #dcdce0;
+        display: flex;
+        justify-content: center;
 
         &.hidden {
           display: none;
@@ -250,7 +254,7 @@ body{
 
         &:hover {
           color: #616166;
-          border-bottom: 2px solid #747579;
+          border-bottom: 2px solid #828286;
         }
 
         &.active {
@@ -265,7 +269,7 @@ body{
             user-select: none;
             object-fit: cover;
             width: 17px;
-            height: 10px;
+            height: 15px;
             filter: invert(45%);
           }
 
